@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-
-  get 'pages/show'
-
   root 'messages#index'
+
+  devise_for :users
+  get 'pages/index' => 'pages#index'
+
+  get 'pages/show'  => 'pages#show'
 end
