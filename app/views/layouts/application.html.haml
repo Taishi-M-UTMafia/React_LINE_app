@@ -9,18 +9,25 @@
     = csrf_meta_tags
   %body
     %header
-      %nav
-        -if user_signed_in?
-          %strong
-            = link_to 'MY PAGE', pages_show_path
-          = link_to 'プロフィール変更', edit_user_registration_path
-          = link_to 'ログアウト', destroy_user_session_path, method: :delete
-        -else
-          = link_to 'サインアップ', new_user_registration_path
-          = link_to 'ログイン', new_user_session_path
-    %p.notice
-      =notice
-    %p.alert
-      =alert
+      .header-logo
+        = link_to 'LINE',root_url
+      %ul.header-menus
+        - if user_signed_in?
+          =current_user.id
+          %li
+            Signed in as:
+            =#{current_user.username}
+          %li= link_to 'Chat',"/users/#{current_user.id}"
+          %li= link_to 'Edit Profile', edit_user_registration_path
+          %li= link_to 'Logout', destroy_user_session_path, method: :delete
+        - else
+          %li= link_to 'Sign in', new_user_session_path
+          %li= link_to 'Sign up', new_user_registration_path
+    - if flash[:notice]
+      %p.notice
+        =flash[:notice]
+    - elsif flash[:alert]
+      %p.alert
+      =flash[:alert]
 
     = yield

@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import _ from 'lodash' //追記
+import _ from 'lodash' // 追記
 import Utils from '../../utils'
 import MessagesStore from '../../stores/messages' // 追記
 import UserStore from '../../stores/user'
@@ -15,8 +15,8 @@ class UserList extends React.Component {
 
   get initialState() {
     // 変更箇所、開始位置
-      return this.getStateFromStore()
-    }
+    return this.getStateFromStore()
+  }
 
     getStateFromStore() {
       const allMessages = MessagesStore.getAllChats()
@@ -49,44 +49,44 @@ class UserList extends React.Component {
       MessagesAction.changeOpenChat(id) // 追記
     }
     render() {
-    this.state.messageList.sort((a, b) => {
-      if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
-        return -1
-      }
-      if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
-        return 1
-      }
-      return 0
-    })
-
-    const messages = this.state.messageList.map((message, index) => {
-      const date = Utils.getNiceDate(message.lastMessage.timestamp)
-
-      var statusIcon
-      if (message.lastMessage.from !== message.user.id) {
-        statusIcon = (
-          <i className='fa fa-reply user-list__item__icon' />
-        )
-      }
-      if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-        statusIcon = (
-          <i className='fa fa-circle user-list__item__icon' />
-        )
-      }
-
-      var isNewMessage = false
-      if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-        isNewMessage = message.lastMessage.from !== UserStore.user.id
-      }
-
-      const itemClasses = classNames({
-        'user-list__item': true,
-        'clear': true,
-        'user-list__item--new': isNewMessage,
-        'user-list__item--active': this.state.openChatID === message.user.id,
+      this.state.messageList.sort((a, b) => {
+        if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
+          return -1
+        }
+        if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
+          return 1
+        }
+        return 0
       })
 
-      return (
+      const messages = this.state.messageList.map((message, index) => {
+        const date = Utils.getNiceDate(message.lastMessage.timestamp)
+
+        var statusIcon
+        if (message.lastMessage.from !== message.user.id) {
+          statusIcon = (
+          <i className='fa fa-reply user-list__item__icon' />
+        )
+        }
+        if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
+          statusIcon = (
+          <i className='fa fa-circle user-list__item__icon' />
+        )
+        }
+
+        var isNewMessage = false
+        if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
+          isNewMessage = message.lastMessage.from !== UserStore.user.id
+        }
+
+        const itemClasses = classNames({
+          'user-list__item': true,
+          'clear': true,
+          'user-list__item--new': isNewMessage,
+          'user-list__item--active': this.state.openChatID === message.user.id,
+        })
+
+        return (
         <li
           onClick={ this.changeOpenChat.bind(this, message.user.id) } // 追記
           className={ itemClasses }
@@ -108,15 +108,15 @@ class UserList extends React.Component {
           </div>
         </li>
       )
-    }, this)
-    return (
+      }, this)
+      return (
       <div className='user-list'>
         <ul className='user-list__list'>
           { messages }
         </ul>
       </div>
     )
-  }
+    }
 }
 
 export default UserList
