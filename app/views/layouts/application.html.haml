@@ -1,7 +1,7 @@
 !!! 5
 %html
   %head
-    %title flux_tutorial
+    %title LINE-like-app
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     %link{ href: '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', rel: 'stylesheet' }/
     = javascript_include_tag 'application'
@@ -14,9 +14,7 @@
       %ul.header-menus
         - if user_signed_in?
           =current_user.id
-          %li
-            Signed in as:
-            =#{current_user.username}
+          %li Signed in as : #{current_user.name}
           %li= link_to 'Search',users_search_path
           %li= link_to 'Edit Profile', edit_user_registration_path
           %li= link_to 'Logout', destroy_user_session_path, method: :delete
