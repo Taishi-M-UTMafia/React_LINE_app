@@ -101,6 +101,7 @@ class UserList extends React.Component {
               <abbr className='user-list__item__timestamp'>
                 { date }
               </abbr>
+
             </h4>
             <span className='user-list__item__message'>
               { statusIcon } { message.lastMessage.contents }

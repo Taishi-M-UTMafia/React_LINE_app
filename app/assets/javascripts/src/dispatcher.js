@@ -4,6 +4,7 @@ import assign from 'object-assign'
 
 const appDispatcher = assign(new Dispatcher(), {
   handleServerAction(action) {
+    // これで、サーバーとビューの両方からactionを取ってこれる
     this.dispatch({
       source: 'server',
       action: action,

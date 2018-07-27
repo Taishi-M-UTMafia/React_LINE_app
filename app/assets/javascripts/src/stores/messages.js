@@ -2,6 +2,7 @@
 import Dispatcher from '../dispatcher'
 import BaseStore from '../base/store'
 import UserStore from '../stores/user' // 追記
+import {ActionTypes} from '../constants/app'
 
 const messages = {
   2: {
@@ -90,24 +91,23 @@ class ChatStore extends BaseStore {
 }
 const MessagesStore = new ChatStore()
 
+
 MessagesStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action
 
   switch (action.type) {
-    case 'updateOpenChatID':
-      openChatID = action.userID
-      messages[openChatID].lastAccess.currentUser = +new Date() // 追記
+    case ActionTypes.UPDATE_OPEN_CHAT_ID:
+      openChatID = payload.action.userID
       MessagesStore.emitChange()
       break
-      // 追記
-    case 'sendMessage':
+
+    case ActionTypes.SEND_MESSAGE:
       const userID = action.userID
       messages[userID].messages.push({
         contents: action.message,
         timestamp: action.timestamp,
         from: UserStore.user.id,
       })
-      messages[userID].lastAccess.currentUser = +new Date() // 追記
       MessagesStore.emitChange()
       break
   }

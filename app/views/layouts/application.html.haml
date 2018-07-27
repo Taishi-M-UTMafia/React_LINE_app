@@ -11,10 +11,9 @@
   %body
     %header
       .header-logo
-        = link_to 'LINE',"/messages/index"
+        = link_to 'LINE', "/"
       %ul.header-menus
         - if user_signed_in?
-          =current_user.id
           %li Signed in as : #{current_user.name}
           %li= link_to 'Search',users_search_path
           %li= link_to 'Edit Profile', edit_user_registration_path
