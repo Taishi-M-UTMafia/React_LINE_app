@@ -88,9 +88,16 @@ class ChatStore extends BaseStore {
   getAllChats() {
     return messages
   }
+  getMessage(){
+    if (!this.get('messageJson')) this.setMessage([])
+    return this.get('messageJson')
+  }
+  setMessage(array) {
+    // massagesJson?
+    this.set('messageJson', array)
+  }
 }
 const MessagesStore = new ChatStore()
-
 
 MessagesStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action
@@ -109,6 +116,15 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
         from: UserStore.user.id,
       })
       MessagesStore.emitChange()
+      break
+
+    case ActionTypes.GET_MESSAGE: // 上のapi通信で使用したgetHogeアクションを受け取っているとします。
+      MessagesStore.setMessage(action.json) // getHogeで取得したjsonをセッターを利用して保存しています。
+      MessagesStore.emitChange()
+      break
+
+    // POST_MESSAGEはいるの？
+    case ActionTypes.POST_MESSAGE:
       break
   }
 

@@ -20,13 +20,16 @@ export default {
     })
   },
   // getの場合
-  getMessage() {
+  getMessage(){
+    // Promiseでインスタンスを作る
     return new Promise((resolve, reject) => {
+      // こっからsuperAgent
       request
       .get('/api/messages') // 取得したいjsonがあるURLを指定する
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
           const json = JSON.parse(res.text)
+          // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_MESSAGE,
             json, // json: jsonと同じ。keyとvalueが一致する場合、このように省略出来ます。
@@ -42,15 +45,15 @@ export default {
   postMessage(MessageId) {
     return new Promise((resolve, reject) => {
       request
-      .post(`${APIEndpoints.MESSAGE}`) // 後ほど説明します。
-      .set('X-CSRF-Token', CSRFToken()) // 後ほど説明します。
+      .post(`${APIEndpoints.MESSAGE}`) // OK
+      .set('X-CSRF-Token', CSRFToken()) // OK
       .send({message_id: MessageId}) // これによりサーバ側に送りたいデータを送ることが出来ます。
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
             type: ActionTypes.POST_MESSAGE,
-            hogeId,
+            MessageId,
             json,
           })
         } else {

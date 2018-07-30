@@ -32,6 +32,7 @@ class ReplyBox extends React.Component {
     return (
       <div className='reply-box'>
         <input
+
         value={ this.state.value }  // 追記
         onKeyDown={ this.handleKeyDown.bind(this) } // 追記
         onChange={ this.updateValue.bind(this) } // 追記
