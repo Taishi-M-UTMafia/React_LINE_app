@@ -19,7 +19,7 @@ export default {
       timestamp: +new Date(),
     })
   },
-  // getの場合
+  // messagesテーブルからJSONデータを取得
   getMessage(){
     // Promiseでインスタンスを作る
     return new Promise((resolve, reject) => {
@@ -62,5 +62,4 @@ export default {
       })
     })
   },
-
 }

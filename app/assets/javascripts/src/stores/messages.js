@@ -131,4 +131,5 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
   return true
 })
 
+window.MessagesStore = MessagesStore
 export default MessagesStore

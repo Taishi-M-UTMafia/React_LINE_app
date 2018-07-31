@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
-    resources :messages
+    resources :messages,:friendships,:users
   end
 
-  resources :messages
+  resources :messages,:friendships,:users
   root to: 'messages#index'
 
   get 'users/search' => 'users#search'
