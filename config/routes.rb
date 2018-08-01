@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   get 'users/search' => 'users#search'
+  devise_for :users
+
+  devise_scope :user do
+    get '/users/sign_out' => 'devise/sessions#destroy'
+  end
 
   namespace :api, { format: 'json' } do
     resources :messages,:friendships,:users
@@ -8,10 +13,4 @@ Rails.application.routes.draw do
   resources :messages,:friendships,:users
   root to: 'messages#index'
 
-
-  devise_for :users
-
-  devise_scope :user do
-    get '/users/sign_out' => 'devise/sessions#destroy'
-  end
 end
