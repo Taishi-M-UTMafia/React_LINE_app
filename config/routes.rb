@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/search' => 'users#search'
+
   namespace :api, { format: 'json' } do
     resources :messages,:friendships,:users
   end
@@ -6,7 +8,6 @@ Rails.application.routes.draw do
   resources :messages,:friendships,:users
   root to: 'messages#index'
 
-  get 'users/search' => 'users#search'
 
   devise_for :users
 

@@ -88,7 +88,7 @@ class ChatStore extends BaseStore {
   getAllChats() {
     return messages
   }
-  getMessage(){
+  getMessage() {
     if (!this.get('messageJson')) this.setMessage([])
     return this.get('messageJson')
   }

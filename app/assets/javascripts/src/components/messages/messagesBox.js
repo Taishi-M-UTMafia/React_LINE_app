@@ -1,10 +1,12 @@
 import React from 'react'
-import classNames from 'classNames'
+// import classNames from 'classNames'
 import ReplyBox from '../../components/messages/replyBox'
 import MessagesStore from '../../stores/messages' // 追記
 import MessageAction from '../../actions/messages' // 追記
 import UserStore from '../../stores/user'
-import Utils from '../../utils'
+import UserAction from '../../actions/user'
+
+// import Utils from '../../utils'
 
 class MessagesBox extends React.Component {
 
@@ -19,13 +21,16 @@ class MessagesBox extends React.Component {
   getStateFromStore() {
     //
     return {
-      message:MessagesStore.getMessage(),
+      message: MessagesStore.getMessage(),
+      user: UserStore.getUser(),
     }
     // return MessagesStore.getChatByUserID(MessagesStore.getOpenChatUserID())
   }
   componentWillMount() {
     MessagesStore.onChange(this.onStoreChange.bind(this))
     MessageAction.getMessage()
+    UserStore.onChange(this.onStoreChange.bind(this))
+    UserAction.getUser()
   }
   componentWillUnmount() {
     MessagesStore.offChange(this.onStoreChange.bind(this))
@@ -34,14 +39,9 @@ class MessagesBox extends React.Component {
     this.setState(this.getStateFromStore())
   }
 
-  getTestMessage(){
-    return MessagesStore.getAllChats()
-  }
-
-  const test_messages=
   render() {
-    console.log(this.state.message)
-    const currentUserID = UserStore.user.id
+    console.log(this.state.user)
+    // const currentUserID = UserStore.user.id
 
     // const messages = this.state.messages.map((message, index) => {
     //   const messageClasses = classNames({
@@ -59,7 +59,7 @@ class MessagesBox extends React.Component {
     //       )
     // })
 
-    const test_messages= this.state.message.content
+    const test_messages = this.state.message.content
 
     // const lastMessage = this.state.messages[messagesLength - 1]
 
@@ -75,7 +75,7 @@ class MessagesBox extends React.Component {
     //         )
     //   }
     // }
-      return (
+    return (
           <div className='message-box'>
             <ul className='message-box__list'>
               { test_messages }
@@ -83,7 +83,6 @@ class MessagesBox extends React.Component {
             <ReplyBox />
           </div>
         )
-
   }
 }
 
