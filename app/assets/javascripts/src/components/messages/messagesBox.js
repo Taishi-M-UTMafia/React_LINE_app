@@ -5,23 +5,20 @@ import MessagesStore from '../../stores/messages' // 追記
 import MessageAction from '../../actions/messages' // 追記
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
-
 // import Utils from '../../utils'
 
-class MessagesBox extends React.Component {
+class MessagesBox extends React.Component { 
 
   constructor(props) {
     super(props)
     this.state = this.initialState
   }
   get initialState() {
-    // initialStateはgetStateFromStore参照（この真下）
     return this.getStateFromStore()
   }
   getStateFromStore() {
-    //
     return {
-      message: MessagesStore.getMessage(),
+      messages: MessagesStore.getMessage(),
       user: UserStore.getUser(),
     }
     // return MessagesStore.getChatByUserID(MessagesStore.getOpenChatUserID())
@@ -41,7 +38,8 @@ class MessagesBox extends React.Component {
 
   render() {
     console.log(this.state.user)
-    // const currentUserID = UserStore.user.id
+    const currentUserID = UserStore.user.id
+    debugger
 
     // const messages = this.state.messages.map((message, index) => {
     //   const messageClasses = classNames({
@@ -59,7 +57,7 @@ class MessagesBox extends React.Component {
     //       )
     // })
 
-    const test_messages = this.state.message.content
+    // const test_messages = this.state.message.content
 
     // const lastMessage = this.state.messages[messagesLength - 1]
 

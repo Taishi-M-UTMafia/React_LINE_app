@@ -26,7 +26,6 @@ class UserList extends React.Component {
         const messagesLength = message.messages.length
         messageList.push({
           lastMessage: message.messages[messagesLength - 1],
-          lastAccess: message.lastAccess,
           user: message.user,
         })
       })

@@ -14,7 +14,7 @@ export const ActionTypes = keyMirror({
   GET_MESSAGE: null,
   POST_MESSAGE: null,
   GET_USER: null,
-  SEND_USER: null,
+  GET_SEARCH_USER: null,
 })
 
 export function CSRFToken() {

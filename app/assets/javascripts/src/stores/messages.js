@@ -5,47 +5,34 @@ import UserStore from '../stores/user' // 追記
 import {ActionTypes} from '../constants/app'
 
 const messages = {
+  // status,lastAccess,timestamp,read削除,profilePic⇨image_name変更
   2: {
     user: {
-      profilePicture: '/hitsujisennin.png',
+      image_name: '/hitsujisennin.png',
       id: 2,
       name: 'ひつじせんにん',
-      status: 'online',
-    },
-    lastAccess: {
-      recipient: 1424469794050,
-      currentUser: 1424469794080,
     },
     messages: [
       {
         contents: 'React覚えたよ！',
         from: 1,
-        timestamp: 1424469793023,
       },
       {
         contents: 'よくやったぞ、サニー。その調子じゃ。',
         from: 2,
-        timestamp: 1424469794000,
       },
     ],
   },
   3: {
     user: {
-      read: true,
-      profilePicture: '/samuraineko.jpg',
+      image_name: '/samuraineko.jpg',
       name: 'さむらいねこ',
       id: 3,
-      status: 'online',
-    },
-    lastAccess: {
-      recipient: 1424352522000,
-      currentUser: 1424352522080,
     },
     messages: [
       {
         contents: 'にゃーん',
         from: 3,
-        timestamp: 1424352522000,
       },
     ],
   },
@@ -53,17 +40,11 @@ const messages = {
     user: {
       name: 'にんじゃわんこ',
       id: 4,
-      profilePicture: '/ninjawanko.png',
-      status: 'online',
-    },
-    lastAccess: {
-      recipient: 1424423579000,
-      currentUser: 1424423574000,
+      image_name: '/ninjawanko.png',
     },
     messages: [
       {
         contents: 'わん！',
-        timestamp: 1424423579000,
         from: 4,
       },
     ],
