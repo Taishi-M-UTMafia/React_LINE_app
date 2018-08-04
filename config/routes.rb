@@ -10,9 +10,11 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     resources :messages,:friendships
     # collectionでapiにルート追加できる
-    resources :users ,:only => [:index, :search] do
+    resources :users ,:only => [:index, :search, :find_current_user, :find_friends] do
       collection do
         get :search
+        get :find_current_user
+        get :find_friends
       end
   end
 

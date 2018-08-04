@@ -1,10 +1,11 @@
 import React from 'react'
-// import classNames from 'classnames'
+import classNames from 'classnames'
 import _ from 'lodash' // 追記
 // import Utils from '../../utils'
 import MessagesStore from '../../stores/messages' // 追記
-// import UserStore from '../../stores/user'
+import UserStore from '../../stores/user'
 import MessagesAction from '../../actions/messages' // 追記
+import UserAction from '../../actions/user'
 
 class UserList extends React.Component {
 
@@ -35,6 +36,8 @@ class UserList extends React.Component {
       }
     }
     componentWillMount() {
+      // debugger
+      UserAction.getFriends()
       MessagesStore.onChange(this.onStoreChange.bind(this))
     }
     componentWillUnmount() {
@@ -47,7 +50,18 @@ class UserList extends React.Component {
     changeOpenChat(id) {
       MessagesAction.changeOpenChat(id) // 追記
     }
+    getFriendsFromStore() {
+      return UserStore.getFriends()
+    }
+    // getFriendsFromStore() {
+    //   debugger
+    //   UserAction.getFriends()
+    //   debugger
+    //   return UserStore.getFriends()
+    // }
     render() {
+      const friends = this.getFriendsFromStore()
+      console.log(friends)
       // this.state.messageList.sort((a, b) => {
       //   if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
       //     return -1
@@ -57,61 +71,59 @@ class UserList extends React.Component {
       //   }
       //   return 0
       // })
-      //
-      // const messages = this.state.messageList.map((message, index) => {
-      //   const date = Utils.getNiceDate(message.lastMessage.timestamp)
-      //
-      //   var statusIcon
-      //   if (message.lastMessage.from !== message.user.id) {
-      //     statusIcon = (
-      //     <i className='fa fa-reply user-list__item__icon' />
-      //   )
-      //   }
-      //   if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-      //     statusIcon = (
-      //     <i className='fa fa-circle user-list__item__icon' />
-      //   )
-      //   }
-      //
-      //   // var isNewMessage = false
-      //   // if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-      //   //   isNewMessage = message.lastMessage.from !== UserStore.user.id
-      //   // }
-      //
-      //   // const itemClasses = classNames({
-      //   //   'user-list__item': true,
-      //   //   'clear': true,
-      //   //   'user-list__item--new': isNewMessage,
-      //   //   'user-list__item--active': this.state.openChatID === message.user.id,
-      //   // })
-      //
-      //   return (
-      //   <li
-      //     onClick={ this.changeOpenChat.bind(this, message.user.id) } // 追記
-      //     className={ itemClasses }
-      //     key={ message.user.id }
-      //   >
-      //     <div className='user-list__item__picture'>
-      //       <img src={ message.user.profilePicture } />
-      //     </div>
-      //     <div className='user-list__item__details'>
-      //       <h4 className='user-list__item__name'>
-      //         { message.user.name }
-      //         <abbr className='user-list__item__timestamp'>
-      //           { date }
-      //         </abbr>
-      //       </h4>
-      //       <span className='user-list__item__message'>
-      //         { statusIcon } { message.lastMessage.contents }
-      //       </span>
-      //     </div>
-      //   </li>
-      // )
-      // }, this)
+
+      const messages = this.state.messageList.map((message, index) => {
+        // const date = Utils.getNiceDate(message.lastMessage.timestamp)
+
+        // var statusIcon
+        // if (message.lastMessage.from !== message.user.id) {
+        //   statusIcon = (
+        //   <i className='fa fa-reply user-list__item__icon' />
+        // )
+        // }
+        // if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
+        //   statusIcon = (
+        //   <i className='fa fa-circle user-list__item__icon' />
+        // )
+        // }
+
+        // var isNewMessage = false
+        // if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
+        //   isNewMessage = message.lastMessage.from !== UserStore.user.id
+        // }
+
+        const itemClasses = classNames({
+          'user-list__item': true,
+          'clear': true,
+          // 'user-list__item--new': isNewMessage,
+          'user-list__item--active': this.state.openChatID === message.user.id,
+        })
+
+        return (
+        <li
+          onClick={ this.changeOpenChat.bind(this, message.user.id) } // 追記
+          className={ itemClasses }
+          key={ message.user.id }
+        >
+          <div className='user-list__item__picture'>
+            <img src={ message.user.image_name } />
+          </div>
+          <div className='user-list__item__details'>
+            <h4 className='user-list__item__name'>
+              { message.user.name }
+            </h4>
+            <span className='user-list__item__message'>
+              { message.lastMessage.contents }
+            </span>
+          </div>
+        </li>
+      )
+      }, this)
+
       return (
       <div className='user-list'>
         <ul className='user-list__list'>
-
+          { messages }
         </ul>
       </div>
     )
