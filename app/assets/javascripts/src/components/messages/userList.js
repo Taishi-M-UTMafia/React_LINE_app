@@ -6,6 +6,7 @@ import MessagesStore from '../../stores/messages' // 追記
 import UserStore from '../../stores/user'
 import MessagesAction from '../../actions/messages' // 追記
 import UserAction from '../../actions/user'
+import FriendshipAction from '../../actions/friendship'
 
 class UserList extends React.Component {
 
@@ -52,6 +53,11 @@ class UserList extends React.Component {
     }
     getFriendsFromStore() {
       return UserStore.getFriends()
+    }
+
+    destroyFriend(toUserId){
+      // debugger
+      FriendshipAction.destroyFriend(toUserId)
     }
     // getFriendsFromStore() {
     //   debugger
@@ -114,6 +120,14 @@ class UserList extends React.Component {
             </h4>
             <span className='user-list__item__message'>
               { message.lastMessage.contents }
+            </span>
+            <span className='user-list__item__deletefriend'>
+              <div
+                key={ message.user.id }
+                onClick={ this.destroyFriend.bind(this, message.user.id) }
+              >
+                削除
+              </div>
             </span>
           </div>
         </li>

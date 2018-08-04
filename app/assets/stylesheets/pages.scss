@@ -187,3 +187,9 @@ header a{
 .search_user_list_result:hover{
   background-color: rgba(0,0,0,0.1);
 }
+
+.user-list__item__deletefriend div{
+  color:red;
+  float:right;
+  font-size:10px;
+}
