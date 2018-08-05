@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import _ from 'lodash' // 追記
+// import _ from 'lodash' // 追記
 // import Utils from '../../utils'
 import MessagesStore from '../../stores/messages' // 追記
 import UserStore from '../../stores/user'
@@ -21,19 +21,19 @@ class UserList extends React.Component {
   }
 
     getStateFromStore() {
-      const allMessages = MessagesStore.getAllChats()
-
-      const messageList = []
-      _.each(allMessages, (message) => {
-        const messagesLength = message.messages.length
-        messageList.push({
-          lastMessage: message.messages[messagesLength - 1],
-          user: message.user,
-        })
-      })
+      // const allMessages = MessagesStore.getAllChats()
+      //
+      // const messageList = []
+      // _.each(allMessages, (message) => {
+      //   const messagesLength = message.messages.length
+      //   messageList.push({
+      //     lastMessage: message.messages[messagesLength - 1],
+      //     user: message.user,
+      //   })
+      // })
       return {
         openChatID: MessagesStore.getOpenChatUserID(),
-        messageList: messageList,
+        // messageList: messageList,
       }
     }
     componentWillMount() {
@@ -61,36 +61,47 @@ class UserList extends React.Component {
       return UserStore.getFriends()
     }
     render() {
-      const friends = this.getFriendsFromStore()
+      // const friends = this.getFriendsFromStore()
+      const friends = [
+        {
+          id: 1,
+          name: 'ひつじせんにん',
+          image_name: '/hitsujisennin.jpg',
+        },
+        {
+          id: 2,
+          name: 'にんじゃわんこ',
+          image_name: '/ninjawanko.png',
+        },
+      ]
       console.log(friends)
-      const messages = this.state.messageList.map((message, index) => {
+      debugger
+      const userList = friends.map((friend) => {
         const itemClasses = classNames({
           'user-list__item': true,
           'clear': true,
           // 'user-list__item--new': isNewMessage,
-          'user-list__item--active': this.state.openChatID === message.user.id,
+          // ここ変えてるよ！
+          'user-list__item--active': this.state.openChatID === friend.id,
         })
 
         return (
         <li
-          onClick={ this.changeOpenChat.bind(this, message.user.id) } // 追記
+          onClick={ this.changeOpenChat.bind(this, friend.id) } // 追記
           className={ itemClasses }
-          key={ message.user.id }
+          key={ friend.id }
         >
           <div className='user-list__item__picture'>
-            <img src={ message.user.image_name } />
+            <img src={ friend.image_name } />
           </div>
           <div className='user-list__item__details'>
             <h4 className='user-list__item__name'>
-              { message.user.name }
+              { friend.name }
             </h4>
-            <span className='user-list__item__message'>
-              { message.lastMessage.contents }
-            </span>
             <span className='user-list__item__deletefriend'>
               <div
-                key={ message.user.id }
-                onClick={ this.destroyFriend.bind(this, message.user.id) }
+                key={ friend.id }
+                onClick={ this.destroyFriend.bind(this, friend.id) }
               >
                 削除
               </div>
@@ -98,12 +109,12 @@ class UserList extends React.Component {
           </div>
         </li>
       )
-      }, this)
+      })
 
       return (
       <div className='user-list'>
         <ul className='user-list__list'>
-          { messages }
+          { userList }
         </ul>
       </div>
     )

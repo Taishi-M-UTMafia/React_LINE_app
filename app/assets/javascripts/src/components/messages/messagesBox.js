@@ -18,19 +18,19 @@ class MessagesBox extends React.Component {
   getStateFromStore() {
     return MessagesStore.getChatByUserID(MessagesStore.getOpenChatUserID())
   }
-  componentWillMount() {
-    MessagesStore.onChange(this.onStoreChange.bind(this))
-    UserStore.onChange(this.onStoreChange.bind(this))
-  }
-  componentWillUnmount() {
-    MessagesStore.offChange(this.onStoreChange.bind(this))
-  }
+  // componentWillMount() {
+  //   MessagesStore.onChange(this.onStoreChange.bind(this))
+  //   UserStore.onChange(this.onStoreChange.bind(this))
+  // }
+  // componentWillUnmount() {
+  //   MessagesStore.offChange(this.onStoreChange.bind(this))
+  // }
   onStoreChange() {
     this.setState(this.getStateFromStore())
   }
   getCurrentUserFromStore() {
     UserAction.getCurrentUser()
-    return UserStore.getUser()
+    return UserStore.getCurrentUser()
   }
 
   render() {
@@ -40,6 +40,7 @@ class MessagesBox extends React.Component {
 
     // const messagesLength = this.state.messages.length
     const currentUserID = currentUser.id
+    // debugger
 
     const messages = this.state.messages.map((message, index) => {
       const messageClasses = classNames({

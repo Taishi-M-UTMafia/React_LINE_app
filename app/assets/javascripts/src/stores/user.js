@@ -9,12 +9,12 @@ class HogeStore extends BaseStore {
   removeChangeListener(callback) {
     this.off('change', callback)
   }
-  getUser() {
-    if (!this.get('userJson')) this.setUser([])
-    return this.get('userJson')
+  getCurrentUser() {
+    if (!this.get('currentuserJson')) this.setCurrentUser([])
+    return this.get('currentuserJson')
   }
-  setUser(array) {
-    this.set('userJson', array)
+  setCurrentUser(array) {
+    this.set('currentuserJson', array)
   }
   getSearchUser() {
     if (!this.get('searchJson')) this.setSearchUser([])
@@ -47,7 +47,7 @@ UserStore.dispatchToken = Dispatcher.register(payload => {
       UserStore.emitChange()
       break
     case ActionTypes.GET_CURRENT_USER:
-      UserStore.setUser(action.json)
+      UserStore.setCurrentUser(action.json)
       UserStore.emitChange()
       break
   }
