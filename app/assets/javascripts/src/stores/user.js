@@ -29,7 +29,6 @@ class HogeStore extends BaseStore {
     return this.get('friendsJson')
   }
   setFriends(array) {
-    // debugger
     this.set('friendsJson', array)
   }
 }
@@ -40,7 +39,7 @@ UserStore.dispatchToken = Dispatcher.register(payload => {
 
   switch (action.type) {
     case ActionTypes.GET_FRIENDS:
-      UserStore.setUser(action.json)
+      UserStore.setFriends(action.json)
       UserStore.emitChange()
       break
     case ActionTypes.GET_SEARCH_USER:

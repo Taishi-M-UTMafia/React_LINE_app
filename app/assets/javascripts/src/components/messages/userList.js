@@ -51,53 +51,19 @@ class UserList extends React.Component {
     changeOpenChat(id) {
       MessagesAction.changeOpenChat(id) // 追記
     }
-    getFriendsFromStore() {
-      return UserStore.getFriends()
-    }
 
-    destroyFriend(toUserId){
+    destroyFriend(toUserId) {
       // debugger
       FriendshipAction.destroyFriend(toUserId)
     }
-    // getFriendsFromStore() {
-    //   debugger
-    //   UserAction.getFriends()
-    //   debugger
-    //   return UserStore.getFriends()
-    // }
+    getFriendsFromStore() {
+      UserAction.getFriends()
+      return UserStore.getFriends()
+    }
     render() {
       const friends = this.getFriendsFromStore()
       console.log(friends)
-      // this.state.messageList.sort((a, b) => {
-      //   if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
-      //     return -1
-      //   }
-      //   if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
-      //     return 1
-      //   }
-      //   return 0
-      // })
-
       const messages = this.state.messageList.map((message, index) => {
-        // const date = Utils.getNiceDate(message.lastMessage.timestamp)
-
-        // var statusIcon
-        // if (message.lastMessage.from !== message.user.id) {
-        //   statusIcon = (
-        //   <i className='fa fa-reply user-list__item__icon' />
-        // )
-        // }
-        // if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-        //   statusIcon = (
-        //   <i className='fa fa-circle user-list__item__icon' />
-        // )
-        // }
-
-        // var isNewMessage = false
-        // if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-        //   isNewMessage = message.lastMessage.from !== UserStore.user.id
-        // }
-
         const itemClasses = classNames({
           'user-list__item': true,
           'clear': true,
