@@ -9,7 +9,6 @@ class App extends React.Component {
         <div className='app'>
           <Header />
           <UserList />
-          <MessagesBox />
         </div>
       )
   }

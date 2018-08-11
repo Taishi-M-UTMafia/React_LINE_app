@@ -34,9 +34,7 @@ export default class SearchForm extends React.Component {
   }
 
   render() {
-    // debugger
     const users = this.getStateFromStore()
-    // debugger
     // mapを使うときはそれぞれを区別するためにkeyを付与
     const usersLists = users.map((user) => {
       return (

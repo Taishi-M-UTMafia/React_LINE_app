@@ -1,59 +1,15 @@
 // stores/messages.js
 import Dispatcher from '../dispatcher'
 import BaseStore from '../base/store'
-import UserStore from '../stores/user' // 追記
+// import UserStore from '../stores/user' // 追記
 import {ActionTypes} from '../constants/app'
 
-const messages = {
-  // status,lastAccess,timestamp,read削除,profilePic⇨image_name変更
-  2: {
-    user: {
-      image_name: '/hitsujisennin.png',
-      id: 2,
-      name: 'ひつじせんにん',
-    },
-    messages: [
-      {
-        contents: 'React覚えたよ！',
-        from: 1,
-      },
-      {
-        contents: 'よくやったぞ、サニー。その調子じゃ。',
-        from: 2,
-      },
-    ],
-  },
-  3: {
-    user: {
-      image_name: '/samuraineko.jpg',
-      name: 'さむらいねこ',
-      id: 3,
-    },
-    messages: [
-      {
-        contents: 'にゃーん',
-        from: 3,
-      },
-    ],
-  },
-  4: {
-    user: {
-      name: 'にんじゃわんこ',
-      id: 4,
-      image_name: '/ninjawanko.png',
-    },
-    messages: [
-      {
-        contents: 'わん！',
-        from: 4,
-      },
-    ],
-  },
-}
 
-var openChatID = parseInt(Object.keys(messages)[0], 10)
+var openChatID =1
+// var openChatID = parseInt(Object.keys(messages)[0], 10)
 
 class ChatStore extends BaseStore {
+
   addChangeListener(callback) {
     this.on('change', callback)
   }
@@ -65,9 +21,6 @@ class ChatStore extends BaseStore {
   }
   getChatByUserID(id) {
     return messages[id]
-  }
-  getAllChats() {
-    return messages
   }
   getMessage() {
     if (!this.get('messageJson')) this.setMessage([])
@@ -89,15 +42,15 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
       MessagesStore.emitChange()
       break
 
-    case ActionTypes.SEND_MESSAGE:
-      const userID = action.userID
-      messages[userID].messages.push({
-        contents: action.message,
-        timestamp: action.timestamp,
-        from: UserStore.user.id,
-      })
-      MessagesStore.emitChange()
-      break
+  //   case ActionTypes.SEND_MESSAGE:
+  //     const userID = action.userID
+  //     messages[userID].messages.push({
+  //       contents: action.message,
+  //       timestamp: action.timestamp,
+  //       from: UserStore.user.id,
+  //     })
+  //     MessagesStore.emitChange()
+  //     break
 
     case ActionTypes.GET_MESSAGE: // 上のapi通信で使用したgetHogeアクションを受け取っているとします。
       MessagesStore.setMessage(action.json) // getHogeで取得したjsonをセッターを利用して保存しています。

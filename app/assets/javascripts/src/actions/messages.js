@@ -20,7 +20,7 @@ export default {
     })
   },
   // messagesテーブルからJSONデータを取得
-  getMessage() {
+  getMessagesByUserId() {
     // Promiseでインスタンスを作る
     return new Promise((resolve, reject) => {
       // こっからsuperAgent
