@@ -4,8 +4,7 @@ import BaseStore from '../base/store'
 // import UserStore from '../stores/user' // 追記
 import {ActionTypes} from '../constants/app'
 
-
-var openChatID =1
+var openChatID = 1
 // var openChatID = parseInt(Object.keys(messages)[0], 10)
 
 class ChatStore extends BaseStore {
@@ -19,8 +18,9 @@ class ChatStore extends BaseStore {
   getOpenChatUserID() {
     return openChatID
   }
+  // あとはここ変えるやで
   getChatByUserID(id) {
-    return messages[id]
+
   }
   getMessage() {
     if (!this.get('messageJson')) this.setMessage([])

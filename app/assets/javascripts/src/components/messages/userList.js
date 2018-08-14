@@ -52,14 +52,14 @@ class UserList extends React.Component {
         image_name: '/hitsujisennin.jpg',
       },
       {
-        id: 2,
+        id: 4,
         name: 'にんじゃわんこ',
         image_name: '/ninjawanko.png',
       },
     ]
-    console.log(friends)
     // debugger
     const userList = friends.map((friend) => {
+      console.log('openChatID:'+this.state.openChatID+',friendId:'+friend.id)
       const itemClasses = classNames({
         'user-list__item': true,
         'clear': true,

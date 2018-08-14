@@ -10,22 +10,23 @@ export default {
       userID: newUserID,
     })
   },
-  // 追記
-  sendMessage(userID, message) {
-    Dispatcher.handleViewAction({
-      type: ActionTypes.SEND_MESSAGE, // 変更箇所
-      userID: userID,
-      message: message,
-      timestamp: +new Date(),
-    })
-  },
+  // // 追記
+  // sendMessage(userID, message) {
+  //   Dispatcher.handleViewAction({
+  //     type: ActionTypes.SEND_MESSAGE, // 変更箇所
+  //     userID: userID,
+  //     message: message,
+  //     timestamp: +new Date(),
+  //   })
+  // },
   // messagesテーブルからJSONデータを取得
-  getMessagesByUserId() {
+  getMessagesByUserId(openChatID) {
     // Promiseでインスタンスを作る
     return new Promise((resolve, reject) => {
       // こっからsuperAgent
       request
       .get('/api/messages') // 取得したいjsonがあるURLを指定する
+      .query({openChatID: openChatID})
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
           const json = JSON.parse(res.text)
@@ -42,24 +43,14 @@ export default {
     })
   },
   // postの場合
-  postMessage(MessageId) {
+  postMessage(openChatId, value) {
+    // debugger
     return new Promise((resolve, reject) => {
       request
       .post(`${APIEndpoints.MESSAGE}`) // OK
       .set('X-CSRF-Token', CSRFToken()) // OK
-      .send({message_id: MessageId}) // これによりサーバ側に送りたいデータを送ることが出来ます。
-      .end((error, res) => {
-        if (!error && res.status === 200) {
-          const json = JSON.parse(res.text)
-          Dispatcher.handleServerAction({
-            type: ActionTypes.POST_MESSAGE,
-            MessageId,
-            json,
-          })
-        } else {
-          reject(res)
-        }
-      })
+      .send({open_chat_id: openChatId, value: value}) // これによりサーバ側に送りたいデータを送ることが出来ます。
+      .end()
     })
   },
 }
