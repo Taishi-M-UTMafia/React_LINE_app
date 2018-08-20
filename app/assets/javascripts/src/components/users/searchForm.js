@@ -40,6 +40,7 @@ export default class SearchForm extends React.Component {
   }
 
   createFriend(toUserId) {
+    location.href = 'http://localhost:3000'
     FriendshipAction.createFriend(toUserId)
   }
   render() {

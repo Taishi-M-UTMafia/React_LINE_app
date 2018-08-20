@@ -43,9 +43,13 @@ class UserList extends React.Component {
     MessagesStore.onChange(this.onStoreChange.bind(this))
   }
   destroyFriend(toUserId) {
-    FriendshipAction.destroyFriend(toUserId)
-    UserAction.getFriends()
+     if (window.confirm('本当に友達解除しますか？')==true){
+      FriendshipAction.destroyFriend(toUserId)
+      UserAction.getFriends()
+    }
   }
+
+
 
   render() {
     // const friend = this.getFriendsFromStore()

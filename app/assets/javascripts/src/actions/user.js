@@ -13,7 +13,7 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
           const json = JSON.parse(res.text)
-          debugger
+          // debugger
           // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_SEARCH_USER,
