@@ -48,25 +48,8 @@ class UserList extends React.Component {
       UserAction.getFriends()
     }
   }
-
-
-
-  render() {
-    // const friend = this.getFriendsFromStore()
-    // const friends = [
-    //   {
-    //     id: 2,
-    //     name: 'ひつじせんにん',
-    //     image_name: '/hitsujisennin.jpg',
-    //   },
-    //   {
-    //     id: 4,
-    //     name: 'にんじゃわんこ',
-    //     image_name: '/ninjawanko.png',
-    //   },
-    // ]
+  render(){
     const userList = this.state.friends.map((friend) => {
-      console.log('openChatID:' + this.state.openChatID + ',friendId:' + friend.id)
       const itemClasses = classNames({
         'user-list__item': true,
         'clear': true,

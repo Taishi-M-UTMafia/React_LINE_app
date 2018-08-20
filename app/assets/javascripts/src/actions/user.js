@@ -5,7 +5,6 @@ import { ActionTypes } from '../constants/app'
 export default {
   // 検索フォームのvalueを取得
   getSearchUser(value) {
-    // debugger
     return new Promise((resolve, reject) => {
       request
       .get('/api/users/search') // 取得したいjsonがあるURLを指定する
@@ -13,7 +12,6 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
           const json = JSON.parse(res.text)
-          // debugger
           // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_SEARCH_USER,
@@ -55,7 +53,7 @@ export default {
       .get('/api/users/find_friends') // 取得したいjsonがあるURLを指定する
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
-          const json = JSON.parse(res.text)
+          const json = JSON.parse(res.text).reverse()
           // debugger
           // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({

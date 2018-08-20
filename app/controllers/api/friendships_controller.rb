@@ -3,7 +3,11 @@ module Api
 
     def create
       @friendship_id=set_friendship_id(params[:to_user_id])
-      Friendship.create(from_user_id: current_user.id,to_user_id:params[:to_user_id],friendship_id: @friendship_id)
+      if !(params[:to_user_id]== current_user.id)
+        Friendship.create(from_user_id: current_user.id,to_user_id:params[:to_user_id],friendship_id: @friendship_id)
+      else
+        flash[:alert]="a"
+      end
       render json: @friendship_id
     end
 

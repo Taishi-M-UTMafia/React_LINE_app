@@ -37,8 +37,8 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
       MessagesStore.emitChange()
       break
 
-    case ActionTypes.GET_MESSAGE: // 上のapi通信で使用したgetHogeアクションを受け取っているとします。
-      MessagesStore.setMessage(action.json) // getHogeで取得したjsonをセッターを利用して保存しています。
+    case ActionTypes.GET_MESSAGE:
+      MessagesStore.setMessage(action.json)
       MessagesStore.emitChange()
       break
 

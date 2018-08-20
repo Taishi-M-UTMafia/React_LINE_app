@@ -7,7 +7,8 @@ module Api
     end
 
     def search
-      @users=User.where('name LIKE ?', "%#{params[:value]}%")
+      # whereで二つ以上の条件を指定したいときはメソッドチェーンを使う
+      @users=User.where('name LIKE ?', "%#{params[:value]}%").where.not(id: current_user.id)
       render json: @users
     end
 
