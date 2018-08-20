@@ -16,8 +16,8 @@ class ReplyBox extends React.Component {
   }
   handleKeyDown(e) {
     if (e.keyCode === 13) {
-      debugger
       MessagesAction.postMessage(MessagesStore.getOpenChatUserID(), this.state.value)
+      MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
       this.setState({
         value: '',
       })
@@ -43,7 +43,8 @@ class ReplyBox extends React.Component {
         <span className='reply-box__tip'>
           Press <span className='reply-box__tip__button'>Enter</span> to send
         </span>
-      </div>
+
+     </div>
     )
   }
 }

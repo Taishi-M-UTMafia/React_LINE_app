@@ -13,30 +13,38 @@ export default class SearchForm extends React.Component {
   get initialState() {
     return {
       value: '',
+      users: [],
     }
   }
 
+  componentWillUnmount() {
+    UserStore.offChange(this.onStoreChange.bind(this))
+  }
+
+  onStoreChange() {
+    this.setState(this.getStateFromStore())
+  }
+
   getStateFromStore() {
-    // debugger
-    UserAction.getSearchUser(this.state.value)
-    return UserStore.getSearchUser()
+    return{
+      users: UserStore.getSearchUser()
+    }
   }
 
   updateValue(e) {
     this.setState({
       value: e.target.value,
     })
+    UserAction.getSearchUser(e.target.value)
+    UserStore.onChange(this.onStoreChange.bind(this))
   }
 
   createFriend(toUserId) {
-    // debugger
     FriendshipAction.createFriend(toUserId)
   }
-
   render() {
-    const users = this.getStateFromStore()
-    // mapを使うときはそれぞれを区別するためにkeyを付与
-    const usersLists = users.map((user) => {
+    console.log(this.state.users)
+    const userLists = this.state.users.map((user) => {
       return (
         <div
           className='search_user_list_result'
@@ -57,7 +65,7 @@ export default class SearchForm extends React.Component {
             onChange={ this.updateValue.bind(this) }
           />
           <div className='search_user_list'>
-            { usersLists }
+            { userLists }
           </div>
         </div>
       )

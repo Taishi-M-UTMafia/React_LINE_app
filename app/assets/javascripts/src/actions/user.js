@@ -1,6 +1,5 @@
 import request from 'superagent'
 import Dispatcher from '../dispatcher'
-// import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
 import { ActionTypes } from '../constants/app'
 
 export default {
@@ -14,7 +13,7 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
           const json = JSON.parse(res.text)
-          // debugger
+          debugger
           // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_SEARCH_USER,
@@ -57,6 +56,7 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
           const json = JSON.parse(res.text)
+          // debugger
           // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_FRIENDS,

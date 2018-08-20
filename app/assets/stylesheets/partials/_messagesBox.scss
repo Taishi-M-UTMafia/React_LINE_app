@@ -11,6 +11,7 @@
   }
 
   &__item {
+    padding: 5px;
     &__contents {
       background: rgba(0, 0, 0, 0.08);
       float: left;
@@ -25,7 +26,6 @@
         float: right;
         background: #218CB9;
         color: #fff;
-        margin-bottom: 10px;
       }
     }
 

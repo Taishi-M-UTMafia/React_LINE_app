@@ -10,17 +10,8 @@ export default {
       userID: newUserID,
     })
   },
-  // // 追記
-  // sendMessage(userID, message) {
-  //   Dispatcher.handleViewAction({
-  //     type: ActionTypes.SEND_MESSAGE, // 変更箇所
-  //     userID: userID,
-  //     message: message,
-  //     timestamp: +new Date(),
-  //   })
-  // },
-  // messagesテーブルからJSONデータを取得
   getMessagesByUserId(openChatID) {
+    // debugger
     // Promiseでインスタンスを作る
     return new Promise((resolve, reject) => {
       // こっからsuperAgent
@@ -30,6 +21,7 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
           const json = JSON.parse(res.text)
+          // debugger
           // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_MESSAGE,

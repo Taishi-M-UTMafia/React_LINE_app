@@ -17,14 +17,15 @@ class HogeStore extends BaseStore {
     this.set('currentuserJson', array)
   }
   getSearchUser() {
+    debugger
     if (!this.get('searchJson')) this.setSearchUser([])
     return this.get('searchJson')
   }
   setSearchUser(array) {
-    // debugger
     this.set('searchJson', array)
   }
   getFriends() {
+    // debugger
     if (!this.get('friendsJson')) this.setFriends([])
     return this.get('friendsJson')
   }
