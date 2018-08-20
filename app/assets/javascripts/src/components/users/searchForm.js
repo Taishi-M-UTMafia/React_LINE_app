@@ -45,7 +45,8 @@ export default class SearchForm extends React.Component {
   }
   render() {
     console.log(this.state.users)
-    const userLists = this.state.users.map((user) => {
+    const userLists = this.state.users.slice(0,5).map((user,i) => {
+      console.log(i)
       return (
         <div
           className='search_user_list_result'
