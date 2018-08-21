@@ -16,6 +16,7 @@ class UserList extends React.Component {
 
   get initialState() {
     return {
+      // openChatID: UserStore.getFriends().id,
       openChatID: MessagesStore.getOpenChatUserID(),
       friends:[],
     }
@@ -49,8 +50,10 @@ class UserList extends React.Component {
     }
   }
   render(){
-    // console.log(this.state.friends)
-    // console.log(UserStore.getFriends())
+    // console.log(UserStore.getFriends()[0])
+    debugger
+    // console.log(this.state.friends[0].id)
+    // console.log(friend.id)
     // console.log(this.state.openChatID)
     const userList = this.state.friends.map((friend) => {
       const itemClasses = classNames({

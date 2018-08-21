@@ -44,6 +44,7 @@ export default class SearchForm extends React.Component {
     FriendshipAction.createFriend(toUserId)
   }
   render() {
+    console.log(UserStore.getFriends()[0])
     const userLists = this.state.users.slice(0,5).map((user) => {
       return (
         <div
