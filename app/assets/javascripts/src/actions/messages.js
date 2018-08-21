@@ -49,4 +49,20 @@ export default {
       })
     })
   },
+  postImage(openChatId, image) {
+    // debugger
+    return new Promise((resolve, reject) => {
+      request
+      .post(`${APIEndpoints.MESSAGE}/post_image`) // OK
+      .set('X-CSRF-Token', CSRFToken()) // OK
+      .attach()
+      // .send({open_chat_id: openChatId, image: image})
+      .end()
+      // .end((error,res) => {
+      //   if (error || !(res.status === 200)){
+      //     alert('写真が送信できませんでした')
+      //   }
+      // })
+    })
+  },
 }

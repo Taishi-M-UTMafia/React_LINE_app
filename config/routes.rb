@@ -8,7 +8,11 @@ Rails.application.routes.draw do
 
   root to: 'messages#index'
   namespace :api, { format: 'json' } do
-    resources :messages
+    resources :messages, :only => [:index, :create, :post_image] do
+      collection do
+        post :post_image
+      end
+    end
     # collectionでapiにルート追加できる
     resources :users ,:only => [:index, :search, :find_current_user, :find_friends] do
       collection do

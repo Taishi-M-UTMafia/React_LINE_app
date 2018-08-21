@@ -15,6 +15,10 @@ module Api
       end
     end
 
+    def post_image
+      
+    end
+
     def set_friendship_id(to_user_id)
       @to_user_id=to_user_id
       @current_user_id=current_user.id.to_i
