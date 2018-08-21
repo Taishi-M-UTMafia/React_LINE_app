@@ -1,11 +1,11 @@
-// stores/messages.js
 import Dispatcher from '../dispatcher'
 import BaseStore from '../base/store'
-// import UserStore from '../stores/user' // 追記
+import UserStore from '../stores/user' // 追記
 import {ActionTypes} from '../constants/app'
 
-var openChatID = 0
-// var openChatID = parseInt(Object.keys(messages)[0], 10)
+// parseIntは文字列を整数に変換。第二引数の10は十進法であることを示す。Objet.keysは引数オブジェクトのプロパティ(キー)を取得。
+var openChatID= parseInt(Object.keys(UserStore.getFriends())[0], 10)
+// var openChatID= Object.keys(UserStore.getFriends())[0]
 
 class ChatStore extends BaseStore {
 
@@ -16,6 +16,9 @@ class ChatStore extends BaseStore {
     this.off('change', callback)
   }
   getOpenChatUserID() {
+    // console.log(Object.keys(UserStore.getFriends())[0])
+    // console.log(UserStore.getFriends())
+    console.log(openChatID)
     return openChatID
   }
   getMessagesByUserId(id) {
@@ -46,6 +49,5 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
 
   return true
 })
-
-window.MessagesStore = MessagesStore
+// window.MessagesStore = MessagesStore
 export default MessagesStore

@@ -40,11 +40,12 @@ export default class SearchForm extends React.Component {
   }
 
   createFriend(toUserId) {
-    location.href = 'http://localhost:3000'
+    // location.href = 'http://localhost:3000'
     FriendshipAction.createFriend(toUserId)
   }
   render() {
-    const userLists = this.state.users.slice(0,5).map((user,i) => {
+    // 治してね
+    const userLists = this.state.users.map((user) => {
       return (
         <div
           className='search_user_list_result'

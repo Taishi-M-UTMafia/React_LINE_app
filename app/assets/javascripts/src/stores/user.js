@@ -25,7 +25,6 @@ class HogeStore extends BaseStore {
     this.set('searchJson', array)
   }
   getFriends() {
-    // debugger
     if (!this.get('friendsJson')) this.setFriends([])
     return this.get('friendsJson')
   }
