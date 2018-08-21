@@ -1,10 +1,6 @@
 module Api
   class UsersController < ApplicationController
-
-    def index
-      @users = User.all
-      render json: @users
-    end
+    before_action :set_current_user, { only:[:find_current_user, :find_friends] }
 
     def search
       # whereで二つ以上の条件を指定したいときはメソッドチェーンを使う
@@ -13,12 +9,10 @@ module Api
     end
 
     def find_current_user
-      @user=User.find_by(id: current_user.id)
       render json: @user
     end
 
     def find_friends
-      @user=User.find_by(id: current_user.id)
       @friends=@user.friends
       render json: @friends
     end

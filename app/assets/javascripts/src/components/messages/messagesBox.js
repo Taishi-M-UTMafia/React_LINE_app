@@ -15,7 +15,7 @@ class MessagesBox extends React.Component {
     return {
       messages: [],
       currentUser:[],
-      openChatId: 1,
+      // openChatId: 1,
     }
   }
   componentWillMount() {
@@ -33,7 +33,7 @@ class MessagesBox extends React.Component {
     return{
       messages: MessagesStore.getMessagesByUserId(MessagesStore.getOpenChatUserID()),
       currentUser: UserStore.getCurrentUser(),
-      openChatId: MessagesStore.getOpenChatUserID()
+      // openChatId: MessagesStore.getOpenChatUserID()
     }
   }
   render() {

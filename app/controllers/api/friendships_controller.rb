@@ -16,17 +16,6 @@ module Api
         render json: {}
       end
     end
-
-    def set_friendship_id(to_user_id)
-      @to_user_id=to_user_id
-      @to_user_id_to_i=@to_user_id.to_i
-      @current_user_id=current_user.id.to_i
-      if current_user.id > @to_user_id
-        "#{@to_user_id_to_i}-#{@current_user_id}"
-      else
-        "#{@current_user_id}-#{@to_user_id_to_i}"
-      end
-    end
   end
 
 end

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       end
     end
     # collectionでapiにルート追加できる
-    resources :users ,:only => [:index, :search, :find_current_user, :find_friends] do
+    resources :users ,:only => [:search, :find_current_user, :find_friends] do
       collection do
         get :search
         get :find_current_user
