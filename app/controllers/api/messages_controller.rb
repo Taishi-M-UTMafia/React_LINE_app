@@ -3,17 +3,16 @@ module Api
 
     def index
       @friendship_id=set_friendship_id(params[:openChatID])
-      # @friendship_id="7-9"
       @messages = Message.where(friendship_id: @friendship_id)
       render json: @messages
     end
 
     def create
       @friendship_id=set_friendship_id(params[:open_chat_id])
-      if !(params[:open_chat_id]==0)
-        Message.create(content: params[:value], from_user_id: current_user.id, friendship_id: @friendship_id)
+      @message=Message.new(content: params[:value], from_user_id: current_user.id, friendship_id: @friendship_id)
+      if  @message.save
+        render json: @message
       end
-      render json: @friendship_id
     end
 
     def set_friendship_id(to_user_id)

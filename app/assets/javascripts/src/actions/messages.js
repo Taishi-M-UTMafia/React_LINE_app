@@ -42,8 +42,10 @@ export default {
       .post(`${APIEndpoints.MESSAGE}`) // OK
       .set('X-CSRF-Token', CSRFToken()) // OK
       .send({open_chat_id: openChatId, value: value}) // これによりサーバ側に送りたいデータを送ることが出来ます。
-      .end((error) => {
-          alert('メッセージが長すぎるか何も入力されていないため、送信できませんでした')
+      .end((error,res) => {
+        if (error || !(res.status === 200)){
+          alert('メッセージが空欄または長すぎるため、送信できませんでした')
+        }
       })
     })
   },

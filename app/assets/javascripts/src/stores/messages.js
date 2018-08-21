@@ -46,7 +46,6 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
 
   switch (action.type) {
     case ActionTypes.UPDATE_OPEN_CHAT_ID:
-    // 変えたよ
       openChatID = payload.action.userID
       MessagesStore.emitChange()
       break
@@ -55,10 +54,8 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
       MessagesStore.setMessage(action.json)
       MessagesStore.emitChange()
       break
-
   }
-
   return true
 })
-// window.MessagesStore = MessagesStore
+
 export default MessagesStore

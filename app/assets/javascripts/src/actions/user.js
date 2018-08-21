@@ -10,7 +10,7 @@ export default {
       .get('/api/users/search') // 取得したいjsonがあるURLを指定する
       .query({value: value})
       .end((error, res) => {
-        if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
+        if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
           // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({

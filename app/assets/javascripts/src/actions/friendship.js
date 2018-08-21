@@ -8,8 +8,10 @@ export default {
       .post(`${APIEndpoints.FRIENDSHIP}`)
       .set('X-CSRF-Token', CSRFToken())
       .send({to_user_id: toUserId})
-      .end((error) => {
+      .end((error,res) => {
+        if (error || !(res.status === 200)){
           alert('その人は既に友達です')
+        }
       })
     })
   },
@@ -19,8 +21,10 @@ export default {
       .post(`${APIEndpoints.FRIENDSHIP}/destroy_friend`)
       .set('X-CSRF-Token', CSRFToken())
       .send({to_user_id: toUserId})
-      .end((error) => {
+      .end((error,res) => {
+        if (error || !(res.status === 200)){
           alert('友達解除に失敗しました')
+        }
       })
     })
   },

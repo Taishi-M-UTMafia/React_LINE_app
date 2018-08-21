@@ -51,7 +51,7 @@ class UserList extends React.Component {
   }
   render(){
     // console.log(UserStore.getFriends()[0])
-    debugger
+    // debugger
     // console.log(this.state.friends[0].id)
     // console.log(friend.id)
     // console.log(this.state.openChatID)

@@ -6,6 +6,10 @@
     <%= devise_error_messages! %>
 
     <div class="field">
+       Choose your new profile pic...</br><%= f.file_field :image %>
+    </div>
+
+    <div class="field">
       <%= f.email_field :email, autofocus: true, autocomplete: "email", :placeholder => "Enter your new email..." %>
     </div>
 
@@ -15,10 +19,6 @@
 
     <div class="field">
       <%= f.text_field :name,  autocomplete: "off", :placeholder => "Enter your new name..."%>
-    </div>
-
-    <div class="field">
-       <%= f.file_field :image %>
     </div>
 
     <div class="field">
