@@ -13,7 +13,7 @@ module Api
       @friendship_id=set_friendship_id(params[:to_user_id])
       @friendship=Friendship.find_by(friendship_id: @friendship_id)
       if @friendship.destroy
-        render json: @friendship_id
+        render json: {}
       end
     end
 

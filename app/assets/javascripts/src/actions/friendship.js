@@ -23,6 +23,7 @@ export default {
       .send({to_user_id: toUserId})
       .end((error,res) => {
         if (error || !(res.status === 200)){
+          debugger
           alert('友達解除に失敗しました')
         }
       })
