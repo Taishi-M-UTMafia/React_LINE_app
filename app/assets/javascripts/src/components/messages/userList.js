@@ -47,6 +47,7 @@ class UserList extends React.Component {
     if (window.confirm('本当に友達解除しますか？') === true) {
       FriendshipAction.destroyFriend(toUserId)
       UserAction.getFriends()
+      .then(() => MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID()))
     }
   }
   render() {

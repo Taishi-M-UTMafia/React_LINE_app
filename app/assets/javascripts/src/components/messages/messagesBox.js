@@ -20,7 +20,8 @@ class MessagesBox extends React.Component {
   componentWillMount() {
     UserAction.getCurrentUser()
     UserStore.onChange(this.onStoreChange.bind(this))
-    MessageAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
+    UserAction.getFriends()
+    .then(() => MessageAction.getMessagesByUserId(MessagesStore.getOpenChatUserID()))
     MessagesStore.onChange(this.onStoreChange.bind(this))
   }
   componentWillUnmount() {

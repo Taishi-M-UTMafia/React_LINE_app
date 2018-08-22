@@ -23,7 +23,7 @@ class ReplyBox extends React.Component {
       })
     }
   }
-  updateImage(e) {
+  postImage(e) {
     MessagesAction.postImage(MessagesStore.getOpenChatUserID(), e.target.files)
     // console.log(e.target.files)
     MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
@@ -50,7 +50,7 @@ class ReplyBox extends React.Component {
         <input
           type='file'
           ref='file'
-          onChange={ this.updateImage.bind(this) }
+          onChange={ this.postImage.bind(this) }
         />
      </div>
     )
