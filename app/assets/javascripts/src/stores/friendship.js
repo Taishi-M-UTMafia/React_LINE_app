@@ -19,10 +19,4 @@ class HogeStore extends BaseStore {
 }
 const FriendshipStore = new HogeStore()
 
-FriendshipStore.dispatchToken = Dispatcher.register(payload => {
-  const action = payload.action
-  }
-  return true
-})
-
 export default FriendshipStore

@@ -1,4 +1,3 @@
-// actions/messages.js
 import request from 'superagent'
 import Dispatcher from '../dispatcher'
 import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
@@ -6,25 +5,21 @@ import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
 export default {
   changeOpenChat(newUserID) {
     Dispatcher.handleViewAction({
-      type: ActionTypes.UPDATE_OPEN_CHAT_ID, // 変更箇所
+      type: ActionTypes.UPDATE_OPEN_CHAT_ID,
       userID: newUserID,
     })
   },
   getMessagesByUserId(openChatID) {
-    // Promiseでインスタンスを作る
     return new Promise((resolve, reject) => {
-      // こっからsuperAgent
       request
-      .get('/api/messages') // 取得したいjsonがあるURLを指定する
+      .get('/api/messages')
       .query({openChatID: openChatID})
       .end((error, res) => {
-        if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
+        if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
-          // debugger
-          // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_MESSAGE,
-            json, // json: jsonと同じ。keyとvalueが一致する場合、このように省略出来ます。
+            json,
           })
           resolve(json)
         } else {
@@ -33,14 +28,12 @@ export default {
       })
     })
   },
-  // postの場合
   postMessage(openChatId, value) {
-    // debugger
-    return new Promise((resolve, reject) => {
+    return new Promise(() => {
       request
-      .post(`${APIEndpoints.MESSAGE}`) // OK
-      .set('X-CSRF-Token', CSRFToken()) // OK
-      .send({open_chat_id: openChatId, value: value}) // これによりサーバ側に送りたいデータを送ることが出来ます。
+      .post(`${APIEndpoints.MESSAGE}`)
+      .set('X-CSRF-Token', CSRFToken())
+      .send({open_chat_id: openChatId, value: value})
       .end((error, res) => {
         if (error || !(res.status === 200)) {
           alert('メッセージが空欄または長すぎるため、送信できませんでした')
@@ -52,9 +45,9 @@ export default {
     // debugger
     return new Promise((resolve, reject) => {
       request
-      .post(`${APIEndpoints.MESSAGE}/post_image`) // OK
-      .set('X-CSRF-Token', CSRFToken()) // OK
-      .attach()
+      .post(`${APIEndpoints.MESSAGE}/post_image`)
+      .set('X-CSRF-Token', CSRFToken())
+      .attach('image', )
       // .send({open_chat_id: openChatId, image: image})
       .end()
       // .end((error,res) => {

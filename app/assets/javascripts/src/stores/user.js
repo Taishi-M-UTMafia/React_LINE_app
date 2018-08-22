@@ -17,7 +17,6 @@ class HogeStore extends BaseStore {
     this.set('currentuserJson', array)
   }
   getSearchUser() {
-    // debugger
     if (!this.get('searchJson')) this.setSearchUser([])
     return this.get('searchJson')
   }

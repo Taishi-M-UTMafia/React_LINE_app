@@ -8,7 +8,6 @@ class ReplyBox extends React.Component {
     super(props)
     this.state = this.initialState
   }
-
   get initialState() {
     return {
       value: '',
@@ -25,7 +24,8 @@ class ReplyBox extends React.Component {
   }
   postImage(e) {
     MessagesAction.postImage(MessagesStore.getOpenChatUserID(), e.target.files)
-    // console.log(e.target.files)
+    console.log(e.target.files)
+    debugger
     MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
   }
   updateValue(e) {
@@ -33,7 +33,6 @@ class ReplyBox extends React.Component {
       value: e.target.value,
     })
   }
-
   render() {
     return (
       <div className='reply-box'>
@@ -49,7 +48,7 @@ class ReplyBox extends React.Component {
         </span>
         <input
           type='file'
-          ref='file'
+          name='image'
           onChange={ this.postImage.bind(this) }
         />
      </div>

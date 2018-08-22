@@ -20,6 +20,7 @@ class MessagesBox extends React.Component {
   componentWillMount() {
     UserAction.getCurrentUser()
     UserStore.onChange(this.onStoreChange.bind(this))
+    // OpenChatIDに初期値を入れるためのgetFriends()
     UserAction.getFriends()
     .then(() => MessageAction.getMessagesByUserId(MessagesStore.getOpenChatUserID()))
     MessagesStore.onChange(this.onStoreChange.bind(this))

@@ -3,7 +3,7 @@ import { APIEndpoints, CSRFToken } from '../constants/app'
 
 export default {
   createFriend(toUserId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(() => {
       request
       .post(`${APIEndpoints.FRIENDSHIP}`)
       .set('X-CSRF-Token', CSRFToken())
@@ -16,7 +16,7 @@ export default {
     })
   },
   destroyFriend(toUserId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(() => {
       request
       .post(`${APIEndpoints.FRIENDSHIP}/destroy_friend`)
       .set('X-CSRF-Token', CSRFToken())
