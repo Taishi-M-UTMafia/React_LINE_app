@@ -11,7 +11,6 @@ export default {
     })
   },
   getMessagesByUserId(openChatID) {
-    // debugger
     // Promiseでインスタンスを作る
     return new Promise((resolve, reject) => {
       // こっからsuperAgent
@@ -42,8 +41,8 @@ export default {
       .post(`${APIEndpoints.MESSAGE}`) // OK
       .set('X-CSRF-Token', CSRFToken()) // OK
       .send({open_chat_id: openChatId, value: value}) // これによりサーバ側に送りたいデータを送ることが出来ます。
-      .end((error,res) => {
-        if (error || !(res.status === 200)){
+      .end((error, res) => {
+        if (error || !(res.status === 200)) {
           alert('メッセージが空欄または長すぎるため、送信できませんでした')
         }
       })

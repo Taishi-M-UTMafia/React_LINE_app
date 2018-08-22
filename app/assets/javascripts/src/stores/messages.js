@@ -4,32 +4,17 @@ import UserStore from '../stores/user' // 追記
 import UserAction from '../actions/user'
 import {ActionTypes} from '../constants/app'
 
-// parseIntは文字列を整数に変換。第二引数の10は十進法であることを示す。Objet.keysは引数オブジェクトのプロパティ(キー)を取得。
-var openChatID= 1
-
 class ChatStore extends BaseStore {
-  // stateにopenChatIdを入れてみるテスト
-  // constructor(props) {
-  //   super(props)
-  //   UserAction.getFriends()
-  //   this.state = this.initialState
-  // }
-  //
-  // get initialState() {
-  //   return {
-  //     openChatID: UserStore.getFriends()[0].id
-  //   }
-  // }
 
-  addChangeListener(callback) {
-    this.on('change', callback)
-  }
-  removeChangeListener(callback) {
-    this.off('change', callback)
-  }
   getOpenChatUserID() {
-    // console.log(this.state.openChatID)
-    return openChatID
+    // ここに初期値のOpenChatID設定
+    if (!this.get('openChatID')) {
+      this.setOpenChatUserID()
+    }
+    return this.get('openChatID')
+  }
+  setOpenChatUserID(id) {
+    this.set('openChatID', id)
   }
   getMessagesByUserId(id) {
     if (!this.get('messageJson')) this.setMessage([])
@@ -41,12 +26,20 @@ class ChatStore extends BaseStore {
 }
 const MessagesStore = new ChatStore()
 
+// dispatcherがActionを受け取ったらTypeをキーに関数を呼び出す。Storeはここでイベントが発行されるのを監視。
 MessagesStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action
 
   switch (action.type) {
+    case ActionTypes.FIRST_OPENCHATID:
+      MessagesStore.setOpenChatUserID(action.firstID)
+      MessagesStore.emitChange()
+      break
+
     case ActionTypes.UPDATE_OPEN_CHAT_ID:
-      openChatID = payload.action.userID
+      // openChatID = action.userID
+      MessagesStore.setOpenChatUserID(action.userID)
+      // Store変更イベントの実装
       MessagesStore.emitChange()
       break
 
@@ -54,6 +47,7 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
       MessagesStore.setMessage(action.json)
       MessagesStore.emitChange()
       break
+
   }
   return true
 })

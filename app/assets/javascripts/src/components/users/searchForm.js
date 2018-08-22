@@ -17,6 +17,10 @@ export default class SearchForm extends React.Component {
     }
   }
 
+  componentWillMount() {
+    UserStore.onChange(this.onStoreChange.bind(this))
+  }
+
   componentWillUnmount() {
     UserStore.offChange(this.onStoreChange.bind(this))
   }
@@ -26,8 +30,8 @@ export default class SearchForm extends React.Component {
   }
 
   getStateFromStore() {
-    return{
-      users: UserStore.getSearchUser()
+    return {
+      users: UserStore.getSearchUser(),
     }
   }
 
@@ -36,7 +40,6 @@ export default class SearchForm extends React.Component {
       value: e.target.value,
     })
     UserAction.getSearchUser(e.target.value)
-    UserStore.onChange(this.onStoreChange.bind(this))
   }
 
   createFriend(toUserId) {
@@ -45,7 +48,7 @@ export default class SearchForm extends React.Component {
   }
   render() {
     // console.log(UserStore.getFriends()[0])
-    const userLists = this.state.users.slice(0,5).map((user) => {
+    const userLists = this.state.users.slice(0, 5).map((user) => {
       return (
         <div
           className='search_user_list_result'

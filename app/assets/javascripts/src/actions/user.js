@@ -26,7 +26,9 @@ export default {
   },
   // current_userを取得
   getCurrentUser() {
+    // debugger
     return new Promise((resolve, reject) => {
+      // debugger
       request
       .get('/api/users/find_current_user')
       .end((error, res) => {
@@ -46,7 +48,6 @@ export default {
     })
   },
   getFriends() {
-    // debugger
     // Promiseでインスタンスを作る
     return new Promise((resolve, reject) => {
       request
@@ -54,12 +55,17 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
           const json = JSON.parse(res.text).reverse()
-          // debugger
           // dispatcherからサーバーのアクションを取ってくる
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_FRIENDS,
             json, // json: jsonと同じ。keyとvalueが一致する場合、このように省略出来ます。
           })
+          if (json !== []) {
+            Dispatcher.handleServerAction({
+              type: ActionTypes.FIRST_OPENCHATID,
+              firstID: json[0].id,
+            })
+          }
           resolve(json)
         } else {
           reject(res)

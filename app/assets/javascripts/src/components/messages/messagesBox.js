@@ -14,26 +14,25 @@ class MessagesBox extends React.Component {
   get initialState() {
     return {
       messages: [],
-      currentUser:[],
-      // openChatId: 1,
+      currentUser: [],
     }
   }
   componentWillMount() {
-    MessageAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
     UserAction.getCurrentUser()
+    UserStore.onChange(this.onStoreChange.bind(this))
+    MessageAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
     MessagesStore.onChange(this.onStoreChange.bind(this))
   }
   componentWillUnmount() {
     UserStore.offChange(this.onStoreChange.bind(this))
   }
-  onStoreChange(){
+  onStoreChange() {
     this.setState(this.getStateFromStore())
   }
-  getStateFromStore(){
-    return{
-      messages: MessagesStore.getMessagesByUserId(MessagesStore.getOpenChatUserID()),
+  getStateFromStore() {
+    return {
       currentUser: UserStore.getCurrentUser(),
-      // openChatId: MessagesStore.getOpenChatUserID()
+      messages: MessagesStore.getMessagesByUserId(MessagesStore.getOpenChatUserID()),
     }
   }
   render() {

@@ -26,7 +26,6 @@ class ReplyBox extends React.Component {
   updateImage(e) {
     MessagesAction.postImage(MessagesStore.getOpenChatUserID(), e.target.files)
     // console.log(e.target.files)
-    // debugger
     MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
   }
   updateValue(e) {
@@ -49,8 +48,8 @@ class ReplyBox extends React.Component {
           Press <span className='reply-box__tip__button'>Enter</span> to send
         </span>
         <input
-          type="file"
-          ref="file"
+          type='file'
+          ref='file'
           onChange={ this.updateImage.bind(this) }
         />
      </div>

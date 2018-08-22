@@ -5,7 +5,6 @@ import UserStore from '../../stores/user'
 import MessagesAction from '../../actions/messages'
 import UserAction from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
-import MessagesBox from './messagesBox'
 
 class UserList extends React.Component {
 
@@ -13,29 +12,30 @@ class UserList extends React.Component {
     super(props)
     this.state = this.initialState
   }
-
   get initialState() {
     return {
-      // openChatID: UserStore.getFriends().id,
       openChatID: '',
-      friends:[],
+      friends: [],
     }
   }
-
   componentWillMount() {
+    // ActionをCallする
     UserAction.getFriends()
+    // Storeの変更を監視
     UserStore.onChange(this.onStoreChange.bind(this))
   }
   componentWillUnmount() {
+    // 監視をやめる
     UserStore.offChange(this.onStoreChange.bind(this))
   }
   onStoreChange() {
+    // Storeが変更されたら呼び出され、Storeから取ってきたデータをStateにセット
     this.setState(this.getStateFromStore())
   }
   getStateFromStore() {
-    return{
+    return {
       friends: UserStore.getFriends(),
-      openChatID: UserStore.getFriends()[0].id,
+      openChatID: MessagesStore.getOpenChatUserID(UserStore.getFriends()),
     }
   }
   changeOpenChat(id) {
@@ -44,17 +44,12 @@ class UserList extends React.Component {
     MessagesStore.onChange(this.onStoreChange.bind(this))
   }
   destroyFriend(toUserId) {
-     if (window.confirm('本当に友達解除しますか？')==true){
+    if (window.confirm('本当に友達解除しますか？') === true) {
       FriendshipAction.destroyFriend(toUserId)
       UserAction.getFriends()
     }
   }
-  render(){
-    // console.log(UserStore.getFriends()[0])
-    // debugger
-    // console.log(this.state.friends[0].id)
-    // console.log(friend.id)
-    // console.log(this.state.openChatID)
+  render() {
     const userList = this.state.friends.map((friend) => {
       const itemClasses = classNames({
         'user-list__item': true,

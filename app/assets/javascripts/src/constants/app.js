@@ -19,6 +19,7 @@ export const ActionTypes = keyMirror({
   GET_CURRENT_USER: null,
   CREATE_FRIENDSHIP: null,
   DESTROY_FRIENDSHIP: null,
+  FIRST_OPENCHATID: null,
 })
 
 export function CSRFToken() {
