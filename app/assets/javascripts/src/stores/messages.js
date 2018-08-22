@@ -6,13 +6,7 @@ import {ActionTypes} from '../constants/app'
 
 class ChatStore extends BaseStore {
 
-  // getOpenChatUserID() {
-  //   // ここに初期値のOpenChatID設定
-  //   UserAction.getFriends()
-  //   UserStore.onChange(this.getOpenChatUserID2.bind(this))
-  // }
   getOpenChatUserID() {
-    // ここに初期値のOpenChatID設定
     if (!this.get('openChatID')) this.setOpenChatUserID()
     return this.get('openChatID')
   }
@@ -34,6 +28,7 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action
 
   switch (action.type) {
+    
     case ActionTypes.FIRST_OPENCHATID:
       MessagesStore.setOpenChatUserID(action.firstID)
       MessagesStore.emitChange()

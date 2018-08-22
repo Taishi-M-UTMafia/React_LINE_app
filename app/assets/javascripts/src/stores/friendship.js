@@ -21,16 +21,6 @@ const FriendshipStore = new HogeStore()
 
 FriendshipStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action
-
-  switch (action.type) {
-    case ActionTypes.CREATE_FRIENDSHIP:
-      // FriendshipStore.setFriendship(action.json)
-      // FriendshipStore.emitChange()
-      break
-    case ActionTypes.DESTROY_FRIENDSHIP:
-      // FriendshipStore.setFriendship(action.json)
-      // FriendshipStore.emitChange()
-      break
   }
   return true
 })
