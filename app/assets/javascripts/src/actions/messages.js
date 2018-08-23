@@ -3,12 +3,14 @@ import Dispatcher from '../dispatcher'
 import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
 
 export default {
+
   changeOpenChat(newUserID) {
     Dispatcher.handleViewAction({
       type: ActionTypes.UPDATE_OPEN_CHAT_ID,
       userID: newUserID,
     })
   },
+
   getMessagesByUserId(openChatID) {
     return new Promise((resolve, reject) => {
       request
@@ -28,6 +30,7 @@ export default {
       })
     })
   },
+
   postMessage(openChatId, value) {
     return new Promise(() => {
       request
@@ -41,20 +44,24 @@ export default {
       })
     })
   },
-  postImage(openChatId, image) {
-    // debugger
+
+  postImage(openChatID, image) {
     return new Promise((resolve, reject) => {
       request
       .post(`${APIEndpoints.MESSAGE}/post_image`)
       .set('X-CSRF-Token', CSRFToken())
-      .attach('image', )
-      // .send({open_chat_id: openChatId, image: image})
-      .end()
-      // .end((error,res) => {
-      //   if (error || !(res.status === 200)){
-      //     alert('写真が送信できませんでした')
-      //   }
-      // })
+      .query({ openChatID: openChatID })
+      .attach('image', image)
+      .end((error,res) => {
+        if (error || !(res.status === 200)){
+          alert('画像を送信できませんでした')
+        } else{
+          Dispatcher.handleServerAction({
+            type: ActionTypes.GET_MESSAGE,
+            json,
+          })
+        }
+      })
     })
   },
 }

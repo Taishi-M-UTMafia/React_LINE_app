@@ -3,6 +3,7 @@ import Dispatcher from '../dispatcher'
 import { ActionTypes } from '../constants/app'
 
 export default {
+
   getSearchUser(value) {
     return new Promise((resolve, reject) => {
       request
@@ -22,6 +23,7 @@ export default {
       })
     })
   },
+
   getCurrentUser() {
     return new Promise((resolve, reject) => {
       request
@@ -40,6 +42,7 @@ export default {
       })
     })
   },
+  
   getFriends() {
     return new Promise((resolve, reject) => {
       request

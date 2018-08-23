@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validates :email, {presence: true}
   validates :password, {presence: true}
   validates :name, {presence: true}
+  validates :name, {uniqueness: true}
   validates :image_name, {presence: true}
 
   # Include default devise modules. Others available are:

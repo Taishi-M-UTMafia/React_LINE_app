@@ -2,6 +2,7 @@ import request from 'superagent'
 import { APIEndpoints, CSRFToken } from '../constants/app'
 
 export default {
+
   createFriend(toUserId) {
     return new Promise(() => {
       request
@@ -15,6 +16,7 @@ export default {
       })
     })
   },
+  
   destroyFriend(toUserId) {
     return new Promise(() => {
       request

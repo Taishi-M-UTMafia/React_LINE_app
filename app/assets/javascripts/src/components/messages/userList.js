@@ -12,37 +12,44 @@ class UserList extends React.Component {
     super(props)
     this.state = this.initialState
   }
+
   get initialState() {
     return {
       openChatID: '',
       friends: [],
     }
   }
+
   componentWillMount() {
     // ActionをCallする
     UserAction.getFriends()
     // Storeの変更を監視
     UserStore.onChange(this.onStoreChange.bind(this))
   }
+
   componentWillUnmount() {
     // 監視をやめる
     UserStore.offChange(this.onStoreChange.bind(this))
   }
+
   onStoreChange() {
     // Storeが変更されたら呼び出され、Storeから取ってきたデータをStateにセット
     this.setState(this.getStateFromStore())
   }
+
   getStateFromStore() {
     return {
       friends: UserStore.getFriends(),
       openChatID: MessagesStore.getOpenChatUserID(UserStore.getFriends()),
     }
   }
+
   changeOpenChat(id) {
     MessagesAction.changeOpenChat(id)
     MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
     MessagesStore.onChange(this.onStoreChange.bind(this))
   }
+
   destroyFriend(toUserId) {
     if (window.confirm('本当に友達解除しますか？') === true) {
       FriendshipAction.destroyFriend(toUserId)
@@ -50,6 +57,7 @@ class UserList extends React.Component {
       .then(() => MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID()))
     }
   }
+
   render() {
     const userList = this.state.friends.map((friend) => {
       const itemClasses = classNames({
@@ -57,6 +65,7 @@ class UserList extends React.Component {
         'clear': true,
         'user-list__item--active': this.state.openChatID === friend.id,
       })
+
       return (
       <li
         onClick={ this.changeOpenChat.bind(this, friend.id) }
