@@ -5,4 +5,6 @@ class Friendship < ActiveRecord::Base
 
   validates :friendship_id,{presence:true}
   validates :friendship_id,{uniqueness:true}
+
+  # TODO: before_saveをつかって、friendship_idの生成を隠蔽する
 end

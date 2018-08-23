@@ -15,7 +15,8 @@ class UserList extends React.Component {
 
   get initialState() {
     return {
-      openChatID: '',
+      // TODO: 数字を期待しているのに、初期値がstringなのは微妙かな
+      openChatID: null,
       friends: [],
     }
   }
@@ -29,6 +30,7 @@ class UserList extends React.Component {
 
   componentWillUnmount() {
     // 監視をやめる
+    // TODO: このoffChangeはうまく動いていない。bindで新しい関数を生成してしまっているため。
     UserStore.offChange(this.onStoreChange.bind(this))
   }
 
@@ -40,17 +42,22 @@ class UserList extends React.Component {
   getStateFromStore() {
     return {
       friends: UserStore.getFriends(),
+      // TODO: 引数を消す
       openChatID: MessagesStore.getOpenChatUserID(UserStore.getFriends()),
     }
   }
 
   changeOpenChat(id) {
     MessagesAction.changeOpenChat(id)
+    // TODO: StoreはgetStateFromStore以外から呼び出さない
     MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
+    // TODO: componentWillMountに移す
     MessagesStore.onChange(this.onStoreChange.bind(this))
   }
 
+  // TODO: 最後のユーザーを削除した時に、メッセージが残るバグがあるので修正する
   destroyFriend(toUserId) {
+    // TODO: === trueは意味ない
     if (window.confirm('本当に友達解除しますか？') === true) {
       FriendshipAction.destroyFriend(toUserId)
       UserAction.getFriends()

@@ -13,6 +13,8 @@ class HogeStore extends BaseStore {
     if (!this.get('currentuserJson')) this.setCurrentUser([])
     return this.get('currentuserJson')
   }
+
+  // TODO: 引数はarrayじゃない
   setCurrentUser(array) {
     this.set('currentuserJson', array)
   }

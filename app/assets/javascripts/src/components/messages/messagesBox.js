@@ -16,6 +16,7 @@ class MessagesBox extends React.Component {
   get initialState() {
     return {
       messages: [],
+      // TODO: currentUserは配列じゃない
       currentUser: [],
     }
   }
@@ -30,6 +31,8 @@ class MessagesBox extends React.Component {
   }
 
   componentWillUnmount() {
+    // TODO: 動いていない
+    // TODO: MessagesStoreもoffChange
     UserStore.offChange(this.onStoreChange.bind(this))
   }
 

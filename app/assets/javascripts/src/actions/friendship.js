@@ -16,9 +16,10 @@ export default {
       })
     })
   },
-  
+
   destroyFriend(toUserId) {
     return new Promise(() => {
+      // TODO: destroyFriendはdeleteメソッドで呼ぶ
       request
       .post(`${APIEndpoints.FRIENDSHIP}/destroy_friend`)
       .set('X-CSRF-Token', CSRFToken())

@@ -17,6 +17,9 @@ class ReplyBox extends React.Component {
 
   handleKeyDown(e) {
     if (e.keyCode === 13) {
+      // TODO: Storeにアクセスしない
+      // TODO: データを取得するのがpostした後であることを保証する
+      // TODO: そもそもわざわざデータを取得しに行かないで、直接storeを更新すれば良い
       MessagesAction.postMessage(MessagesStore.getOpenChatUserID(), this.state.value)
       MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
       this.setState({
@@ -26,6 +29,7 @@ class ReplyBox extends React.Component {
   }
 
   postImage(e) {
+    // TODO: データを取得するのがpostした後であることを保証する
     MessagesAction.postImage(MessagesStore.getOpenChatUserID(), e.target.files[0])
     MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
   }

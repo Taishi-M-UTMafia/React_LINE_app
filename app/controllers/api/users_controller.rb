@@ -3,6 +3,7 @@ module Api
     before_action :set_current_user, { only:[:find_current_user, :find_friends] }
 
     def search
+      # TODO: 取得する件数をlimitする
       # whereで二つ以上の条件を指定したいときはメソッドチェーンを使う
       @users=User.where('name LIKE ?', "%#{params[:value]}%").where.not(id: current_user.id)
       render json: @users

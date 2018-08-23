@@ -6,4 +6,6 @@ class Message < ActiveRecord::Base
   validates :from_user_id, presence: true
   validates :friendship_id, presence: true
   validates :message_type, presence: true
+
+  # TODO: message_typeをenumにする
 end

@@ -2,6 +2,7 @@ module Api
   class MessagesController < ApplicationController
 
     def index
+      # TODO: Messageモデルのfriendship_idはfriendshipのidを入れるようにする
       @friendship_id=set_friendship_id(params[:openChatID])
       @messages = Message.where(friendship_id: @friendship_id)
       render json: @messages

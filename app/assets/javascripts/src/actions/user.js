@@ -42,7 +42,7 @@ export default {
       })
     })
   },
-  
+
   getFriends() {
     return new Promise((resolve, reject) => {
       request
@@ -54,6 +54,7 @@ export default {
             type: ActionTypes.GET_FRIENDS,
             json,
           })
+          // TODO: 空かどうかは json.lengh > 0 で判別
           if (json !== []) {
             Dispatcher.handleServerAction({
               type: ActionTypes.FIRST_OPENCHATID,
