@@ -7,6 +7,8 @@ class Message < ActiveRecord::Base
   validates :friendship_id, presence: true
   validates :message_type, presence: true
 
-  # TODO: message_typeをenumにする
-  # enum message_type: { draft: 0, published: 1 }
+  # REVIEW(Sunny): message_typeをenumにする。modelに格納する値を制限できる。
+  #　　　　　　　　　数字に対応させてmodeにinteger型で保存するのがベタだけどそれは今度から
+  enum message_type: { text: 'text', image: 'image' }
+
 end

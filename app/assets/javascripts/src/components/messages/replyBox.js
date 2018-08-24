@@ -19,7 +19,6 @@ class ReplyBox extends React.Component {
   }
 
   componentWillMount(){
-    UserAction.getFriends()
     MessagesStore.onChange(this.onStoreChange)
   }
 

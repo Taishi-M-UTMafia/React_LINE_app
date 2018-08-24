@@ -23,7 +23,6 @@ class UserList extends React.Component {
   }
 
   componentWillMount() {
-    UserAction.getFriends()
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
   }

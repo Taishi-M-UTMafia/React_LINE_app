@@ -6,9 +6,9 @@ class ApplicationController < ActionController::Base
     users_search_url
   end
 
-  # REVIEW(Sunny): 何もセットしてないからメソッド名が微妙→かえたけど、ゆーても微妙
-  # TODO: ApplicationControllerにこのメソッドがあるのは変か
-  def set_friendship_id(to_user_id)
+  # REVIEW(Sunny): 何もセットしてないからメソッド名が微妙→ ゆーても微妙
+  # TODO(Sunny): ApplicationControllerにこのメソッドがあるのは変か
+  def return_friendship_id(to_user_id)
     if current_user.id > to_user_id.to_i
       "#{to_user_id.to_i}-#{current_user.id}"
     else
