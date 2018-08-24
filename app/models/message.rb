@@ -8,4 +8,5 @@ class Message < ActiveRecord::Base
   validates :message_type, presence: true
 
   # TODO: message_typeをenumにする
+  # enum message_type: { draft: 0, published: 1 }
 end

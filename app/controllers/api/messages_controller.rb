@@ -13,7 +13,8 @@ module Api
       @message=Message.new(content: params[:value], from_user_id: current_user.id,
                           friendship_id: @friendship_id, message_type: "text")
       if  @message.save
-        render json: @message
+        @messages=Message.where(friendship_id: @friendship_id)
+        render json: @messages
       end
     end
 
@@ -28,7 +29,8 @@ module Api
       @message=Message.new(content: path, from_user_id: current_user.id,
                           friendship_id: @friendship_id, message_type: "image")
       if @message.save
-        render json: @message
+        @messages=Message.where(friendship_id: @friendship_id)
+        render json: @messages
       end
     end
   end

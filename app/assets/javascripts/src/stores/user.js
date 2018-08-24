@@ -14,9 +14,9 @@ class HogeStore extends BaseStore {
     return this.get('currentuserJson')
   }
 
-  // TODO: 引数はarrayじゃない
-  setCurrentUser(array) {
-    this.set('currentuserJson', array)
+  // REVIEW(Sunny): 引数はarrayじゃない
+  setCurrentUser(obj) {
+    this.set('currentuserJson', obj)
   }
   getSearchUser() {
     if (!this.get('searchJson')) this.setSearchUser([])

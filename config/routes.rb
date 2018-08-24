@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
     resources :friendships ,:only => [:create, :destroy_friend] do
       collection do
-        post :destroy_friend
+        delete :destroy_friend
       end
     end
   end

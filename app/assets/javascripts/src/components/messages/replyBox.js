@@ -1,27 +1,49 @@
 import React from 'react'
 import MessagesStore from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
+import UserAction from '../../actions/user'
 
 class ReplyBox extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = this.initialState
+    this.onStoreChange=this.onStoreChange.bind(this)
   }
 
   get initialState() {
     return {
       value: '',
+      openChatID: null,
+    }
+  }
+
+  componentWillMount(){
+    UserAction.getFriends()
+    MessagesStore.onChange(this.onStoreChange)
+  }
+
+  // REVIEW(Sunny): 動いていない
+  componentWillUnmount(){
+    MessagesStore.offChange(this.onStoreChange)
+  }
+
+  onStoreChange() {
+    this.setState(this.getStateFromStore())
+  }
+
+  getStateFromStore(){
+    return{
+      openChatID: MessagesStore.getOpenChatUserID(),
     }
   }
 
   handleKeyDown(e) {
     if (e.keyCode === 13) {
-      // TODO: Storeにアクセスしない
-      // TODO: データを取得するのがpostした後であることを保証する
-      // TODO: そもそもわざわざデータを取得しに行かないで、直接storeを更新すれば良い
-      MessagesAction.postMessage(MessagesStore.getOpenChatUserID(), this.state.value)
-      MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
+      // REVIEW(Sunny): Storeにアクセスしない
+      // REVIEW(Sunny): データを取得するのがpostした後であることを保証する
+      // REVIEW(Sunny): そもそもわざわざデータを取得しに行かないで、直接storeを更新すれば良い
+      MessagesAction.postMessage(this.state.openChatID, this.state.value)
       this.setState({
         value: '',
       })
@@ -29,9 +51,9 @@ class ReplyBox extends React.Component {
   }
 
   postImage(e) {
-    // TODO: データを取得するのがpostした後であることを保証する
-    MessagesAction.postImage(MessagesStore.getOpenChatUserID(), e.target.files[0])
-    MessagesAction.getMessagesByUserId(MessagesStore.getOpenChatUserID())
+    // REVIEW(Sunny): Storeにアクセスしない
+    // REVIEW(Sunny): データを取得するのがpostした後であることを保証する
+    MessagesAction.postImage(this.state.openChatID, e.target.files[0])
   }
 
   updateValue(e) {

@@ -1,20 +1,19 @@
 module Api
   class UsersController < ApplicationController
-    before_action :set_current_user, { only:[:find_current_user, :find_friends] }
 
     def search
-      # TODO: 取得する件数をlimitする
-      # whereで二つ以上の条件を指定したいときはメソッドチェーンを使う
-      @users=User.where('name LIKE ?', "%#{params[:value]}%").where.not(id: current_user.id)
+      # REVIEW(Sunny): 取得する件数をlimitする
+      # whereで二つ以上の条件を指定したいときはメソッドチェーンを使う,取得件数は多くなりすぎないように(重くなるの回避)
+      @users=User.limit(5).where('name LIKE ?', "%#{params[:value]}%").where.not(id: current_user.id)
       render json: @users
     end
 
     def find_current_user
-      render json: @user
+      render json: current_user
     end
 
     def find_friends
-      @friends=@user.friends
+      @friends=current_user.friends
       render json: @friends
     end
   end

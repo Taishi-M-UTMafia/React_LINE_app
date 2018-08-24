@@ -8,6 +8,7 @@ export default class SearchForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.initialState
+    this.onStoreChange=this.onStoreChange.bind(this)
   }
 
   get initialState() {
@@ -18,11 +19,12 @@ export default class SearchForm extends React.Component {
   }
 
   componentWillMount() {
-    UserStore.onChange(this.onStoreChange.bind(this))
+    UserStore.onChange(this.onStoreChange)
   }
 
+  // REVIEW(Sunny):動いてない
   componentWillUnmount() {
-    UserStore.offChange(this.onStoreChange.bind(this))
+    UserStore.offChange(this.onStoreChange)
   }
 
   onStoreChange() {

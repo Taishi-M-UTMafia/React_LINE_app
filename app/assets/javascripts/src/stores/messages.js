@@ -7,8 +7,6 @@ import {ActionTypes} from '../constants/app'
 class ChatStore extends BaseStore {
 
   getOpenChatUserID() {
-    // TODO: 意味ない
-    if (!this.get('openChatID')) this.setOpenChatUserID()
     return this.get('openChatID')
   }
   setOpenChatUserID(id) {

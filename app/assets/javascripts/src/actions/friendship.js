@@ -19,9 +19,9 @@ export default {
 
   destroyFriend(toUserId) {
     return new Promise(() => {
-      // TODO: destroyFriendはdeleteメソッドで呼ぶ
+      // REVIEW(Sunny): destroyFriendはdeleteメソッドで呼ぶ
       request
-      .post(`${APIEndpoints.FRIENDSHIP}/destroy_friend`)
+      .del(`${APIEndpoints.FRIENDSHIP}/destroy_friend`)
       .set('X-CSRF-Token', CSRFToken())
       .send({to_user_id: toUserId})
       .end((error, res) => {

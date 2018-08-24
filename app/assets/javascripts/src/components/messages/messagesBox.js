@@ -11,29 +11,31 @@ class MessagesBox extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.initialState
+    this.onStoreChange=this.onStoreChange.bind(this)
   }
 
   get initialState() {
     return {
+      openChatID: null,
       messages: [],
-      // TODO: currentUserは配列じゃない
-      currentUser: [],
+      // REVIEW(Sunny): currentUserは配列じゃない
+      currentUser: {},
     }
   }
 
   componentWillMount() {
     UserAction.getCurrentUser()
-    UserStore.onChange(this.onStoreChange.bind(this))
-    // OpenChatIDに初期値を入れるためのgetFriends()
-    UserAction.getFriends()
-    .then(() => MessageAction.getMessagesByUserId(MessagesStore.getOpenChatUserID()))
-    MessagesStore.onChange(this.onStoreChange.bind(this))
+    UserAction.getFriends() // OpenChatIDに初期値を入れるためのgetFriends()
+    .then(() => MessageAction.getMessagesByUserId(this.state.openChatID))
+    UserStore.onChange(this.onStoreChange)
+    MessagesStore.onChange(this.onStoreChange)
   }
 
   componentWillUnmount() {
-    // TODO: 動いていない
-    // TODO: MessagesStoreもoffChange
-    UserStore.offChange(this.onStoreChange.bind(this))
+    // REVIEW(sunny): 動いていない
+    // REVIEW(Sunny): MessagesStoreもoffChange
+    UserStore.offChange(this.onStoreChange)
+    MessagesStore.offChange(this.onStoreChange)
   }
 
   onStoreChange() {
@@ -42,8 +44,10 @@ class MessagesBox extends React.Component {
 
   getStateFromStore() {
     return {
+      // REVIEW(Sunny): Storeにアクセスしない →これどこがだめなのか不明、再度聞く
+      openChatID: MessagesStore.getOpenChatUserID(),
       currentUser: UserStore.getCurrentUser(),
-      messages: MessagesStore.getMessagesByUserId(MessagesStore.getOpenChatUserID()),
+      messages: MessagesStore.getMessagesByUserId(this.state.openChatID),
     }
   }
 
