@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   root 'messages#index'
   get 'users/search' => 'users#search'
-  devise_for :users
 
-  devise_scope :user do
-    get '/users/sign_out' => 'devise/sessions#destroy'
-  end
+  devise_for :users, :controllers => {
+   :registrations => 'users/registrations',
+   :sessions      => 'users/sessions'
+  }
 
   namespace :api, { format: 'json' } do
     resources :messages, :only => [:index, :create, :post_image] do
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         get :find_current_user
       end
     end
-    
+
     resources :friendships ,:only => [:create, :destroy_friendship] do
       collection do
         delete :destroy_friendship
