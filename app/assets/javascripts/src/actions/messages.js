@@ -16,8 +16,9 @@ export default {
     return new Promise((resolve, reject) => {
       request
       .get('/api/messages')
-      .query({openChatID: openChatID})
+      .query({open_chat_id: openChatID})
       .end((error, res) => {
+        debugger
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
@@ -57,7 +58,7 @@ export default {
       request
       .post(`${APIEndpoints.MESSAGE}/post_image`)
       .set('X-CSRF-Token', CSRFToken())
-      .query({ openChatID: openChatID })
+      .query({ open_chat_id: openChatID })
       .attach('image', image)
       .end((error,res) => {
         if (error || !(res.status === 200)){

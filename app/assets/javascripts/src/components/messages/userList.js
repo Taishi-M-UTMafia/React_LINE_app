@@ -11,14 +11,14 @@ class UserList extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.initialState
-    this.onStoreChange=this.onStoreChange.bind(this)
+    this.onStoreChange = this.onStoreChange.bind(this)
   }
 
   get initialState() {
     return {
       // REVIEW(Sunny): 数字を期待しているのに、初期値がstringなのは微妙かな
       openChatID: null,
-      friends: [],
+      friends   : [],
     }
   }
 
@@ -29,8 +29,6 @@ class UserList extends React.Component {
 
   componentWillUnmount() {
     // REVIEW(Sunny): このoffChangeはうまく動いていない。bindで新しい関数を生成してしまっているため。
-    // ComponentWillMount()で生成されたthis.onStoreChange.bind(this)のlistenを解除しなければいけない
-    // なので、コンストラクタでonStoreChangeのbindされた新しい関数を定義して使いまわす→あってるか確認の仕方がわからない
     UserStore.offChange(this.onStoreChange)
     MessagesStore.offChange(this.onStoreChange)
   }
@@ -54,10 +52,10 @@ class UserList extends React.Component {
   }
 
   // REVIEW(Sunny): 最後のユーザーを削除した時に、メッセージが残るバグがあるので修正する
-  destroyFriend(toUserId) {
+  destroyFriendship(toUserId) {
     // REVIEW(Sunny): === trueは意味ない
     if (window.confirm('本当に友達解除しますか？')) {
-      FriendshipAction.destroyFriend(toUserId)
+      FriendshipAction.destroyFriendship(toUserId)
       UserAction.getFriends()
       .then(() => MessagesAction.getMessagesByUserId(this.state.openChatID))
     }
@@ -66,40 +64,36 @@ class UserList extends React.Component {
   render() {
     const userList = this.state.friends.map((friend) => {
       const itemClasses = classNames({
-        'user-list__item': true,
-        'clear': true,
+        'user-list__item'        : true,
+        'clear'                  : true,
         'user-list__item--active': this.state.openChatID === friend.id,
       })
 
       return (
-      <li
-        onClick={ this.changeOpenChat.bind(this, friend.id) }
-        className={ itemClasses }
-        key={ friend.id }
-      >
-        <div className='user-list__item__picture'>
-          <img src={ friend.image_name } />
-        </div>
-        <div className='user-list__item__details'>
-          <h4 className='user-list__item__name'>
-            { friend.name }
-          </h4>
-          <span className='user-list__item__deletefriend'>
-            <div
-              key={ friend.id }
-              onClick={ this.destroyFriend.bind(this, friend.id) }
-            >
-              削除
-            </div>
-          </span>
-        </div>
-      </li>
-    )
+        <li
+          onClick   = { this.changeOpenChat.bind(this, friend.id) }
+          className = { itemClasses }
+          key       = { friend.id }
+        >
+          <div className = 'user-list__item__picture'><img src = { friend.image_name }/></div>
+          <div className = 'user-list__item__details'>
+            <h4   className = 'user-list__item__name'>{ friend.name }</h4>
+            <span className = 'user-list__item__deletefriend'>
+              <div
+                key     = { friend.id }
+                onClick = { this.destroyFriendship.bind(this, friend.id) }
+              >
+                削除
+              </div>
+            </span>
+          </div>
+        </li>
+      )
     })
 
     return (
-    <div className='user-list'>
-      <ul className='user-list__list'>
+    <div className = 'user-list'>
+      <ul className = 'user-list__list'>
         { userList }
       </ul>
     </div>

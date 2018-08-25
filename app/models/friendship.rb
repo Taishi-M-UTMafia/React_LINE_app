@@ -16,7 +16,7 @@ class Friendship < ActiveRecord::Base
   #     self.friendship_id = "#{current_user.id}-#{to_user_id.to_i}"
   #   end
   # end
-  # def return_friendship_id(to_user_id)
+  # def riendship_id(to_user_id)
   #   if current_user.id > to_user_id.to_i
   #     self.friendship_id = "#{to_user_id.to_i}-#{current_user.id}"
   #   else
@@ -24,7 +24,7 @@ class Friendship < ActiveRecord::Base
   #   end
   # end
 
-  def messages
+  def all_messages
     Message.where(friendship_id: self.id)
   end
 

@@ -21,9 +21,9 @@ Rails.application.routes.draw do
         get :find_friends
       end
     end
-    resources :friendships ,:only => [:create, :destroy_friend] do
+    resources :friendships ,:only => [:create, :destroy_friendship] do
       collection do
-        delete :destroy_friend
+        delete :destroy_friendship
       end
     end
   end

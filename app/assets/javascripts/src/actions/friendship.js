@@ -7,9 +7,9 @@ export default {
     return new Promise(() => {
       request
       .post(`${APIEndpoints.FRIENDSHIP}`)
-      .set('X-CSRF-Token', CSRFToken())
+      .set ('X-CSRF-Token', CSRFToken())
       .send({to_user_id: toUserId})
-      .end((error, res) => {
+      .end ((error, res) => {
         if (error || !(res.status === 200)) {
           alert('その人は既に友達です')
         }
@@ -17,11 +17,11 @@ export default {
     })
   },
 
-  destroyFriend(toUserId) {
+  destroyFriendship(toUserId) {
     return new Promise(() => {
       // REVIEW(Sunny): destroyFriendはdeleteメソッドで呼ぶ
       request
-      .del(`${APIEndpoints.FRIENDSHIP}/destroy_friend`)
+      .del(`${APIEndpoints.FRIENDSHIP}/destroy_friendship`)
       .set('X-CSRF-Token', CSRFToken())
       .send({to_user_id: toUserId})
       .end((error, res) => {
