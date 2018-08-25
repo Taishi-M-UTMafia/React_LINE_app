@@ -1,17 +1,15 @@
-import React from 'react'
-// import Header from './header'
-import UserList from './userList'
+import React       from 'react'
+import UserList    from './userList'
 import MessagesBox from './messagesBox'
 
 class App extends React.Component {
   render() {
-    // userLisとmessageBox復活させてね
     return (
-        <div className='app'>
-          <UserList />
-          <MessagesBox />
-        </div>
-      )
+      <div className = 'app'>
+        <UserList />
+        <MessagesBox />
+      </div>
+    )
   }
 }
 

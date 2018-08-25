@@ -1,14 +1,13 @@
 import React from 'react'
-// import SearchUser from './searchUser'
 import UserAction from '../../actions/user'
-import UserStore from '../../stores/user'
+import UserStore  from '../../stores/user'
 import FriendshipAction from '../../actions/friendship'
 
 export default class SearchForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.initialState
-    this.onStoreChange=this.onStoreChange.bind(this)
+    this.onStoreChange = this.onStoreChange.bind(this)
   }
 
   get initialState() {
@@ -48,32 +47,28 @@ export default class SearchForm extends React.Component {
     location.href = 'http://localhost:3000'
     FriendshipAction.createFriend(toUserId)
   }
+  
   render() {
-    // console.log(UserStore.getFriends()[0])
     const userLists = this.state.users.slice(0, 5).map((user) => {
       return (
         <div
-          className='search_user_list_result'
-          onClick= { this.createFriend.bind(this, user.id) }
-          key={ user.id }
-        >
-          { user.name }
-        </div>
+          key       = { user.id }
+          className = 'search_user_list_result'
+          onClick   = { this.createFriend.bind(this, user.id) }
+        >{ user.name }</div>
       )
     })
     return (
-        <div className='searchform-wrapper'>
-          <input
-            className='searchform'
-            type='text'
-            placeholder="Set your friend's name..."
-            value={ this.state.value }
-            onChange={ this.updateValue.bind(this) }
-          />
-          <div className='search_user_list'>
-            { userLists }
-          </div>
-        </div>
-      )
+      <div className = 'searchform-wrapper'>
+        <input
+          type        = 'text'
+          className   = 'searchform'
+          placeholder = "Set your friend's name..."
+          value       = { this.state.value }
+          onChange    = { this.updateValue.bind(this) }
+        />
+        <div className = 'search_user_list'>{ userLists }</div>
+      </div>
+    )
   }
 }

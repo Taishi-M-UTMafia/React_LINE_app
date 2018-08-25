@@ -7,7 +7,6 @@ import UserAction       from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
 
 class UserList extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = this.initialState
@@ -82,9 +81,7 @@ class UserList extends React.Component {
               <div
                 key     = { friend.id }
                 onClick = { this.destroyFriendship.bind(this, friend.id) }
-              >
-                削除
-              </div>
+              >削除</div>
             </span>
           </div>
         </li>

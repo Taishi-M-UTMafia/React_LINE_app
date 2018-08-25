@@ -3,10 +3,9 @@ import Dispatcher from '../dispatcher'
 import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
 
 export default {
-
   changeOpenChat(newUserID) {
       Dispatcher.handleViewAction({
-        type: ActionTypes.UPDATE_OPEN_CHAT_ID,
+        type  : ActionTypes.UPDATE_OPEN_CHAT_ID,
         userID: newUserID,
       })
       this.getMessagesByUserId(newUserID)
@@ -16,9 +15,8 @@ export default {
     return new Promise((resolve, reject) => {
       request
       .get('/api/messages')
-      .query({open_chat_id: openChatID})
+      .query({ open_chat_id: openChatID })
       .end((error, res) => {
-        debugger
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
@@ -38,7 +36,7 @@ export default {
       request
       .post(`${APIEndpoints.MESSAGE}`)
       .set('X-CSRF-Token', CSRFToken())
-      .send({open_chat_id: openChatId, value: value})
+      .send({ open_chat_id: openChatId, value: value })
       .end((error, res) => {
         if (error || !(res.status === 200)) {
           alert('メッセージが空欄または長すぎるため、送信できませんでした')

@@ -1,14 +1,13 @@
-import request from 'superagent'
-import Dispatcher from '../dispatcher'
+import request         from 'superagent'
+import Dispatcher      from '../dispatcher'
 import { ActionTypes } from '../constants/app'
 
 export default {
-
   getSearchUser(value) {
     return new Promise((resolve, reject) => {
       request
       .get('/api/users/search')
-      .query({value: value})
+      .query({ value: value })
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
@@ -57,12 +56,12 @@ export default {
           // REVIEW(Sunny): 空かどうかは json.lengh > 0 で判別
           if (json .length > 0) {
             Dispatcher.handleServerAction({
-              type: ActionTypes.FIRST_OPENCHATID,
+              type   : ActionTypes.FIRST_OPENCHATID,
               firstID: json[0].id,
             })
           } else {
             Dispatcher.handleServerAction({
-              type: ActionTypes.FIRST_OPENCHATID,
+              type   : ActionTypes.FIRST_OPENCHATID,
               firstID: null,
             })
           }

@@ -1,14 +1,8 @@
-import Dispatcher from '../dispatcher'
-import BaseStore from '../base/store'
+import Dispatcher    from '../dispatcher'
+import BaseStore     from '../base/store'
 import {ActionTypes} from '../constants/app'
 
 class UsersStore extends BaseStore {
-  addChangeListener(callback) {
-    this.on('change', callback)
-  }
-  removeChangeListener(callback) {
-    this.off('change', callback)
-  }
   getCurrentUser() {
     if (!this.get('currentuserJson')) this.setCurrentUser([])
     return this.get('currentuserJson')
@@ -33,6 +27,7 @@ class UsersStore extends BaseStore {
     this.set('friendsJson', array)
   }
 }
+
 const UserStore = new UsersStore()
 
 UserStore.dispatchToken = Dispatcher.register(payload => {
@@ -43,10 +38,12 @@ UserStore.dispatchToken = Dispatcher.register(payload => {
       UserStore.setFriends(action.json)
       UserStore.emitChange()
       break
+
     case ActionTypes.GET_SEARCH_USER:
       UserStore.setSearchUser(action.json)
       UserStore.emitChange()
       break
+
     case ActionTypes.GET_CURRENT_USER:
       UserStore.setCurrentUser(action.json)
       UserStore.emitChange()
