@@ -2,7 +2,7 @@ import Dispatcher from '../dispatcher'
 import BaseStore from '../base/store'
 import {ActionTypes} from '../constants/app'
 
-class HogeStore extends BaseStore {
+class FriendStore extends BaseStore {
   addChangeListener(callback) {
     this.on('change', callback)
   }
@@ -17,6 +17,6 @@ class HogeStore extends BaseStore {
     this.set('friendshipJson', array)
   }
 }
-const FriendshipStore = new HogeStore()
+const FriendshipStore = new FriendStore()
 
 export default FriendshipStore

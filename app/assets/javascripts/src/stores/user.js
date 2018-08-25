@@ -2,7 +2,7 @@ import Dispatcher from '../dispatcher'
 import BaseStore from '../base/store'
 import {ActionTypes} from '../constants/app'
 
-class HogeStore extends BaseStore {
+class UsersStore extends BaseStore {
   addChangeListener(callback) {
     this.on('change', callback)
   }
@@ -33,7 +33,7 @@ class HogeStore extends BaseStore {
     this.set('friendsJson', array)
   }
 }
-const UserStore = new HogeStore()
+const UserStore = new UsersStore()
 
 UserStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action

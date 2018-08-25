@@ -8,5 +8,4 @@ class Friendship < ActiveRecord::Base
   def all_messages
     Message.where(friendship_id: self.id)
   end
-
 end
