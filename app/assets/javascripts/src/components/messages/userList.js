@@ -1,9 +1,9 @@
-import React from 'react'
-import classNames from 'classnames'
-import MessagesStore from '../../stores/messages'
-import UserStore from '../../stores/user'
-import MessagesAction from '../../actions/messages'
-import UserAction from '../../actions/user'
+import React            from 'react'
+import classNames       from 'classnames'
+import MessagesStore    from '../../stores/messages'
+import MessagesAction   from '../../actions/messages'
+import UserStore        from '../../stores/user'
+import UserAction       from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
 
 class UserList extends React.Component {
@@ -39,7 +39,7 @@ class UserList extends React.Component {
 
   getStateFromStore() {
     return {
-      friends: UserStore.getFriends(),
+      friends   : UserStore.getFriends(),
       // REVIEW(Sunny): 引数を消す
       openChatID: MessagesStore.getOpenChatUserID(),
     }
@@ -51,7 +51,7 @@ class UserList extends React.Component {
     // REVIEW(Sunny): onChangeはcomponentWillMountに移す
   }
 
-  // REVIEW(Sunny): 最後のユーザーを削除した時に、メッセージが残るバグがあるので修正する
+  // TODO(Sunny): 最後のユーザーを削除した時に、メッセージが残るバグがあるので修正する
   destroyFriendship(toUserId) {
     // REVIEW(Sunny): === trueは意味ない
     if (window.confirm('本当に友達解除しますか？')) {
@@ -71,9 +71,9 @@ class UserList extends React.Component {
 
       return (
         <li
+          key       = { friend.id }
           onClick   = { this.changeOpenChat.bind(this, friend.id) }
           className = { itemClasses }
-          key       = { friend.id }
         >
           <div className = 'user-list__item__picture'><img src = { friend.image_name }/></div>
           <div className = 'user-list__item__details'>
@@ -92,11 +92,11 @@ class UserList extends React.Component {
     })
 
     return (
-    <div className = 'user-list'>
-      <ul className = 'user-list__list'>
-        { userList }
-      </ul>
-    </div>
+      <div className = 'user-list'>
+        <ul className = 'user-list__list'>
+          { userList }
+        </ul>
+      </div>
     )
   }
 }
