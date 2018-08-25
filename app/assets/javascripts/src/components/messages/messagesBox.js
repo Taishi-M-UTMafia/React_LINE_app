@@ -7,7 +7,6 @@ import UserStore     from '../../stores/user'
 import UserAction    from '../../actions/user'
 
 class MessagesBox extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = this.initialState
