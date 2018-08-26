@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   # TODO(Sunny): 何もセットしてないからメソッド名が微妙
   # TODO(Sunny): ApplicationControllerにこのメソッドがあるのは変か
-  def friendship_id(to_user_id)
+  def chat_room_id(to_user_id)
     if current_user.id > to_user_id.to_i
       "#{to_user_id.to_i}-#{current_user.id}"
     else
@@ -19,12 +19,12 @@ class ApplicationController < ActionController::Base
     private
       def sign_in_required
           redirect_to new_user_session_url unless user_signed_in?
-          flash[:notice]="You have to log in" unless user_signed_in?
+          flash[:notice] = "You have to log in" unless user_signed_in?
       end
 
     protected
       def configure_permitted_parameters
-        devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+        devise_parameter_sanitizer.permit(:sign_up,        keys: [:name])
         devise_parameter_sanitizer.permit(:account_update, keys: [:name])
       end
 end

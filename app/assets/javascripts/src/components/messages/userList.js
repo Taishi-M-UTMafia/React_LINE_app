@@ -1,13 +1,12 @@
-import React from 'react'
-import classNames from 'classnames'
-import MessagesStore from '../../stores/messages'
-import UserStore from '../../stores/user'
-import MessagesAction from '../../actions/messages'
-import UserAction from '../../actions/user'
+import React            from 'react'
+import classNames       from 'classnames'
+import MessagesStore    from '../../stores/messages'
+import MessagesAction   from '../../actions/messages'
+import UserStore        from '../../stores/user'
+import UserAction       from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
 
 class UserList extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = this.initialState
@@ -39,7 +38,7 @@ class UserList extends React.Component {
 
   getStateFromStore() {
     return {
-      friends: UserStore.getFriends(),
+      friends   : UserStore.getFriends(),
       // REVIEW(Sunny): 引数を消す
       openChatID: MessagesStore.getOpenChatUserID(),
     }
@@ -71,9 +70,9 @@ class UserList extends React.Component {
 
       return (
         <li
+          key       = { friend.id }
           onClick   = { this.changeOpenChat.bind(this, friend.id) }
           className = { itemClasses }
-          key       = { friend.id }
         >
           <div className = 'user-list__item__picture'><img src = { friend.image_name }/></div>
           <div className = 'user-list__item__details'>
@@ -82,9 +81,7 @@ class UserList extends React.Component {
               <div
                 key     = { friend.id }
                 onClick = { this.destroyFriendship.bind(this, friend.id) }
-              >
-                削除
-              </div>
+              >削除</div>
             </span>
           </div>
         </li>
@@ -92,11 +89,11 @@ class UserList extends React.Component {
     })
 
     return (
-    <div className = 'user-list'>
-      <ul className = 'user-list__list'>
-        { userList }
-      </ul>
-    </div>
+      <div className = 'user-list'>
+        <ul className = 'user-list__list'>
+          { userList }
+        </ul>
+      </div>
     )
   }
 }

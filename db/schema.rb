@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180825034530) do
+=======
+ActiveRecord::Schema.define(version: 20180826080534) do
+>>>>>>> modify-friendship-id
 
   create_table "friendships", force: :cascade do |t|
     t.integer  "from_user_id"
     t.integer  "to_user_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+<<<<<<< HEAD
+=======
+    t.string   "chat_room_id"
+>>>>>>> modify-friendship-id
   end
 
   add_index "friendships", ["from_user_id", "to_user_id"], name: "index_friendships_on_from_user_id_and_to_user_id", unique: true
@@ -26,9 +34,9 @@ ActiveRecord::Schema.define(version: 20180825034530) do
     t.string   "content"
     t.integer  "from_user_id"
     t.integer  "to_user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "friendship_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "chat_room_id"
     t.string   "message_type"
   end
 

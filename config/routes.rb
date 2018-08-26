@@ -1,31 +1,31 @@
 Rails.application.routes.draw do
+  root 'messages#index'
   get 'users/search' => 'users#search'
-  devise_for :users
 
-  devise_scope :user do
-    get '/users/sign_out' => 'devise/sessions#destroy'
-  end
+  devise_for :users, :controllers => {
+   :registrations => 'users/registrations',
+   :sessions      => 'users/sessions'
+  }
 
-  root to: 'messages#index'
   namespace :api, { format: 'json' } do
     resources :messages, :only => [:index, :create, :post_image] do
       collection do
         post :post_image
       end
     end
-    # collectionでapiにルート追加できる
-    resources :users ,:only => [:search, :find_current_user, :find_friends] do
+
+    resources :users ,:only => [:search, :find_friends, :find_current_user] do
       collection do
         get :search
-        get :find_current_user
         get :find_friends
+        get :find_current_user
       end
     end
+
     resources :friendships ,:only => [:create, :destroy_friendship] do
       collection do
         delete :destroy_friendship
       end
     end
   end
-
 end
