@@ -4,7 +4,7 @@ class Message < ActiveRecord::Base
 
   validates :content,       presence: true, length: { maximum: 50 }
   validates :from_user_id,  presence: true
-  validates :friendship_id, presence: true
+  validates :chat_room_id,  presence: true
   validates :message_type,  presence: true
 
   # TODO(Sunny): message_typeをenumにする。modelに格納する値を制限できる。
