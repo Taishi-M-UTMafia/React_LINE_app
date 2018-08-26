@@ -6,8 +6,15 @@ class ApplicationController < ActionController::Base
     users_search_url
   end
 
-  # REVIEW(Sunny): 何もセットしてないからメソッド名が微妙→そもそもFriendship_id生成しない
-  # REVIEW(Sunny): ApplicationControllerにこのメソッドがあるのは変か
+  # TODO(Sunny): 何もセットしてないからメソッド名が微妙
+  # TODO(Sunny): ApplicationControllerにこのメソッドがあるのは変か
+  def chat_room_id(to_user_id)
+    if current_user.id > to_user_id.to_i
+      "#{to_user_id.to_i}-#{current_user.id}"
+    else
+      "#{current_user.id}-#{to_user_id.to_i}"
+    end
+  end
 
     private
       def sign_in_required

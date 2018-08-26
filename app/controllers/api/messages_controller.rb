@@ -1,39 +1,40 @@
 module Api
   class MessagesController < ApplicationController
     def index
-      # REVIEW(Sunny): Messageモデルのfriendship_idはfriendshipのidを入れるようにする
-      friendship = Friendship.find_by(friendship_id: friendship_id(params[:open_chat_id]))
-      render json: friendship.all_messages
+      # TODO(Sunny): Messageモデルのfriendship_idはfriendshipのidを入れるようにする
+      #              ⇒一旦友達関係がdestroyされるとfriendshipのidも変わってしまうので無理なのでは
+      # FIXME(Sunny): 全メソッドでchat_room_idを定義する全く同じメソッドがあるのでドライにできないか？
+      chat_room_id = Friendship.find_by(chat_room_id: chat_room_id(params[:open_chat_id]))
+      render json: chat_room_id.all_messages
     end
 
     def create
-      friendship = Friendship.find_by(friendship_id: friendship_id(params[:open_chat_id]))
-      # TODO(Sunny): if createに改善(post_imageも)
-      new_message = Message.new(content: params[:value],
-                                from_user_id: current_user.id,
-                                friendship_id: friendship.id,
-                                message_type: "text")
-      if  new_message.save
-        render json: friendship.all_messages
+      chat_room_id = Friendship.find_by(chat_room_id: chat_room_id(params[:open_chat_id]))
+      new_message  = Message.new(content: params[:value],
+                                 from_user_id: current_user.id,
+                                 friendship_id: chat_room_id(params[:open_chat_id]),
+                                 message_type: "text")
+      if new_message.save
+        render json: chat_room_id.all_messages
       end
     end
 
     def post_image
-      # FIXME: セキュリティが弱い？ストロングパラメータ使う、他にもどこが弱いか調べるなど
-      # FIXME: Output_pathいる？コードをもっとスリムに、変数image,path名前改善
-      image = params[:image]
-      path = Time.now.to_i.to_s + image.original_filename
-      output_path = Rails.root.join('public/message_images', path)
-      friendship = Friendship.find_by(friendship_id: friendship_id(params[:open_chat_id]))
+      posted_image = params[:image]
+      chat_room_id = Friendship.find_by(chat_room_id: chat_room_id(params[:open_chat_id]))
+      path         = Time.now.to_i.to_s + posted_image.original_filename
+      output_path  = Rails.root.join('public/message_images', path)
+      new_image    = Message.new(content: path,
+                                 from_user_id: current_user.id,
+                                 friendship_id: chat_room_id(params[:open_chat_id]),
+                                 message_type: "image")
+
       File.open(output_path, 'w+b') do |fp|
-        fp.write  image.tempfile.read
+        fp.write  posted_image.tempfile.read
       end
-      new_image = Message.new(content: path,
-                              from_user_id: current_user.id,
-                              friendship_id: friendship.id,
-                              message_type: "image")
+
       if new_image.save
-        render json: friendship.all_messages
+        render json: chat_room_id.all_messages
       end
     end
   end
