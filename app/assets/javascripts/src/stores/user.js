@@ -1,5 +1,5 @@
-import Dispatcher    from '../dispatcher'
-import BaseStore     from '../base/store'
+import Dispatcher from '../dispatcher'
+import BaseStore from '../base/store'
 import {ActionTypes} from '../constants/app'
 
 class UsersStore extends BaseStore {

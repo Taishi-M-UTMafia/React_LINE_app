@@ -1,6 +1,5 @@
-import React          from 'react'
-import UserAction     from '../../actions/user'
-import MessagesStore  from '../../stores/messages'
+import React from 'react'
+import MessagesStore from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
 
 class ReplyBox extends React.Component {
@@ -31,7 +30,7 @@ class ReplyBox extends React.Component {
   }
 
   getStateFromStore() {
-    return{
+    return {
       openChatID: MessagesStore.getOpenChatUserID(),
     }
   }
@@ -64,19 +63,19 @@ class ReplyBox extends React.Component {
     return (
       <div className = 'reply-box'>
         <input
-          className   = 'reply-box__input'
+          className = 'reply-box__input'
           placeholder = 'Type message to reply..'
-          value       = { this.state.value }
-          onChange    = { this.updateValue.bind(this) }
-          onKeyDown   = { this.handleKeyDown.bind(this) }
+          value = { this.state.value }
+          onChange = { this.updateValue.bind(this) }
+          onKeyDown = { this.handleKeyDown.bind(this) }
         />
         <span className = 'reply-box__tip'>
           Press <span className = 'reply-box__tip__button'>Enter</span> to send
         </span>
         <input
-          type     = 'file'
-          name     = 'image'
-          accept   = 'image/*'
+          type = 'file'
+          name = 'image'
+          accept = 'image/*'
           onChange = { this.postImage.bind(this) }
         />
      </div>

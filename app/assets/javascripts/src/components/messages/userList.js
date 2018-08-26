@@ -1,9 +1,9 @@
-import React            from 'react'
-import classNames       from 'classnames'
-import MessagesStore    from '../../stores/messages'
-import MessagesAction   from '../../actions/messages'
-import UserStore        from '../../stores/user'
-import UserAction       from '../../actions/user'
+import React from 'react'
+import classNames from 'classnames'
+import MessagesStore from '../../stores/messages'
+import MessagesAction from '../../actions/messages'
+import UserStore from '../../stores/user'
+import UserAction from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
 
 class UserList extends React.Component {
@@ -70,16 +70,16 @@ class UserList extends React.Component {
 
       return (
         <li
-          key       = { friend.id }
-          onClick   = { this.changeOpenChat.bind(this, friend.id) }
+          key = { friend.id }
+          onClick = { this.changeOpenChat.bind(this, friend.id) }
           className = { itemClasses }
         >
           <div className = 'user-list__item__picture'><img src = { friend.image_name }/></div>
           <div className = 'user-list__item__details'>
-            <h4   className = 'user-list__item__name'>{ friend.name }</h4>
+            <h4 className = 'user-list__item__name'>{ friend.name }</h4>
             <span className = 'user-list__item__deletefriend'>
               <div
-                key     = { friend.id }
+                key = { friend.id }
                 onClick = { this.destroyFriendship.bind(this, friend.id) }
               >削除</div>
             </span>

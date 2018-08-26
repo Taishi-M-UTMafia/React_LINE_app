@@ -1,5 +1,5 @@
-import Dispatcher    from '../dispatcher'
-import BaseStore     from '../base/store'
+import Dispatcher from '../dispatcher'
+import BaseStore from '../base/store'
 import {ActionTypes} from '../constants/app'
 
 class ChatStore extends BaseStore {
@@ -36,7 +36,7 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
       MessagesStore.setOpenChatUserID(action.userID)
       MessagesStore.emitChange()
       break
-      
+
     case ActionTypes.GET_MESSAGE:
       MessagesStore.setMessage(action.json)
       MessagesStore.emitChange()

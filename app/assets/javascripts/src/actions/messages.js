@@ -19,7 +19,6 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
-          debugger
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_MESSAGE,
             json,
@@ -59,10 +58,10 @@ export default {
       .set('X-CSRF-Token', CSRFToken())
       .query({ open_chat_id: openChatID })
       .attach('image', image)
-      .end((error,res) => {
-        if (error || !(res.status === 200)){
+      .end((error, res) => {
+        if (error || !(res.status === 200)) {
           alert('画像を送信できませんでした')
-        } else{
+        } else {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_MESSAGE,

@@ -1,5 +1,5 @@
 import {Dispatcher} from 'flux'
-import assign       from 'object-assign'
+import assign from 'object-assign'
 
 const appDispatcher = assign(new Dispatcher(), {
   handleServerAction(action) {
