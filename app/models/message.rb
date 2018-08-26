@@ -2,12 +2,12 @@ class Message < ActiveRecord::Base
   belongs_to :user
   belongs_to :friendship
 
-  validates :content, presence: true, length: {maximum: 50}
-  validates :from_user_id, presence: true
-  validates :friendship_id, presence: true
-  validates :message_type, presence: true
+  validates :content,       presence: true, length: { maximum: 50 }
+  validates :from_user_id,  presence: true
+  validates :chat_room_id,  presence: true
+  validates :message_type,  presence: true
 
-  # REVIEW(Sunny): message_typeをenumにする。modelに格納する値を制限できる。
+  # TODO(Sunny): message_typeをenumにする。modelに格納する値を制限できる。
   #　　　　　　　　　数字に対応させてmodeにinteger型で保存するのがベタだけどそれは今度から
   enum message_type: { text: 'text', image: 'image' }
 

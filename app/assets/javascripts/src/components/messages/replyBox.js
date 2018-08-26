@@ -1,29 +1,28 @@
-import React from 'react'
-import MessagesStore from '../../stores/messages'
+import React          from 'react'
+import UserAction     from '../../actions/user'
+import MessagesStore  from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
-import UserAction from '../../actions/user'
 
 class ReplyBox extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = this.initialState
-    this.onStoreChange=this.onStoreChange.bind(this)
+    this.onStoreChange = this.onStoreChange.bind(this)
   }
 
   get initialState() {
     return {
-      value: '',
+      value     : '',
       openChatID: null,
     }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     MessagesStore.onChange(this.onStoreChange)
   }
 
   // REVIEW(Sunny): 動いていない
-  componentWillUnmount(){
+  componentWillUnmount() {
     MessagesStore.offChange(this.onStoreChange)
   }
 
@@ -31,7 +30,7 @@ class ReplyBox extends React.Component {
     this.setState(this.getStateFromStore())
   }
 
-  getStateFromStore(){
+  getStateFromStore() {
     return{
       openChatID: MessagesStore.getOpenChatUserID(),
     }
@@ -63,22 +62,22 @@ class ReplyBox extends React.Component {
 
   render() {
     return (
-      <div className='reply-box'>
+      <div className = 'reply-box'>
         <input
-          value={ this.state.value }
-          onKeyDown={ this.handleKeyDown.bind(this) }
-          onChange={ this.updateValue.bind(this) }
-          className='reply-box__input'
-          placeholder='Type message to reply..'
+          className   = 'reply-box__input'
+          placeholder = 'Type message to reply..'
+          value       = { this.state.value }
+          onChange    = { this.updateValue.bind(this) }
+          onKeyDown   = { this.handleKeyDown.bind(this) }
         />
-        <span className='reply-box__tip'>
-          Press <span className='reply-box__tip__button'>Enter</span> to send
+        <span className = 'reply-box__tip'>
+          Press <span className = 'reply-box__tip__button'>Enter</span> to send
         </span>
         <input
-          type='file'
-          name='image'
-          accept="image/*"
-          onChange={ this.postImage.bind(this) }
+          type     = 'file'
+          name     = 'image'
+          accept   = 'image/*'
+          onChange = { this.postImage.bind(this) }
         />
      </div>
     )
