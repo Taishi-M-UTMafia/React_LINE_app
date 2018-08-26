@@ -12,10 +12,15 @@
 # It's strongly recommended that you check this file into your version control system.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180825034530) do
 =======
 ActiveRecord::Schema.define(version: 20180826080534) do
 >>>>>>> modify-friendship-id
+=======
+ActiveRecord::Schema.define(version: 20180826080534) do
+
+>>>>>>> efb1d8e169aeeee499ab047f43224a9a36d50165
 
   create_table "friendships", force: :cascade do |t|
     t.integer  "from_user_id"
@@ -23,9 +28,14 @@ ActiveRecord::Schema.define(version: 20180826080534) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     t.string   "chat_room_id"
 >>>>>>> modify-friendship-id
+=======
+    t.string   "chat_room_id"
+
+>>>>>>> efb1d8e169aeeee499ab047f43224a9a36d50165
   end
 
   add_index "friendships", ["from_user_id", "to_user_id"], name: "index_friendships_on_from_user_id_and_to_user_id", unique: true
