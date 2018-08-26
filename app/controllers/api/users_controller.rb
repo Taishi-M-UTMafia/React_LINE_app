@@ -1,9 +1,9 @@
 module Api
   class UsersController < ApplicationController
-    def search
+    def find_search_user
       # REVIEW(Sunny): 取得する件数をlimitする
-      searched_users = User.limit(5).where('name LIKE ?', "%#{params[:value]}%").where.not(id: current_user.id)
-      render json: searched_users
+      search_users = User.limit(5).where('name LIKE ?', "%#{params[:value]}%").where.not(id: current_user.id)
+      render json: search_users
     end
 
     def find_current_user

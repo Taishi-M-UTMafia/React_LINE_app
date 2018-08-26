@@ -5,7 +5,7 @@ export default {
   createFriend(toUserId) {
     return new Promise(() => {
       request
-      .post(`${APIEndpoints.FRIENDSHIP}`)
+      .post(`${APIEndpoints.FRIENDSHIP}/create_friendship`)
       .set ('X-CSRF-Token', CSRFToken())
       .send({ to_user_id: toUserId })
       .end ((error, res) => {

@@ -6,7 +6,7 @@ export default {
   getSearchUser(value) {
     return new Promise((resolve, reject) => {
       request
-      .get('/api/users/search')
+      .get('/api/users/find_search_user')
       .query({ value: value })
       .end((error, res) => {
         if (!error && res.status === 200) {

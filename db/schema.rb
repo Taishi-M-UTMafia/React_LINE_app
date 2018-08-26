@@ -13,7 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20180825034530) do
 
-
   create_table "friendships", force: :cascade do |t|
     t.integer  "from_user_id"
     t.integer  "to_user_id"

@@ -35,7 +35,7 @@ export default {
   postMessage(openChatId, value) {
     return new Promise(() => {
       request
-      .post(`${APIEndpoints.MESSAGE}`)
+      .post(`${APIEndpoints.MESSAGE}/post_message`)
       .set('X-CSRF-Token', CSRFToken())
       .send({ open_chat_id: openChatId, value: value })
       .end((error, res) => {

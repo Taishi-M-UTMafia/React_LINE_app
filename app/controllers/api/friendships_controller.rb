@@ -1,6 +1,6 @@
 module Api
   class FriendshipsController < ApplicationController
-    def create
+    def create_friendship
       # TODO(Sunny): friendship_idっていうのは本来model側が隠蔽すべきロジック。
       # chat_room_idは友達関係の一意性を担保するための、from_user_idとto_user_idの組み合わせ(小さい順)。
       new_friendship = Friendship.new(from_user_id: current_user.id, to_user_id: params[:to_user_id],
