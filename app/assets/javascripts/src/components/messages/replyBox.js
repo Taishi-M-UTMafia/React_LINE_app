@@ -11,7 +11,7 @@ class ReplyBox extends React.Component {
 
   get initialState() {
     return {
-      value: '',
+      value     : '',
       openChatID: null,
     }
   }

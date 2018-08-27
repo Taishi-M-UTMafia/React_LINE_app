@@ -55,12 +55,12 @@ export default {
           })
           if (json .length > 0) {
             Dispatcher.handleServerAction({
-              type: ActionTypes.FIRST_OPENCHATID,
+              type   : ActionTypes.FIRST_OPENCHATID,
               firstID: json[0].id,
             })
           } else {
             Dispatcher.handleServerAction({
-              type: ActionTypes.FIRST_OPENCHATID,
+              type   : ActionTypes.FIRST_OPENCHATID,
               firstID: null,
             })
           }

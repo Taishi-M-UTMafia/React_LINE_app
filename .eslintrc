@@ -18,14 +18,15 @@
     "__PROD__"     : false,
     "__DEBUG__"    : false,
     "__DEBUG_NEW_WINDOW__" : false,
-    "React": true,
-    "ReactDOM": true
+    "React" : true,
+    "ReactDOM"  : true
   },
-  "rules": {
+  "rules" : {
     "semi"                        : [2, "never"],
     "comma-dangle"                : [2, "always-multiline"],
     "space-before-function-paren" : [2, "never"],
     "react/jsx-boolean-value"     : [2, "always"],
-    "react-in-jsx-scope"          : 0
-  }
+    "react-in-jsx-scope"          : 0,
+    "key-spacing" : [2, { "align": "colon" }],
+  },
 }

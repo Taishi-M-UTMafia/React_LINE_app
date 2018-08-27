@@ -6,9 +6,6 @@ import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
 
-window.FriendshipAction = FriendshipAction
-window.MessagesAction = MessagesAction
-
 class UserList extends React.Component {
   constructor(props) {
     super(props)
@@ -19,7 +16,7 @@ class UserList extends React.Component {
   get initialState() {
     return {
       openChatID: null,
-      friends: [],
+      friends   : [],
     }
   }
 
@@ -39,7 +36,7 @@ class UserList extends React.Component {
 
   getStateFromStore() {
     return {
-      friends: UserStore.getFriends(),
+      friends   : UserStore.getFriends(),
       openChatID: MessagesStore.getOpenChatUserID(),
     }
   }
@@ -59,8 +56,8 @@ class UserList extends React.Component {
   render() {
     const userList = this.state.friends.map((friend) => {
       const itemClasses = classNames({
-        'user-list__item': true,
-        'clear': true,
+        'user-list__item'        : true,
+        'clear'                  : true,
         'user-list__item--active': this.state.openChatID === friend.id,
       })
 
