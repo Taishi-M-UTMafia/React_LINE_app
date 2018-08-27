@@ -5,7 +5,7 @@ import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
 export default {
   changeOpenChat(newUserID) {
     Dispatcher.handleViewAction({
-      type  : ActionTypes.UPDATE_OPEN_CHAT_ID,
+      type: ActionTypes.UPDATE_OPEN_CHAT_ID,
       userID: newUserID,
     })
     this.getMessagesByUserId(newUserID)

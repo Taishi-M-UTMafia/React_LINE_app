@@ -6,12 +6,12 @@ class ReplyBox extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.initialState
-    this.onStoreChange = this.onStoreChange.bind(this)
+    this.onStoreChange = this._onStoreChange.bind(this)
   }
 
   get initialState() {
     return {
-      value     : '',
+      value: '',
       openChatID: null,
     }
   }
@@ -20,12 +20,11 @@ class ReplyBox extends React.Component {
     MessagesStore.onChange(this.onStoreChange)
   }
 
-  // REVIEW(Sunny): 動いていない
   componentWillUnmount() {
     MessagesStore.offChange(this.onStoreChange)
   }
 
-  onStoreChange() {
+  _onStoreChange() {
     this.setState(this.getStateFromStore())
   }
 
@@ -37,9 +36,6 @@ class ReplyBox extends React.Component {
 
   handleKeyDown(e) {
     if (e.keyCode === 13) {
-      // REVIEW(Sunny): Storeにアクセスしない
-      // REVIEW(Sunny): データを取得するのがpostした後であることを保証する
-      // REVIEW(Sunny): そもそもわざわざデータを取得しに行かないで、直接storeを更新すれば良い
       MessagesAction.postMessage(this.state.openChatID, this.state.value)
       this.setState({
         value: '',
@@ -48,8 +44,6 @@ class ReplyBox extends React.Component {
   }
 
   postImage(e) {
-    // REVIEW(Sunny): Storeにアクセスしない
-    // REVIEW(Sunny): データを取得するのがpostした後であることを保証する
     MessagesAction.postImage(this.state.openChatID, e.target.files[0])
   }
 
@@ -65,6 +59,7 @@ class ReplyBox extends React.Component {
         <input
           className = 'reply-box__input'
           placeholder = 'Type message to reply..'
+          autoFocus = { true }
           value = { this.state.value }
           onChange = { this.updateValue.bind(this) }
           onKeyDown = { this.handleKeyDown.bind(this) }

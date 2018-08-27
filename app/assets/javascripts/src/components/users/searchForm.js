@@ -21,7 +21,6 @@ export default class SearchForm extends React.Component {
     UserStore.onChange(this.onStoreChange)
   }
 
-  // REVIEW(Sunny):動いてない
   componentWillUnmount() {
     UserStore.offChange(this.onStoreChange)
   }
@@ -61,8 +60,9 @@ export default class SearchForm extends React.Component {
     return (
       <div className = 'searchform-wrapper'>
         <input
-          type = 'text'
           className = 'searchform'
+          type = 'text'
+          autoFocus = { true }
           placeholder = "Set your friend's name..."
           value = { this.state.value }
           onChange = { this.updateValue.bind(this) }

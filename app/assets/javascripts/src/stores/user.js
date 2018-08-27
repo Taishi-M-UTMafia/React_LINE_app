@@ -8,7 +8,6 @@ class UsersStore extends BaseStore {
     return this.get('currentuserJson')
   }
 
-  // REVIEW(Sunny): 引数はarrayじゃない
   setCurrentUser(obj) {
     this.set('currentuserJson', obj)
   }

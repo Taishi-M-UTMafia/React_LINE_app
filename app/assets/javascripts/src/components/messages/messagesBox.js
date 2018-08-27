@@ -10,15 +10,14 @@ class MessagesBox extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.initialState
-    this.onStoreChange = this.onStoreChange.bind(this)
+    this.onStoreChange = this._onStoreChange.bind(this)
   }
 
   get initialState() {
     return {
-      openChatID : null,
-      // REVIEW(Sunny): currentUserは配列じゃない
+      openChatID: null,
       currentUser: {},
-      messages   : [],
+      messages: [],
     }
   }
 
@@ -31,30 +30,27 @@ class MessagesBox extends React.Component {
   }
 
   componentWillUnmount() {
-    // REVIEW(sunny): 動いていない
-    // REVIEW(Sunny): MessagesStoreもoffChange
     UserStore.offChange(this.onStoreChange)
     MessagesStore.offChange(this.onStoreChange)
   }
 
-  onStoreChange() {
+  _onStoreChange() {
     this.setState(this.getStateFromStore())
   }
 
   getStateFromStore() {
     return {
-      // REVIEW(Sunny): Storeにアクセスしない →これどこがだめなのか不明、再度聞く
-      openChatID : MessagesStore.getOpenChatUserID(),
+      openChatID: MessagesStore.getOpenChatUserID(),
       currentUser: UserStore.getCurrentUser(),
-      messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
+      messages: MessagesStore.getMessagesByUserId(this.state.openChatID),
     }
   }
 
   render() {
     const messagesList = this.state.messages.map((message) => {
       const messageClasses = classNames({
-        'clear'                          : true,
-        'message-box__item'              : true,
+        'clear': true,
+        'message-box__item': true,
         'message-box__item--from-current': message.from_user_id === this.state.currentUser.id,
       })
       if (message.message_type === 'text') {
@@ -67,7 +63,7 @@ class MessagesBox extends React.Component {
         return (
           <li key = { message.id } className = { messageClasses }>
             <div className = 'message-box__item__contents'>
-              <img className = "image_message" src = { 'message_images/' + message.content } />
+              <img className = 'image_message' src = { 'message_images/' + message.content } />
             </div>
           </li>
         )

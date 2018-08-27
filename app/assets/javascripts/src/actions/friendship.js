@@ -18,7 +18,6 @@ export default {
 
   destroyFriendship(toUserId) {
     return new Promise(() => {
-      // REVIEW(Sunny): destroyFriendはdeleteメソッドで呼ぶ
       request
       .del(`${APIEndpoints.FRIENDSHIP}/destroy_friendship`)
       .set('X-CSRF-Token', CSRFToken())

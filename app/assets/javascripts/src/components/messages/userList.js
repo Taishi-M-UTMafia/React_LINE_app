@@ -6,18 +6,20 @@ import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
 
+window.FriendshipAction = FriendshipAction
+window.MessagesAction = MessagesAction
+
 class UserList extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.initialState
-    this.onStoreChange = this.onStoreChange.bind(this)
+    this.onStoreChange = this._onStoreChange.bind(this)
   }
 
   get initialState() {
     return {
-      // REVIEW(Sunny): 数字を期待しているのに、初期値がstringなのは微妙かな
       openChatID: null,
-      friends   : [],
+      friends: [],
     }
   }
 
@@ -27,32 +29,26 @@ class UserList extends React.Component {
   }
 
   componentWillUnmount() {
-    // REVIEW(Sunny): このoffChangeはうまく動いていない。bindで新しい関数を生成してしまっているため。
     UserStore.offChange(this.onStoreChange)
     MessagesStore.offChange(this.onStoreChange)
   }
 
-  onStoreChange() {
+  _onStoreChange() {
     this.setState(this.getStateFromStore())
   }
 
   getStateFromStore() {
     return {
-      friends   : UserStore.getFriends(),
-      // REVIEW(Sunny): 引数を消す
+      friends: UserStore.getFriends(),
       openChatID: MessagesStore.getOpenChatUserID(),
     }
   }
 
   changeOpenChat(id) {
     MessagesAction.changeOpenChat(id)
-    // REVIEW(Sunny): StoreはgetStateFromStore以外から呼び出さない
-    // REVIEW(Sunny): onChangeはcomponentWillMountに移す
   }
 
-  // REVIEW(Sunny): 最後のユーザーを削除した時に、メッセージが残るバグがあるので修正する
   destroyFriendship(toUserId) {
-    // REVIEW(Sunny): === trueは意味ない
     if (window.confirm('本当に友達解除しますか？')) {
       FriendshipAction.destroyFriendship(toUserId)
       UserAction.getFriends()
@@ -63,8 +59,8 @@ class UserList extends React.Component {
   render() {
     const userList = this.state.friends.map((friend) => {
       const itemClasses = classNames({
-        'user-list__item'        : true,
-        'clear'                  : true,
+        'user-list__item': true,
+        'clear': true,
         'user-list__item--active': this.state.openChatID === friend.id,
       })
 
