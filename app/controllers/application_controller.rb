@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
     users_search_url
   end
 
-  # TODO(Sunny): ApplicationControllerにこのメソッドがあるのは変か
   def chat_room_id(to_user_id)
     if current_user.id > to_user_id.to_i
       "#{to_user_id.to_i}-#{current_user.id}"

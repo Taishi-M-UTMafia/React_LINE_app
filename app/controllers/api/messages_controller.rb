@@ -6,8 +6,6 @@ module Api
       if params[:open_chat_id] == nil
         render json: []
       else
-        # TODO(Sunny): Messageモデルのchat_room_idはfriendshipのidを入れるようにする
-        #              ⇒一旦友達関係がdestroyされるとfriendshipのidも変わってしまうので無理なのでは
         @chat_room = Friendship.find_by(chat_room_id: chat_room_id(params[:open_chat_id]))
       end
     end
