@@ -13,7 +13,6 @@ class UsersStore extends BaseStore {
   }
 
   getToUser() {
-    debugger
     if (!this.get('toUserJson')) this.setToUser({})
     return this.get('toUserJson')
   }

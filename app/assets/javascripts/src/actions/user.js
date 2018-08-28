@@ -24,7 +24,6 @@ export default {
   },
 
   getToUser(openChatID) {
-    debugger
     return new Promise((resolve, reject) => {
       request
       .get('/api/users/find_to_user')
@@ -32,7 +31,6 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
-          debugger
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_TO_USER,
             json,

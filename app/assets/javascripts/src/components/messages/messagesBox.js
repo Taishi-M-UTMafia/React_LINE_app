@@ -29,7 +29,6 @@ class MessagesBox extends React.Component {
       MessageAction.getMessagesByUserId(this.state.openChatID)
       UserAction.getToUser(this.state.openChatID)
     })
-    // .then(() => UserAction.getToUser(this.state.openChatID))
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
   }
@@ -63,10 +62,10 @@ class MessagesBox extends React.Component {
       let isText = (message.message_type === 'text')
       return (
         <li key = { message.id } className = { messageClasses }>
-          <div className = 'user-list__item__picture'><img src = { this.state.toUser.image_name }/></div>
+          <div className = 'user-list__item__picture'><img className = 'icon_by_message' src = { this.state.toUser.image_name }/></div>
           <p>{ this.state.toUser.name }</p>
           <div className = 'message-box__item__contents'>
-            { isText ? <span>{ message.content }</span> : <img className = 'image_message' src = { 'message_images/' + message.content } />}
+            { isText ? <span>{ message.content }</span> : <img className = 'image_message' src = { 'message_images/' + message.content } /> }
           </div>
         </li>
       )
