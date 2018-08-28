@@ -59,26 +59,17 @@ class MessagesBox extends React.Component {
         'message-box__item'              : true,
         'message-box__item--from-current': message.from_user_id === this.state.currentUser.id,
       })
-      // HACK(Sunny): if文もっとうまくかけるはず
-      if (message.message_type === 'text') {
-        return (
-          <li key = { message.id } className = { messageClasses }>
-            <div className = 'user-list__item__picture'><img src = { this.state.toUser.image_name }/></div>
-            <p>{ this.state.toUser.name }</p>
-            <div className = 'message-box__item__contents'>{ message.content }</div>
-          </li>
-        )
-      } else if (message.message_type === 'image') {
-        return (
-          <li key = { message.id } className = { messageClasses }>
-            <div className = 'user-list__item__picture'><img src = { this.state.toUser.image_name }/></div>
-            <p>{ this.state.toUser.name }</p>
-            <div className = 'message-box__item__contents'>
-              <img className = 'image_message' src = { 'message_images/' + message.content } />
-            </div>
-          </li>
-        )
-      }
+
+      let isText = (message.message_type === 'text')
+      return (
+        <li key = { message.id } className = { messageClasses }>
+          <div className = 'user-list__item__picture'><img src = { this.state.toUser.image_name }/></div>
+          <p>{ this.state.toUser.name }</p>
+          <div className = 'message-box__item__contents'>
+            { isText ? <span>{ message.content }</span> : <img className = 'image_message' src = { 'message_images/' + message.content } />}
+          </div>
+        </li>
+      )
     })
 
     return (

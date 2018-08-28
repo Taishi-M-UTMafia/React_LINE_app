@@ -1,5 +1,6 @@
 import request from 'superagent'
 import Dispatcher from '../dispatcher'
+import UserAction from './user'
 import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
 
 export default {
@@ -9,6 +10,7 @@ export default {
       userID: newUserID,
     })
     this.getMessagesByUserId(newUserID)
+    UserAction.getToUser(newUserID)
   },
 
   getMessagesByUserId(openChatID) {
