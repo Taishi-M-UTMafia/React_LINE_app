@@ -15,11 +15,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users ,:only => [:find_search_user, :find_current_user, :find_friends] do
+    resources :users ,:only => [:find_search_user, :find_current_user, :find_friends, :find_to_user] do
       collection do
         get :find_search_user
         get :find_current_user
         get :find_friends
+        get :find_to_user
       end
     end
 

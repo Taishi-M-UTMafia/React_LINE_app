@@ -18,13 +18,18 @@ class MessagesBox extends React.Component {
       openChatID : null,
       currentUser: {},
       messages   : [],
+      toUser     : {},
     }
   }
 
   componentWillMount() {
     UserAction.getCurrentUser()
     UserAction.getFriends() // OpenChatIDに初期値を入れるためのgetFriends()
-    .then(() => MessageAction.getMessagesByUserId(this.state.openChatID))
+    .then(() => {
+      MessageAction.getMessagesByUserId(this.state.openChatID)
+      UserAction.getToUser(this.state.openChatID)
+    })
+    // .then(() => UserAction.getToUser(this.state.openChatID))
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
   }
@@ -43,6 +48,7 @@ class MessagesBox extends React.Component {
       openChatID : MessagesStore.getOpenChatUserID(),
       currentUser: UserStore.getCurrentUser(),
       messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
+      toUser     : UserStore.getToUser(this.state.openChatID)
     }
   }
 
@@ -53,15 +59,20 @@ class MessagesBox extends React.Component {
         'message-box__item'              : true,
         'message-box__item--from-current': message.from_user_id === this.state.currentUser.id,
       })
+      // HACK(Sunny): if文もっとうまくかけるはず
       if (message.message_type === 'text') {
         return (
           <li key = { message.id } className = { messageClasses }>
+            <div className = 'user-list__item__picture'><img src = { this.state.toUser.image_name }/></div>
+            <p>{ this.state.toUser.name }</p>
             <div className = 'message-box__item__contents'>{ message.content }</div>
           </li>
         )
       } else if (message.message_type === 'image') {
         return (
           <li key = { message.id } className = { messageClasses }>
+            <div className = 'user-list__item__picture'><img src = { this.state.toUser.image_name }/></div>
+            <p>{ this.state.toUser.name }</p>
             <div className = 'message-box__item__contents'>
               <img className = 'image_message' src = { 'message_images/' + message.content } />
             </div>

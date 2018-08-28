@@ -21,11 +21,21 @@
       padding: 10px 15px;
     }
 
+    p{
+      margin:0;
+    }
+
     &--from-current {
       .message-box__item__contents {
         float: right;
         background: #218CB9;
         color: #fff;
+      }
+      img{
+        display: none;
+      }
+      p{
+        display: none;
       }
     }
 
