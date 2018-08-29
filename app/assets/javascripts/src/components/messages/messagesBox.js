@@ -47,7 +47,13 @@ class MessagesBox extends React.Component {
       openChatID : MessagesStore.getOpenChatUserID(),
       currentUser: UserStore.getCurrentUser(),
       messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-      toUser     : UserStore.getToUser(this.state.openChatID)
+      toUser     : UserStore.getToUser(this.state.openChatID),
+    }
+  }
+
+  destroyMessage(messageID) {
+    if (window.confirm('この投稿を削除しますか？(相手からも見えなくなります)')) {
+      MessageAction.destroyMessage(this.state.openChatID, messageID)
     }
   }
 
@@ -62,10 +68,16 @@ class MessagesBox extends React.Component {
       let isText = (message.message_type === 'text')
       return (
         <li key = { message.id } className = { messageClasses }>
-          <div className = 'user-list__item__picture'><img className = 'icon_by_message' src = { this.state.toUser.image_name }/></div>
+          <div className = 'user-list__item__picture'>
+            <img className = 'icon_by_message' src = { this.state.toUser.image_name }/>
+          </div>
           <p>{ this.state.toUser.name }</p>
           <div className = 'message-box__item__contents'>
             { isText ? <span>{ message.content }</span> : <img className = 'image_message' src = { 'message_images/' + message.content } /> }
+            <div
+              key = { message.id }
+              onClick = { this.destroyMessage.bind(this, message.id) }
+            ><i className = 'fas fa-times-circle'></i></div>
           </div>
         </li>
       )

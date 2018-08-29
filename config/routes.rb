@@ -8,9 +8,10 @@ Rails.application.routes.draw do
   }
 
   namespace :api, { format: 'json' } do
-    resources :messages, :only => [:index, :post_message, :post_image] do
+    resources :messages, :only => [:index, :post_message, :destroy_message, :post_image] do
       collection do
         post :post_message
+        delete :destroy_message
         post :post_image
       end
     end
