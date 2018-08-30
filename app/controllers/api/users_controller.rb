@@ -12,5 +12,10 @@ module Api
     def find_friends
       render json: current_user.friends
     end
+
+    def find_to_user
+      to_user = User.find_by(id: params[:open_chat_id])
+      render json: to_user
+    end
   end
 end

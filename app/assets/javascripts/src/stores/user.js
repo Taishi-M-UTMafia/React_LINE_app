@@ -4,20 +4,32 @@ import {ActionTypes} from '../constants/app'
 
 class UsersStore extends BaseStore {
   getCurrentUser() {
-    if (!this.get('currentuserJson')) this.setCurrentUser([])
-    return this.get('currentuserJson')
+    if (!this.get('currentUserJson')) this.setCurrentUser({})
+    return this.get('currentUserJson')
   }
 
   setCurrentUser(obj) {
-    this.set('currentuserJson', obj)
+    this.set('currentUserJson', obj)
   }
+
+  getToUser() {
+    if (!this.get('toUserJson')) this.setToUser({})
+    return this.get('toUserJson')
+  }
+
+  setToUser(obj) {
+    this.set('toUserJson', obj)
+  }
+
   getSearchUser() {
     if (!this.get('searchJson')) this.setSearchUser([])
     return this.get('searchJson')
   }
+
   setSearchUser(array) {
     this.set('searchJson', array)
   }
+
   getFriends() {
     if (!this.get('friendsJson')) this.setFriends([])
     return this.get('friendsJson')
@@ -40,6 +52,11 @@ UserStore.dispatchToken = Dispatcher.register(payload => {
 
     case ActionTypes.GET_SEARCH_USER:
       UserStore.setSearchUser(action.json)
+      UserStore.emitChange()
+      break
+
+    case ActionTypes.GET_TO_USER:
+      UserStore.setToUser(action.json)
       UserStore.emitChange()
       break
 

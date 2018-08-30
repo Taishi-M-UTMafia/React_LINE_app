@@ -14,6 +14,7 @@ export const ActionTypes = keyMirror({
   GET_FRIENDS        : null,
   GET_SEARCH_USER    : null,
   GET_CURRENT_USER   : null,
+  GET_TO_USER        : null,
   CREATE_FRIENDSHIP  : null,
   DESTROY_FRIENDSHIP : null,
   FIRST_OPENCHATID   : null,

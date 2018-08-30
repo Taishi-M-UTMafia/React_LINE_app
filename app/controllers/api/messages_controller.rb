@@ -22,6 +22,11 @@ module Api
       render json: @chat_room.all_messages if new_message.save
     end
 
+    def destroy_message
+      message_to_destroy = Message.find_by(id: params[:message_id])
+      render json: @chat_room.all_messages if message_to_destroy.destroy
+    end
+
     def post_image
       posted_image = params[:image]
       path         = Time.now.to_i.to_s + posted_image.original_filename
