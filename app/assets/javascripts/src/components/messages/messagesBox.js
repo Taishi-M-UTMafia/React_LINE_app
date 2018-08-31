@@ -44,7 +44,6 @@ class MessagesBox extends React.Component {
 
   getStateFromStore() {
     const friends = UserStore.getFriends()
-    debugger
     return {
       openChatID : MessagesStore.getOpenChatUserID(),
       currentUser: UserStore.getCurrentUser(),
