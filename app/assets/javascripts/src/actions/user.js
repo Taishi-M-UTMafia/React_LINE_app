@@ -23,26 +23,6 @@ export default {
     })
   },
 
-  getToUser(openChatID) {
-    return new Promise((resolve, reject) => {
-      request
-      .get('/api/users/find_to_user')
-      .query({ open_chat_id: openChatID })
-      .end((error, res) => {
-        if (!error && res.status === 200) {
-          const json = JSON.parse(res.text)
-          Dispatcher.handleServerAction({
-            type: ActionTypes.GET_TO_USER,
-            json,
-          })
-          resolve(json)
-        } else {
-          reject(res)
-        }
-      })
-    })
-  },
-
   getCurrentUser() {
     return new Promise((resolve, reject) => {
       request

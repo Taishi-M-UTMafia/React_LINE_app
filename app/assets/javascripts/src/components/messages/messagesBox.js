@@ -6,6 +6,9 @@ import MessageAction from '../../actions/messages'
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
 
+window.UserStore = UserStore
+window.MessagesStore = MessagesStore
+
 class MessagesBox extends React.Component {
   constructor(props) {
     super(props)
@@ -43,11 +46,13 @@ class MessagesBox extends React.Component {
   }
 
   getStateFromStore() {
+    const friends = UserStore.getFriends()
+    debugger
     return {
       openChatID : MessagesStore.getOpenChatUserID(),
       currentUser: UserStore.getCurrentUser(),
       messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-      toUser     : UserStore.getToUser(this.state.openChatID),
+      toUser     : friends.filter((friends) => friends.id == this.state.openChatID)[0],
     }
   }
 

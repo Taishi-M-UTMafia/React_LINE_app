@@ -55,11 +55,6 @@ UserStore.dispatchToken = Dispatcher.register(payload => {
       UserStore.emitChange()
       break
 
-    case ActionTypes.GET_TO_USER:
-      UserStore.setToUser(action.json)
-      UserStore.emitChange()
-      break
-
     case ActionTypes.GET_CURRENT_USER:
       UserStore.setCurrentUser(action.json)
       UserStore.emitChange()
