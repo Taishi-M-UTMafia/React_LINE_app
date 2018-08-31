@@ -62,7 +62,7 @@ class MessagesBox extends React.Component {
       const messageClasses = classNames({
         'clear'                          : true,
         'message-box__item'              : true,
-        'message-box__item--from-current': message.from_user_id === this.state.currentUser.id,
+        'message-box__item--from-current': message.user_id === this.state.currentUser.id,
       })
 
       let isText = (message.message_type === 'text')
