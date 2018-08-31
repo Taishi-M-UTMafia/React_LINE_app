@@ -74,7 +74,7 @@ class UserList extends React.Component {
               <div
                 key = { friend.id }
                 onClick = { this.destroyFriendship.bind(this, friend.id) }
-              ><i className = 'fas fa-times-circle'></i></div>
+              >削除</div>
             </span>
           </div>
         </li>
