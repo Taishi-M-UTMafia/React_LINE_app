@@ -6,9 +6,6 @@ import MessageAction from '../../actions/messages'
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
 
-window.UserStore = UserStore
-window.MessagesStore = MessagesStore
-
 class MessagesBox extends React.Component {
   constructor(props) {
     super(props)
