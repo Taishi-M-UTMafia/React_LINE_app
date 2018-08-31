@@ -1,6 +1,5 @@
 import request from 'superagent'
 import Dispatcher from '../dispatcher'
-import UserAction from './user'
 import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
 
 export default {
@@ -10,7 +9,6 @@ export default {
       userID: newUserID,
     })
     this.getMessagesByUserId(newUserID)
-    UserAction.getToUser(newUserID)
   },
 
   getMessagesByUserId(openChatID) {
@@ -33,35 +31,15 @@ export default {
     })
   },
 
-  postMessage(openChatID, value) {
+  postMessage(openChatId, value) {
     return new Promise(() => {
       request
       .post(`${APIEndpoints.MESSAGE}/post_message`)
       .set('X-CSRF-Token', CSRFToken())
-      .send({ open_chat_id: openChatID, value: value })
+      .send({ open_chat_id: openChatId, value: value })
       .end((error, res) => {
         if (error || !(res.status === 200)) {
           alert('メッセージが空欄または長すぎるため、送信できませんでした')
-        } else {
-          const json = JSON.parse(res.text)
-          Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
-            json,
-          })
-        }
-      })
-    })
-  },
-
-  destroyMessage(openChatID, messageID) {
-    return new Promise(() => {
-      request
-      .del(`${APIEndpoints.MESSAGE}/destroy_message`)
-      .set('X-CSRF-Token', CSRFToken())
-      .send({ open_chat_id: openChatID, message_id: messageID })
-      .end((error, res) => {
-        if (error || !(res.status === 200)) {
-          alert('メッセージの削除に失敗しました')
         } else {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({

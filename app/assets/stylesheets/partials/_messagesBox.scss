@@ -19,15 +19,6 @@
       font-weight: 400;
       border-radius: 10px;
       padding: 10px 15px;
-      position: relative;
-    }
-
-    p{
-      margin:0;
-    }
-
-    .fa-times-circle{
-      display: none;
     }
 
     &--from-current {
@@ -35,24 +26,6 @@
         float: right;
         background: #218CB9;
         color: #fff;
-      }
-      img.icon_by_message{
-        display: none;
-      }
-      p{
-        display: none;
-      }
-      .fa-times-circle{
-        display:block;
-        color:red;
-        font-size:12px;
-        cursor: pointer;
-        position:absolute;
-        top:0;
-        left: -1;
-        right:0;
-        bottom:0;
-        border-radius: 6px;
       }
     }
 

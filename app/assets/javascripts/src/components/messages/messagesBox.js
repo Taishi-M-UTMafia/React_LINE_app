@@ -18,17 +18,13 @@ class MessagesBox extends React.Component {
       openChatID : null,
       currentUser: {},
       messages   : [],
-      toUser     : {},
     }
   }
 
   componentWillMount() {
     UserAction.getCurrentUser()
     UserAction.getFriends() // OpenChatIDに初期値を入れるためのgetFriends()
-    .then(() => {
-      MessageAction.getMessagesByUserId(this.state.openChatID)
-      UserAction.getToUser(this.state.openChatID)
-    })
+    .then(() => MessageAction.getMessagesByUserId(this.state.openChatID))
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
   }
@@ -47,13 +43,6 @@ class MessagesBox extends React.Component {
       openChatID : MessagesStore.getOpenChatUserID(),
       currentUser: UserStore.getCurrentUser(),
       messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-      toUser     : UserStore.getToUser(this.state.openChatID),
-    }
-  }
-
-  destroyMessage(messageID) {
-    if (window.confirm('この投稿を削除しますか？(相手からも見えなくなります)')) {
-      MessageAction.destroyMessage(this.state.openChatID, messageID)
     }
   }
 
@@ -64,23 +53,21 @@ class MessagesBox extends React.Component {
         'message-box__item'              : true,
         'message-box__item--from-current': message.from_user_id === this.state.currentUser.id,
       })
-
-      let isText = (message.message_type === 'text')
-      return (
-        <li key = { message.id } className = { messageClasses }>
-          <div className = 'user-list__item__picture'>
-            <img className = 'icon_by_message' src = { this.state.toUser.image_name }/>
-          </div>
-          <p>{ this.state.toUser.name }</p>
-          <div className = 'message-box__item__contents'>
-            { isText ? <span>{ message.content }</span> : <img className = 'image_message' src = { 'message_images/' + message.content } /> }
-            <div
-              key = { message.id }
-              onClick = { this.destroyMessage.bind(this, message.id) }
-            ><i className = 'fas fa-times-circle'></i></div>
-          </div>
-        </li>
-      )
+      if (message.message_type === 'text') {
+        return (
+          <li key = { message.id } className = { messageClasses }>
+            <div className = 'message-box__item__contents'>{ message.content }</div>
+          </li>
+        )
+      } else if (message.message_type === 'image') {
+        return (
+          <li key = { message.id } className = { messageClasses }>
+            <div className = 'message-box__item__contents'>
+              <img className = 'image_message' src = { 'message_images/' + message.content } />
+            </div>
+          </li>
+        )
+      }
     })
 
     return (
