@@ -8,28 +8,17 @@ Rails.application.routes.draw do
   }
 
   namespace :api, { format: 'json' } do
-    resources :messages, :only => [:index, :post_message, :destroy_message, :post_image] do
-      collection do
-        post :post_message
-        delete :destroy_message
-        post :post_image
-      end
-    end
+    get 'messages' => 'messages#index'
+    post 'messages/post_message' => 'messages#post_message'
+    post 'messages/post_image'   => 'messages#post_image'
+    delete 'messages/dedstroy_message' => 'messages#destroy_message'
 
-    resources :users ,:only => [:find_search_user, :find_current_user, :find_friends, :find_to_user] do
-      collection do
-        get :find_search_user
-        get :find_current_user
-        get :find_friends
-        get :find_to_user
-      end
-    end
+    get 'users/find_search_user'  => 'users#find_search_user'
+    get 'users/find_current_user' => 'users#find_current_user'
+    get 'users/find_friends'      => 'users#find_friends'
+    get 'users/find_to_user'      => 'users#find_to_user'
 
-    resources :friendships ,:only => [:create_friendship, :destroy_friendship] do
-      collection do
-        post   :create_friendship
-        delete :destroy_friendship
-      end
-    end
+    post 'friendships/create_friendship' => 'friendships#create_friendship'
+    delete 'friendships/destroy_friendship' => 'friendships#destroy_friendship'
   end
 end
