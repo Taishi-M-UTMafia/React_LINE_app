@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     get 'messages' => 'messages#index'
     post 'messages/post_message' => 'messages#post_message'
     post 'messages/post_image'   => 'messages#post_image'
-    delete 'messages/dedstroy_message' => 'messages#destroy_message'
+    delete 'messages/destroy_message' => 'messages#destroy_message'
 
     get 'users/find_search_user'  => 'users#find_search_user'
     get 'users/find_current_user' => 'users#find_current_user'

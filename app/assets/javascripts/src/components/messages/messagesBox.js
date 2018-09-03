@@ -25,10 +25,7 @@ class MessagesBox extends React.Component {
   componentWillMount() {
     UserAction.getCurrentUser()
     UserAction.getFriends() // OpenChatIDに初期値を入れるためのgetFriends()
-    .then(() => {
-      MessageAction.getMessagesByUserId(this.state.openChatID)
-      UserAction.getToUser(this.state.openChatID)
-    })
+    .then(() => MessageAction.getMessagesByUserId(this.state.openChatID))
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
   }
@@ -44,11 +41,22 @@ class MessagesBox extends React.Component {
 
   getStateFromStore() {
     const friends = UserStore.getFriends()
-    return {
-      openChatID : MessagesStore.getOpenChatUserID(),
-      currentUser: UserStore.getCurrentUser(),
-      messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-      toUser     : friends.filter((friends) => friends.id == this.state.openChatID)[0],
+    // toUserがundefinedになる場合の処理をうまく書けてない
+    const toUser = friends.filter((friends) => friends.id == this.state.openChatID)[0]
+    if (toUser !== undefined) {
+      return {
+        openChatID : MessagesStore.getOpenChatUserID(),
+        currentUser: UserStore.getCurrentUser(),
+        messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
+        toUser     : toUser,
+      }
+    } else {
+      return {
+        openChatID : MessagesStore.getOpenChatUserID(),
+        currentUser: UserStore.getCurrentUser(),
+        messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
+        toUser     : {},
+      }
     }
   }
 
