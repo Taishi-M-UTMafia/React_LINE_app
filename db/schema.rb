@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180831032150) do
+ActiveRecord::Schema.define(version: 20180903080238) do
 
   create_table "friendships", force: :cascade do |t|
     t.integer  "from_user_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20180831032150) do
     t.datetime "updated_at",   null: false
     t.string   "chat_room_id"
     t.string   "message_type"
+    t.integer  "timestamp"
   end
 
   create_table "users", force: :cascade do |t|

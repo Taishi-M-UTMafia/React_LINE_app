@@ -11,7 +11,7 @@ class ChatStore extends BaseStore {
     this.set('openChatID', id)
   }
 
-  getMessagesByUserId(id) {
+  getMessagesByUserId() {
     if (!this.get('messageJson')) this.setMessage([])
     return this.get('messageJson')
   }

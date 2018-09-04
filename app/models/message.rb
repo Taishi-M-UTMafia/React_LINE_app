@@ -6,7 +6,7 @@ class Message < ActiveRecord::Base
   validates :user_id,       presence: true
   validates :chat_room_id,  presence: true
   validates :message_type,  presence: true
+  validates :timestamp,  presence: true
 
   enum message_type: { text: 'text', image: 'image' }
-
 end

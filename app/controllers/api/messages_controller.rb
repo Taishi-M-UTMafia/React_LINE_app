@@ -18,7 +18,8 @@ module Api
       new_message = Message.new(content: params[:value],
                                 user_id: current_user.id,
                                 chat_room_id: chat_room_id(params[:open_chat_id]),
-                                message_type: "text")
+                                message_type: "text",
+                                timestamp: Time.now.to_i)
       render json: @chat_room.all_messages if new_message.save
     end
 
@@ -34,7 +35,8 @@ module Api
       new_image    = Message.new(content: path,
                                  user_id: current_user.id,
                                  chat_room_id: chat_room_id(params[:open_chat_id]),
-                                 message_type: "image")
+                                 message_type: "image",
+                                 timestamp: Time.now.to_i)
 
       File.open(output_path, 'w+b') do |fp|
         fp.write  posted_image.tempfile.read

@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classNames'
+import _ from 'lodash'
 import ReplyBox from '../../components/messages/replyBox'
 import MessagesStore from '../../stores/messages'
 import MessageAction from '../../actions/messages'
@@ -41,22 +42,13 @@ class MessagesBox extends React.Component {
 
   getStateFromStore() {
     const friends = UserStore.getFriends()
-    // toUserがundefinedになる場合の処理をうまく書けてない
-    const toUser = friends.filter((friends) => friends.id == this.state.openChatID)[0]
-    if (toUser !== undefined) {
-      return {
-        openChatID : MessagesStore.getOpenChatUserID(),
-        currentUser: UserStore.getCurrentUser(),
-        messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-        toUser     : toUser,
-      }
-    } else {
-      return {
-        openChatID : MessagesStore.getOpenChatUserID(),
-        currentUser: UserStore.getCurrentUser(),
-        messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-        toUser     : {},
-      }
+    var toUser = _.find(friends, ['id', this.state.openChatID])
+    if (toUser === void 0) toUser = {}
+    return {
+      openChatID : MessagesStore.getOpenChatUserID(),
+      currentUser: UserStore.getCurrentUser(),
+      messages   : MessagesStore.getMessagesByUserId(),
+      toUser     : toUser,
     }
   }
 
