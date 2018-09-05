@@ -53,17 +53,6 @@ export default {
             type: ActionTypes.GET_FRIENDS,
             json,
           })
-          if (json .length > 0) {
-            Dispatcher.handleServerAction({
-              type   : ActionTypes.FIRST_OPENCHATID,
-              firstID: json[0].id,
-            })
-          } else {
-            Dispatcher.handleServerAction({
-              type   : ActionTypes.FIRST_OPENCHATID,
-              firstID: null,
-            })
-          }
           resolve(json)
         } else {
           reject(res)

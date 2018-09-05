@@ -50,11 +50,17 @@ class UserList extends React.Component {
         friend: message.friend,
       })
     })
-    // var topList = messageList[0]
-    // if (topList === void 0) topList = {}
+    messageList.sort((a, b) => {
+      if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
+        return -1
+      }
+      if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
+        return 1
+      }
+      return 0
+    })
     return {
       friends    : UserStore.getFriends(),
-      // openChatID : topList.friend.id,
       openChatID : MessagesStore.getOpenChatUserID(),
       messageList: messageList,
     }
@@ -76,16 +82,6 @@ class UserList extends React.Component {
   }
 
   render() {
-    this.state.messageList.sort((a, b) => {
-      if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
-        return -1
-      }
-      if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
-        return 1
-      }
-      return 0
-    })
-
     const userList = this.state.messageList.map((message, index) => {
       var statusIcon
       if (message.lastMessage.user_id !== message.friend.id) {

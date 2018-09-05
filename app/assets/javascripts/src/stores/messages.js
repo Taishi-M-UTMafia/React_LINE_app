@@ -41,11 +41,6 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action
 
   switch (action.type) {
-    case ActionTypes.FIRST_OPENCHATID:
-      MessagesStore.setOpenChatUserID(action.firstID)
-      MessagesStore.emitChange()
-      break
-
     case ActionTypes.UPDATE_OPEN_CHAT_ID:
       MessagesStore.setOpenChatUserID(action.userID)
       MessagesStore.emitChange()
