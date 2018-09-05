@@ -9,15 +9,15 @@ export const APIEndpoints = {
 }
 
 export const ActionTypes = keyMirror({
-  GET_MESSAGE        : null,
-  POST_MESSAGE       : null,
-  GET_FRIENDS        : null,
-  GET_SEARCH_USER    : null,
-  GET_CURRENT_USER   : null,
-  CREATE_FRIENDSHIP  : null,
-  DESTROY_FRIENDSHIP : null,
-  FIRST_OPENCHATID   : null,
-  UPDATE_OPEN_CHAT_ID: null,
+  GET_OPEN_CHAT_MESSAGE: null,
+  GET_MESSAGE_BY_ID    : null,
+  POST_MESSAGE         : null,
+  GET_FRIENDS          : null,
+  GET_SEARCH_USER      : null,
+  GET_CURRENT_USER     : null,
+  FIRST_OPENCHATID     : null,
+  UPDATE_OPEN_CHAT_ID  : null,
+  FRIENDSHIP_SAVE      : null,
 })
 
 export function CSRFToken() {

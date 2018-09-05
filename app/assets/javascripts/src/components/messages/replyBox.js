@@ -1,6 +1,9 @@
 import React from 'react'
+import _ from 'lodash'
 import MessagesStore from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
+import UserStore from '../../stores/user'
+import UserAction from '../../actions/user'
 
 class ReplyBox extends React.Component {
   constructor(props) {
@@ -10,14 +13,12 @@ class ReplyBox extends React.Component {
   }
 
   get initialState() {
-    return {
-      value     : '',
-      openChatID: null,
-    }
+    return this.getStateFromStore()
   }
 
   componentWillMount() {
     MessagesStore.onChange(this.onStoreChange)
+    UserStore.onChange(this.onStoreChange)
   }
 
   componentWillUnmount() {
@@ -31,12 +32,18 @@ class ReplyBox extends React.Component {
   getStateFromStore() {
     return {
       openChatID: MessagesStore.getOpenChatUserID(),
+      friends   : UserStore.getFriends(),
     }
   }
 
   handleKeyDown(e) {
     if (e.keyCode === 13) {
       MessagesAction.postMessage(this.state.openChatID, this.state.value)
+      UserAction.getFriends()
+      .then(() => {
+        MessagesStore.state.friendWithMessages = []
+        _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
+      })
       this.setState({
         value: '',
       })
@@ -45,6 +52,11 @@ class ReplyBox extends React.Component {
 
   postImage(e) {
     MessagesAction.postImage(this.state.openChatID, e.target.files[0])
+    UserAction.getFriends()
+    .then(() => {
+      MessagesStore.state.friendWithMessages = []
+      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
+    })
   }
 
   updateValue(e) {

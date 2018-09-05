@@ -3,7 +3,17 @@ import BaseStore from '../base/store'
 import {ActionTypes} from '../constants/app'
 
 class ChatStore extends BaseStore {
+  constructor(props) {
+    super(props)
+    this.state = this.initialState
+  }
+
+  get initialState() {
+    return { friendWithMessages: [] }
+  }
+
   getOpenChatUserID() {
+    if (!this.get('openChatID')) this.setOpenChatUserID(null)
     return this.get('openChatID')
   }
 
@@ -11,13 +21,17 @@ class ChatStore extends BaseStore {
     this.set('openChatID', id)
   }
 
-  getMessagesByUserId() {
-    if (!this.get('messageJson')) this.setMessage([])
-    return this.get('messageJson')
+  getOpenChatMessages() {
+    if (!this.get('openchatmessageJson')) this.setOpenChatMessages([])
+    return this.get('openchatmessageJson')
   }
 
-  setMessage(array) {
-    this.set('messageJson', array)
+  setOpenChatMessages(array) {
+    this.set('openchatmessageJson', array)
+  }
+
+  getFriendWithMessages() {
+    return this.state.friendWithMessages
   }
 }
 
@@ -37,8 +51,16 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
       MessagesStore.emitChange()
       break
 
-    case ActionTypes.GET_MESSAGE:
-      MessagesStore.setMessage(action.json)
+    case ActionTypes.GET_OPEN_CHAT_MESSAGE:
+      MessagesStore.setOpenChatMessages(action.json)
+      MessagesStore.emitChange()
+      break
+
+    case ActionTypes.GET_MESSAGE_BY_ID:
+      MessagesStore.state.friendWithMessages.push({
+        friend  : action.friend,
+        messages: action.json,
+      })
       MessagesStore.emitChange()
       break
   }

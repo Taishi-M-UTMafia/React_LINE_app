@@ -6,6 +6,7 @@ import MessagesAction from '../../actions/messages'
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
+import FriendshipStore from '../../stores/friendship'
 
 class UserList extends React.Component {
   constructor(props) {
@@ -15,15 +16,17 @@ class UserList extends React.Component {
   }
 
   get initialState() {
-    return {
-      openChatID : null,
-      messageList: [],
-    }
+    return this.getStateFromStore()
   }
 
   componentWillMount() {
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
+    // FriendshipStore.onChange(this.onStoreChange)
+    UserAction.getFriends()
+    .then(() => {
+      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
+    })
   }
 
   componentWillUnmount() {
@@ -36,20 +39,22 @@ class UserList extends React.Component {
   }
 
   getStateFromStore() {
-    const friends = UserStore.getFriends()
+    const messages = MessagesStore.getFriendWithMessages()
     const messageList = []
-    _.each(friends, (friend) => {
-      const messages = MessagesStore.getMessagesByUserId(friend.id)
-      const messageLength = messages.length
-      var lastMessage = messages[messageLength - 1]
+    _.each(messages, (message) => {
+      var lastMessage = message.messages[message.messages.length - 1]
       if (lastMessage === void 0) lastMessage = {}
       messageList.push({
-        friend     : friend,
-        // lastAccess : ,
         lastMessage: lastMessage,
+        // lastAccess: message.lastAccess,
+        friend: message.friend,
       })
     })
+    // var topList = messageList[0]
+    // if (topList === void 0) topList = {}
     return {
+      friends    : UserStore.getFriends(),
+      // openChatID : topList.friend.id,
       openChatID : MessagesStore.getOpenChatUserID(),
       messageList: messageList,
     }
@@ -63,12 +68,14 @@ class UserList extends React.Component {
     if (window.confirm('本当に友達解除しますか？')) {
       FriendshipAction.destroyFriendship(toUserId)
       UserAction.getFriends()
-      .then(() => MessagesAction.getMessagesByUserId(this.state.openChatID))
+      .then(() => {
+        MessagesStore.state.friendWithMessages = []
+        _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
+      }).then(() => MessagesAction.getOpenChatMessages(this.state.openChatID))
     }
   }
 
   render() {
-    console.log(this.state.messageList)
     this.state.messageList.sort((a, b) => {
       if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
         return -1
@@ -81,15 +88,15 @@ class UserList extends React.Component {
 
     const userList = this.state.messageList.map((message, index) => {
       var statusIcon
-    //   if (message.lastMessage.from !== message.user.id) {
-    //     statusIcon = (
-    //       <i className='fa fa-reply user-list__item__icon' />
-    //     )
-    //   }
-    //   if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-      statusIcon = (
-          <i className='fa fa-circle user-list__item__icon' />
+      if (message.lastMessage.user_id !== message.friend.id) {
+        statusIcon = (
+          <i className='fa fa-reply user-list__item__icon' />
         )
+      }
+    //   if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
+      // statusIcon = (
+      //     <i className='fa fa-circle user-list__item__icon' />
+      //   )
     //   }
 
       const itemClasses = classNames({

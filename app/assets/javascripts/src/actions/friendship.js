@@ -1,5 +1,6 @@
 import request from 'superagent'
-import { APIEndpoints, CSRFToken } from '../constants/app'
+import Dispatcher from '../dispatcher'
+import { ActionTypes, APIEndpoints, CSRFToken } from '../constants/app'
 
 export default {
   createFriend(toUserId) {
@@ -17,6 +18,7 @@ export default {
   },
 
   destroyFriendship(toUserId) {
+    debugger
     return new Promise(() => {
       request
       .del(`${APIEndpoints.FRIENDSHIP}/destroy_friendship`)

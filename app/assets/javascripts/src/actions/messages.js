@@ -1,6 +1,6 @@
 import request from 'superagent'
 import Dispatcher from '../dispatcher'
-import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
+import { ActionTypes, APIEndpoints, CSRFToken } from '../constants/app'
 
 export default {
   changeOpenChat(newUserID) {
@@ -8,10 +8,32 @@ export default {
       type  : ActionTypes.UPDATE_OPEN_CHAT_ID,
       userID: newUserID,
     })
-    this.getMessagesByUserId(newUserID)
+    this.getOpenChatMessages(newUserID)
   },
 
-  getMessagesByUserId(openChatID) {
+  getMessagesByFriendID(friend, friendID) {
+    return new Promise((resolve, reject) => {
+      request
+      .get('/api/messages')
+      .query({ open_chat_id: friendID })
+      .end((error, res) => {
+        if (!error && res.status === 200) {
+          const json = JSON.parse(res.text)
+          Dispatcher.handleServerAction({
+            type  : ActionTypes.GET_MESSAGE_BY_ID,
+            friend: friend,
+            json,
+          })
+          resolve(json)
+        } else {
+          reject(res)
+        }
+      })
+    })
+  },
+
+  getOpenChatMessages(openChatID) {
+    debugger
     return new Promise((resolve, reject) => {
       request
       .get('/api/messages')
@@ -20,7 +42,7 @@ export default {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
+            type: ActionTypes.GET_OPEN_CHAT_MESSAGE,
             json,
           })
           resolve(json)
@@ -43,7 +65,7 @@ export default {
         } else {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
+            type: ActionTypes.GET_OPEN_CHAT_MESSAGE,
             json,
           })
         }
@@ -63,7 +85,7 @@ export default {
         } else {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
+            type: ActionTypes.GET_OPEN_CHAT_MESSAGE,
             json,
           })
         }
@@ -84,7 +106,7 @@ export default {
         } else {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
+            type: ActionTypes.GET_OPEN_CHAT_MESSAGE,
             json,
           })
         }

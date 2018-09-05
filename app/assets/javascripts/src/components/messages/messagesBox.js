@@ -16,6 +16,7 @@ class MessagesBox extends React.Component {
 
   get initialState() {
     return {
+      friends    : [],
       openChatID : null,
       currentUser: {},
       messages   : [],
@@ -26,7 +27,7 @@ class MessagesBox extends React.Component {
   componentWillMount() {
     UserAction.getCurrentUser()
     UserAction.getFriends() // OpenChatIDに初期値を入れるためのgetFriends()
-    .then(() => MessageAction.getMessagesByUserId(this.state.openChatID))
+    .then(() => MessageAction.getOpenChatMessages(this.state.openChatID))
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
   }
@@ -45,9 +46,10 @@ class MessagesBox extends React.Component {
     var toUser = _.find(friends, ['id', this.state.openChatID])
     if (toUser === void 0) toUser = {}
     return {
+      friends    : UserStore.getFriends(),
       openChatID : MessagesStore.getOpenChatUserID(),
       currentUser: UserStore.getCurrentUser(),
-      messages   : MessagesStore.getMessagesByUserId(),
+      messages   : MessagesStore.getOpenChatMessages(),
       toUser     : toUser,
     }
   }
@@ -55,6 +57,10 @@ class MessagesBox extends React.Component {
   destroyMessage(messageID) {
     if (window.confirm('この投稿を削除しますか？(相手からも見えなくなります)')) {
       MessageAction.destroyMessage(this.state.openChatID, messageID)
+      MessagesStore.state.friendWithMessages = []
+      _.each(this.state.friends, (friend) => {
+        MessageAction.getMessagesByFriendID(friend, friend.id)
+      })
     }
   }
 
