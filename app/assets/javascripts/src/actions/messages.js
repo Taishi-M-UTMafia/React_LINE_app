@@ -1,5 +1,7 @@
 import request from 'superagent'
 import Dispatcher from '../dispatcher'
+import FriendshipStore from '../stores/friendship'
+import FriendshipAction from './friendship'
 import { ActionTypes, APIEndpoints, CSRFToken } from '../constants/app'
 
 export default {
@@ -11,6 +13,7 @@ export default {
     this.getOpenChatMessages(newUserID)
   },
 
+  // HACK(Sunny) :ここ引数一つだけで良いのでは？
   getMessagesByFriendID(friend, friendID) {
     return new Promise((resolve, reject) => {
       request
@@ -19,10 +22,14 @@ export default {
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
-          Dispatcher.handleServerAction({
-            type  : ActionTypes.GET_MESSAGE_BY_ID,
-            friend: friend,
-            json,
+          FriendshipAction.getFriendship(friendID)
+          .then(() => {
+            Dispatcher.handleServerAction({
+              type      : ActionTypes.GET_MESSAGE_BY_ID,
+              friendship: FriendshipStore.getFriendship(),
+              friend    : friend,
+              json,
+            })
           })
           resolve(json)
         } else {
@@ -32,8 +39,8 @@ export default {
     })
   },
 
+  // HACK(Sunny): これカットできるのでは？
   getOpenChatMessages(openChatID) {
-    debugger
     return new Promise((resolve, reject) => {
       request
       .get('/api/messages')

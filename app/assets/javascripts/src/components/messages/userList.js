@@ -6,6 +6,7 @@ import MessagesStore from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
+import FriendshipStore from '../../stores/friendship'
 import FriendshipAction from '../../actions/friendship'
 
 class UserList extends React.Component {
@@ -22,6 +23,7 @@ class UserList extends React.Component {
   componentWillMount() {
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
+    // FriendshipStore.onChange(this.onStoreChange)
     UserAction.getFriends()
     .then(() => {
       _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
@@ -57,7 +59,8 @@ class UserList extends React.Component {
   }
 
   changeOpenChat(id) {
-    MessagesAction.changeOpenChat(id)
+    FriendshipAction.updateLastAccess(id)
+    .then(() => MessagesAction.changeOpenChat(id))
   }
 
   destroyFriendship(toUserId) {
@@ -71,6 +74,7 @@ class UserList extends React.Component {
   }
 
   render() {
+    console.log(this.state.messageList)
     // HACK(Sunny): lastMessageがからの場合考えないとねー
     this.state.messageList.sort((a, b) => {
       if (a.lastMessage.timestamp > b.lastMessage.timestamp) {

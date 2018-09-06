@@ -4,6 +4,7 @@ import MessagesStore from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
+import FriendshipAction from '../../actions/friendship'
 
 class ReplyBox extends React.Component {
   constructor(props) {

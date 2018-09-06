@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     get 'users/find_current_user' => 'users#find_current_user'
     get 'users/find_friends'      => 'users#find_friends'
 
+    get 'friendships' => 'friendships#index'
+    get 'friendships/update_last_access' => 'friendships#update_last_access'
     post 'friendships/create_friendship' => 'friendships#create_friendship'
     delete 'friendships/destroy_friendship' => 'friendships#destroy_friendship'
   end

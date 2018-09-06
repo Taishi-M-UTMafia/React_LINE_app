@@ -4,6 +4,26 @@ import MessagesAction from './messages'
 import { ActionTypes, APIEndpoints, CSRFToken } from '../constants/app'
 
 export default {
+  getFriendship(toUserId) {
+    return new Promise((resolve, reject) => {
+      request
+      .get('/api/friendships')
+      .query({ to_user_id: toUserId })
+      .end((error, res) => {
+        if (!error && res.status === 200) {
+          const json = JSON.parse(res.text)
+          Dispatcher.handleServerAction({
+            type: ActionTypes.GET_FRIENDSHIP,
+            json,
+          })
+          resolve(json)
+        } else {
+          reject(res)
+        }
+      })
+    })
+  },
+
   createFriend(toUserId) {
     return new Promise(() => {
       request
@@ -21,7 +41,6 @@ export default {
   },
 
   destroyFriendship(toUserId) {
-    debugger
     return new Promise(() => {
       request
       .del(`${APIEndpoints.FRIENDSHIP}/destroy_friendship`)
@@ -30,6 +49,26 @@ export default {
       .end((error, res) => {
         if (error || !(res.status === 200)) {
           alert('友達解除に失敗しました')
+        }
+      })
+    })
+  },
+
+  updateLastAccess(toUserId) {
+    return new Promise((resolve, reject) => {
+      request
+      .get('/api/friendships/update_last_access')
+      .query({ to_user_id: toUserId })
+      .end((error, res) => {
+        if (!error && res.status === 200) {
+          const json = JSON.parse(res.text)
+          Dispatcher.handleServerAction({
+            type: ActionTypes.GET_FRIENDSHIP,
+            json,
+          })
+          resolve(json)
+        } else {
+          reject(res)
         }
       })
     })

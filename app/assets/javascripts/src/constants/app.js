@@ -16,7 +16,7 @@ export const ActionTypes = keyMirror({
   GET_SEARCH_USER      : null,
   GET_CURRENT_USER     : null,
   UPDATE_OPEN_CHAT_ID  : null,
-  FRIENDSHIP_SAVE      : null,
+  GET_FRIENDSHIP       : null,
 })
 
 export function CSRFToken() {

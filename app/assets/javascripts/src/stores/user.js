@@ -13,12 +13,12 @@ class UsersStore extends BaseStore {
   }
 
   getSearchUser() {
-    if (!this.get('searchJson')) this.setSearchUser([])
+    if (!this.get('searchJson')) this.setSearchUser({})
     return this.get('searchJson')
   }
 
-  setSearchUser(array) {
-    this.set('searchJson', array)
+  setSearchUser(obj) {
+    this.set('searchJson', obj)
   }
 
   getFriends() {
