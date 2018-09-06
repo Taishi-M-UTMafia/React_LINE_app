@@ -32,6 +32,7 @@ const Utils = {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
     const date = new Date(timestamp)
+    debugger
     const distance = Math.round((+new Date() - timestamp) / 60000)
 
     let string

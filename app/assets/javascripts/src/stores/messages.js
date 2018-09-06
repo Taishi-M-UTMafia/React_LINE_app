@@ -53,8 +53,9 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
 
     case ActionTypes.GET_MESSAGE_BY_ID:
       MessagesStore.state.friendWithMessages.push({
-        friend  : action.friend,
-        messages: action.json,
+        friend    : action.friend,
+        lastAccess: action.lastAccess,
+        messages  : action.json,
       })
       MessagesStore.emitChange()
       break

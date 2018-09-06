@@ -1,12 +1,12 @@
 import React from 'react'
 import classNames from 'classnames'
 import _ from 'lodash'
+// import Utils from '../../utils'
 import MessagesStore from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
 import FriendshipAction from '../../actions/friendship'
-import FriendshipStore from '../../stores/friendship'
 
 class UserList extends React.Component {
   constructor(props) {
@@ -22,7 +22,6 @@ class UserList extends React.Component {
   componentWillMount() {
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
-    // FriendshipStore.onChange(this.onStoreChange)
     UserAction.getFriends()
     .then(() => {
       _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
@@ -46,18 +45,9 @@ class UserList extends React.Component {
       if (lastMessage === void 0) lastMessage = {}
       messageList.push({
         lastMessage: lastMessage,
-        // lastAccess: message.lastAccess,
+        lastAccess: message.lastAccess,
         friend: message.friend,
       })
-    })
-    messageList.sort((a, b) => {
-      if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
-        return -1
-      }
-      if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
-        return 1
-      }
-      return 0
     })
     return {
       friends    : UserStore.getFriends(),
@@ -74,15 +64,27 @@ class UserList extends React.Component {
     if (window.confirm('本当に友達解除しますか？')) {
       FriendshipAction.destroyFriendship(toUserId)
       UserAction.getFriends()
-      .then(() => {
-        MessagesStore.state.friendWithMessages = []
-        _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
-      }).then(() => MessagesAction.getOpenChatMessages(this.state.openChatID))
+      MessagesStore.state.friendWithMessages = []
+      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
+      MessagesAction.getOpenChatMessages(this.state.openChatID)
     }
   }
 
   render() {
+    // HACK(Sunny): lastMessageがからの場合考えないとねー
+    this.state.messageList.sort((a, b) => {
+      if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
+        return -1
+      }
+      if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
+        return 1
+      }
+      return 0
+    })
+
     const userList = this.state.messageList.map((message, index) => {
+      // HACK(Sunny): 9/5 10:00みたいな形で取得したい
+      // const date = Utils.getNiceDate(message.lastMessage.timestamp)
       var statusIcon
       if (message.lastMessage.user_id !== message.friend.id) {
         statusIcon = (
@@ -102,6 +104,7 @@ class UserList extends React.Component {
       })
 
       return (
+        // HACK(Sunny): h4配下にh5は置かない
         <li
           key = { message.friend.id }
           onClick = { this.changeOpenChat.bind(this, message.friend.id) }
@@ -109,7 +112,12 @@ class UserList extends React.Component {
         >
           <div className = 'user-list__item__picture'><img src = { message.friend.image_name }/></div>
           <div className = 'user-list__item__details'>
-            <h4 className = 'user-list__item__name'>{ message.friend.name }</h4>
+            <h4 className = 'user-list__item__name'>
+              { message.friend.name }
+              <h5 className='user-list__item__timestamp'>
+                { message.lastMessage.created_at }
+              </h5>
+            </h4>
             <span className = 'user-list__item__deletefriend'>
               <div
                 key = { message.friend.id }
