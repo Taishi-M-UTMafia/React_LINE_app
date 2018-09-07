@@ -1,7 +1,7 @@
 import React from 'react'
 import UserAction from '../../actions/user'
 import UserStore from '../../stores/user'
-import MessagesAction from '../../actions/messages'
+// import MessagesAction from '../../actions/messages'
 import FriendshipAction from '../../actions/friendship'
 
 export default class SearchForm extends React.Component {
@@ -47,7 +47,7 @@ export default class SearchForm extends React.Component {
     location.href = 'http://localhost:3000'
     FriendshipAction.createFriend(toUserID)
     // HACK(Sunny): SearchFormから飛んだ時はOpenchatIDを最初からつけてあげたい
-    MessagesAction.changeOpenChat(toUserID)
+    // MessagesAction.changeOpenChat(toUserID)
   }
 
   render() {

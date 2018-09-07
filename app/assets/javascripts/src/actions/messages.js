@@ -12,7 +12,6 @@ export default {
     })
   },
 
-  // HACK(Sunny) :ここ引数一つだけで良いのでは？
   getMessagesByFriendID(friend) {
     return new Promise((resolve, reject) => {
       request

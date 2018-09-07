@@ -93,7 +93,7 @@ class MessagesBox extends React.Component {
       )
     })
     var lastAccess = friendWithMessages.lastAccess
-    if(lastAccess === void 0) lastAccess = {}
+    if (lastAccess === void 0) lastAccess = {}
     const messagesLength = messages.length
     var lastMessage = messages[messagesLength - 1]
     if (lastMessage === void 0) lastMessage = {}
@@ -102,12 +102,12 @@ class MessagesBox extends React.Component {
       if (lastAccess.recipient >= lastMessage.timestamp) {
         const date = Utils.getShortDate(lastMessage.timestamp)
         messagesList.push(
-            <li key='read' className='message-box__item message-box__item--read'>
-              <div className='message-box__item__contents'>
-                Read { date }
-              </div>
-            </li>
-          )
+          <li key='read' className='message-box__item message-box__item--read'>
+            <div className='message-box__item__contents'>
+              Read { date }
+            </div>
+          </li>
+        )
       }
     }
 

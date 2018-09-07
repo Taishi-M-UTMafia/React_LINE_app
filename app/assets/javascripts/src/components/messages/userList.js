@@ -1,12 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
 import _ from 'lodash'
-// import Utils from '../../utils'
+import Utils from '../../utils'
 import MessagesStore from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
-import FriendshipStore from '../../stores/friendship'
 import FriendshipAction from '../../actions/friendship'
 
 class UserList extends React.Component {
@@ -47,13 +46,13 @@ class UserList extends React.Component {
       if (lastMessage === void 0) lastMessage = {}
       messageList.push({
         lastMessage: lastMessage,
-        lastAccess: message.lastAccess,
-        friend: message.friend,
+        lastAccess : message.lastAccess,
+        friend     : message.friend,
       })
     })
     return {
       friends    : UserStore.getFriends(),
-      currentUser: UserStore.getCurrentUser,
+      currentUser: UserStore.getCurrentUser(),
       openChatID : MessagesStore.getOpenChatUserID(),
       messageList: messageList,
     }
@@ -78,33 +77,18 @@ class UserList extends React.Component {
   }
 
   render() {
-    // HACK(Sunny): lastMessageがからの場合考えないとねー
-    this.state.messageList.sort((a, b) => {
-      if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
-        return -1
-      }
-      if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
-        return 1
-      }
-      return 0
-    })
+    // HACK(Sunny): lastMessageが空の場合は？
+    this.state.messageList.sort((a, b) => b.lastMessage.timestamp - a.lastMessage.timestamp)
 
     const userList = this.state.messageList.map((message, index) => {
-      // HACK(Sunny): 9/5 10:00みたいな形で取得したい
-      // const date = Utils.getNiceDate(message.lastMessage.timestamp)
       var statusIcon
-      if (message.lastMessage.user_id !== message.friend.id) {
-        statusIcon = (
-          <i className='fa fa-reply user-list__item__icon' />
-        )
+      if (message.lastMessage.user_id === this.state.currentUser.id) {
+        statusIcon = <i className='fa fa-reply user-list__item__icon' />
       }
       if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-      statusIcon = (
-          <i className='fa fa-circle user-list__item__icon' />
-        )
+        statusIcon = <i className='fa fa-circle user-list__item__icon' />
       }
 
-      // trueの場合自分がまだ見てない
       var isNewMessage = false
       if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
         isNewMessage = message.lastMessage.from !== message.friend.id
@@ -117,8 +101,9 @@ class UserList extends React.Component {
         'user-list__item--active': this.state.openChatID === message.friend.id,
       })
 
+      const date = Utils.getNiceDate(message.lastMessage.timestamp)
+
       return (
-        // HACK(Sunny): h4配下にh5は置かない
         <li
           key = { message.friend.id }
           onClick = { this.changeOpenChat.bind(this, message.friend.id) }
@@ -128,10 +113,8 @@ class UserList extends React.Component {
           <div className = 'user-list__item__details'>
             <h4 className = 'user-list__item__name'>
               { message.friend.name }
-              <h5 className='user-list__item__timestamp'>
-                { message.lastMessage.created_at }
-              </h5>
             </h4>
+            <p className='user-list__item__timestamp'>{ date }</p>
             <span className = 'user-list__item__deletefriend'>
               <div
                 key = { message.friend.id }

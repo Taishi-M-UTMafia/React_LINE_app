@@ -1,6 +1,5 @@
 import Dispatcher from '../dispatcher'
 import BaseStore from '../base/store'
-import FriendshipStore from './friendship'
 import {ActionTypes} from '../constants/app'
 
 class ChatStore extends BaseStore {
@@ -40,9 +39,9 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
 
     case ActionTypes.GET_MESSAGE_BY_ID:
       var lastAccess
-      if(action.friend.id === action.friendship.to_user_id) {
+      if (action.friend.id === action.friendship.to_user_id) {
         lastAccess = { currentUser: action.friendship.from_user_last_access, recipient: action.friendship.to_user_last_access }
-      }else if(action.friend.id === action.friendship.from_user_id) {
+      } else if (action.friend.id === action.friendship.from_user_id) {
         lastAccess = { currentUser: action.friendship.to_user_last_access, recipient: action.friendship.from_user_last_access }
       }
       MessagesStore.state.friendWithMessages.push({

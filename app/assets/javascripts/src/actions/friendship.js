@@ -1,6 +1,6 @@
 import request from 'superagent'
 import Dispatcher from '../dispatcher'
-import MessagesAction from './messages'
+// import MessagesAction from './messages'
 import { ActionTypes, APIEndpoints, CSRFToken } from '../constants/app'
 
 export default {
@@ -32,7 +32,7 @@ export default {
       .send({ to_user_id: toUserId })
       .end((error, res) => {
         // HACK(Sunny): SearchFormから飛んだ時はOpenchatIDを最初からつけてあげたい
-        MessagesAction.changeOpenChat(toUserID)
+        // MessagesAction.changeOpenChat(toUserId)
         if (error || !(res.status === 200)) {
           alert('その人は既に友達です')
         }
