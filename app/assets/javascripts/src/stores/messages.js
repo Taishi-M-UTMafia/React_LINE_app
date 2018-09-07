@@ -22,15 +22,6 @@ class ChatStore extends BaseStore {
     this.set('openChatID', id)
   }
 
-  getOpenChatMessages() {
-    if (!this.get('openchatmessageJson')) this.setOpenChatMessages([])
-    return this.get('openchatmessageJson')
-  }
-
-  setOpenChatMessages(array) {
-    this.set('openchatmessageJson', array)
-  }
-
   getFriendWithMessages() {
     return this.state.friendWithMessages
   }
@@ -44,11 +35,6 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
   switch (action.type) {
     case ActionTypes.UPDATE_OPEN_CHAT_ID:
       MessagesStore.setOpenChatUserID(action.userID)
-      MessagesStore.emitChange()
-      break
-
-    case ActionTypes.GET_OPEN_CHAT_MESSAGE:
-      MessagesStore.setOpenChatMessages(action.json)
       MessagesStore.emitChange()
       break
 

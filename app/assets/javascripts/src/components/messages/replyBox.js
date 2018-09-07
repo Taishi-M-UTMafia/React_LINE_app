@@ -44,7 +44,7 @@ class ReplyBox extends React.Component {
       .then(() => {
         FriendshipAction.updateLastAccess(this.state.openChatID)
         MessagesStore.state.friendWithMessages = []
-        _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
+        _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend))
       })
       this.setState({
         value: '',
@@ -57,7 +57,7 @@ class ReplyBox extends React.Component {
     UserAction.getFriends()
     .then(() => {
       MessagesStore.state.friendWithMessages = []
-      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
+      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend))
     })
   }
 

@@ -26,7 +26,7 @@ class UserList extends React.Component {
     // FriendshipStore.onChange(this.onStoreChange)
     UserAction.getFriends()
     .then(() => {
-      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
+      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend))
     })
   }
 
@@ -62,6 +62,10 @@ class UserList extends React.Component {
   changeOpenChat(id) {
     FriendshipAction.updateLastAccess(id)
     .then(() => MessagesAction.changeOpenChat(id))
+    .then(() => {
+      MessagesStore.state.friendWithMessages = []
+      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend))
+    })
   }
 
   destroyFriendship(toUserId) {
@@ -69,13 +73,11 @@ class UserList extends React.Component {
       FriendshipAction.destroyFriendship(toUserId)
       UserAction.getFriends()
       MessagesStore.state.friendWithMessages = []
-      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
-      MessagesAction.getOpenChatMessages(this.state.openChatID)
+      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend))
     }
   }
 
   render() {
-    console.log(this.state.messageList)
     // HACK(Sunny): lastMessageがからの場合考えないとねー
     this.state.messageList.sort((a, b) => {
       if (a.lastMessage.timestamp > b.lastMessage.timestamp) {

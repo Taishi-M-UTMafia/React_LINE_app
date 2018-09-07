@@ -10,19 +10,18 @@ export default {
       type  : ActionTypes.UPDATE_OPEN_CHAT_ID,
       userID: newUserID,
     })
-    this.getOpenChatMessages(newUserID)
   },
 
   // HACK(Sunny) :ここ引数一つだけで良いのでは？
-  getMessagesByFriendID(friend, friendID) {
+  getMessagesByFriendID(friend) {
     return new Promise((resolve, reject) => {
       request
       .get('/api/messages')
-      .query({ open_chat_id: friendID })
+      .query({ open_chat_id: friend.id })
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
-          FriendshipAction.getFriendship(friendID)
+          FriendshipAction.getFriendship(friend.id)
           .then(() => {
             Dispatcher.handleServerAction({
               type      : ActionTypes.GET_MESSAGE_BY_ID,
@@ -30,27 +29,6 @@ export default {
               friend    : friend,
               json,
             })
-          })
-          resolve(json)
-        } else {
-          reject(res)
-        }
-      })
-    })
-  },
-
-  // HACK(Sunny): これカットできるのでは？
-  getOpenChatMessages(openChatID) {
-    return new Promise((resolve, reject) => {
-      request
-      .get('/api/messages')
-      .query({ open_chat_id: openChatID })
-      .end((error, res) => {
-        if (!error && res.status === 200) {
-          const json = JSON.parse(res.text)
-          Dispatcher.handleServerAction({
-            type: ActionTypes.GET_OPEN_CHAT_MESSAGE,
-            json,
           })
           resolve(json)
         } else {

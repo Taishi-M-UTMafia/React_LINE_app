@@ -21,7 +21,7 @@ FriendshipStore.dispatchToken = Dispatcher.register(payload => {
   switch (action.type) {
     case ActionTypes.GET_FRIENDSHIP:
       FriendshipStore.setFriendship(action.json)
-      FriendshipStore.emitChange()
+      // FriendshipStore.emitChange()
       break
   }
   return true
