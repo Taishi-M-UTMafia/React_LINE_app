@@ -42,6 +42,7 @@ class ReplyBox extends React.Component {
       MessagesAction.postMessage(this.state.openChatID, this.state.value)
       UserAction.getFriends()
       .then(() => {
+        FriendshipAction.updateLastAccess(this.state.openChatID)
         MessagesStore.state.friendWithMessages = []
         _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend, friend.id))
       })

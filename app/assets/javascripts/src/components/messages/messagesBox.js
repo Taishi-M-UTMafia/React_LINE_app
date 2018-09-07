@@ -88,6 +88,23 @@ class MessagesBox extends React.Component {
       )
     })
 
+    // const messagesLength = this.state.messages.length
+    // var lastMessage = this.state.messages[messagesLength - 1]
+    // if (lastMessage === void 0) lastMessage = {}
+    //
+    // if (lastMessage.user_id === this.state.currentUser.id) {
+    //   if (this.state.lastAccess.recipient >= lastMessage.timestamp) {
+    //     const date = Utils.getShortDate(lastMessage.timestamp)
+    //     messages.push(
+    //         <li key='read' className='message-box__item message-box__item--read'>
+    //           <div className='message-box__item__contents'>
+    //             Read { date }
+    //           </div>
+    //         </li>
+    //       )
+    //   }
+    // }
+
     return (
       <div className = 'message-box'>
         <ul className = 'message-box__list'>{ messagesList }</ul>

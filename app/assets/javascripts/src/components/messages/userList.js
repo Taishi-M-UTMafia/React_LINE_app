@@ -53,6 +53,7 @@ class UserList extends React.Component {
     })
     return {
       friends    : UserStore.getFriends(),
+      currentUser: UserStore.getCurrentUser,
       openChatID : MessagesStore.getOpenChatUserID(),
       messageList: messageList,
     }
@@ -95,15 +96,22 @@ class UserList extends React.Component {
           <i className='fa fa-reply user-list__item__icon' />
         )
       }
-    //   if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-      // statusIcon = (
-      //     <i className='fa fa-circle user-list__item__icon' />
-      //   )
-    //   }
+      if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
+      statusIcon = (
+          <i className='fa fa-circle user-list__item__icon' />
+        )
+      }
+
+      // trueの場合自分がまだ見てない
+      var isNewMessage = false
+      if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
+        isNewMessage = message.lastMessage.from !== message.friend.id
+      }
 
       const itemClasses = classNames({
         'user-list__item'        : true,
         'clear'                  : true,
+        'user-list__item--new'   : isNewMessage,
         'user-list__item--active': this.state.openChatID === message.friend.id,
       })
 
