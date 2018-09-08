@@ -7,11 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def chat_room_id(to_user_id)
-    if current_user.id > to_user_id.to_i
-      "#{to_user_id.to_i}-#{current_user.id}"
-    else
-      "#{current_user.id}-#{to_user_id.to_i}"
-    end
+    current_user.id > to_user_id.to_i ? "#{to_user_id.to_i}-#{current_user.id}" : "#{current_user.id}-#{to_user_id.to_i}"
   end
 
     private

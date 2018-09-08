@@ -16,7 +16,7 @@ module Api
       elsif params[:to_user_id].to_i === @friendship[:from_user_id]
         @friendship[:to_user_last_access] = Time.now.to_i
       end
-      render json: @friendship if @friendship.save
+      @friendship.save and render json: @friendship
     end
 
     def create_friendship
@@ -24,11 +24,11 @@ module Api
       # HACK(Sunny): chat_room_idをいちいちつくるのははナンセンス
       new_friendship = Friendship.new(from_user_id: current_user.id, to_user_id: params[:to_user_id],
                                       chat_room_id: chat_room_id(params[:to_user_id]))
-      render json: [] if new_friendship.save
+      new_friendship.save and render json: []
     end
 
     def destroy_friendship
-      render json: [] if @friendship.destroy
+      @friendship.destroy and render json: []
     end
   end
 end

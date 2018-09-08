@@ -20,12 +20,12 @@ module Api
                                 chat_room_id: chat_room_id(params[:open_chat_id]),
                                 message_type: "text",
                                 timestamp: Time.now.to_i)
-      render json: @chat_room.all_messages if new_message.save
+      new_message.save and render json: @chat_room.all_messages
     end
 
     def destroy_message
       message_to_destroy = Message.find_by(id: params[:message_id])
-      render json: @chat_room.all_messages if message_to_destroy.destroy
+      message_to_destroy.destroy and render json: @chat_room.all_messages
     end
 
     def post_image
@@ -42,7 +42,7 @@ module Api
         fp.write  posted_image.tempfile.read
       end
 
-      render json: @chat_room.all_messages if new_image.save
+      new_image.save and render json: @chat_room.all_messages
     end
   end
 end
