@@ -14,7 +14,11 @@ class ReplyBox extends React.Component {
   }
 
   get initialState() {
-    return this.getStateFromStore()
+    return {
+      value     : '',
+      openChatID: null,
+      friends   : [],
+    }
   }
 
   componentWillMount() {
@@ -56,6 +60,7 @@ class ReplyBox extends React.Component {
     MessagesAction.postImage(this.state.openChatID, e.target.files[0])
     UserAction.getFriends()
     .then(() => {
+      FriendshipAction.updateLastAccess(this.state.openChatID)
       MessagesStore.state.friendWithMessages = []
       _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend))
     })

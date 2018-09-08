@@ -84,11 +84,11 @@ class MessagesBox extends React.Component {
           <p>{ this.state.toUser.name }</p>
           <div className = 'message-box__item__contents'>
             { isText ? <span>{ message.content }</span> : <img className = 'image_message' src = { 'message_images/' + message.content } /> }
-            <div
-              key = { message.id }
-              onClick = { this.destroyMessage.bind(this, message.id) }
-            ><i className = 'fas fa-times-circle'></i></div>
           </div>
+          <div
+            key = { message.id }
+            onClick = { this.destroyMessage.bind(this, message.id) }
+          ><i className = "far fa-trash-alt"></i></div>
         </li>
       )
     })
