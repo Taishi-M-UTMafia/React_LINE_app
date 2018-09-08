@@ -109,7 +109,7 @@ class UserList extends React.Component {
           onClick = { this.changeOpenChat.bind(this, message.friend.id) }
           className = { itemClasses }
         >
-          <div className = 'user-list__item__picture'><img src = { message.friend.image_name }/></div>
+          <div className = 'user-list__item__picture'><img src = { message.friend.image_name.url }/></div>
           <div className = 'user-list__item__details'>
             <h4 className = 'user-list__item__name'>
               { message.friend.name }

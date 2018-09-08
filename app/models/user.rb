@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
   validates :password,   {presence: true}
   validates :name,       {presence: true}
   validates :name,       {uniqueness: true}
-  validates :image_name, {presence: true}
+
+  mount_uploader :image_name, ImagesUploader
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

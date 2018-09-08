@@ -20,7 +20,7 @@ class MessagesBox extends React.Component {
       friends    : [],
       openChatID : null,
       currentUser: {},
-      messages   : [],
+      userList   : [],
       toUser     : {},
     }
   }
@@ -66,9 +66,10 @@ class MessagesBox extends React.Component {
   render() {
     var friendWithMessages = _.find(this.state.userList, (list) => list.friend.id === this.state.openChatID)
     if (friendWithMessages === void 0) friendWithMessages = []
-    var messages = friendWithMessages.messages
-    if (messages === void 0) messages = []
-    const messagesList = messages.map((message) => {
+    // HACK(Sunny): リネーム
+    var openChatMessages = friendWithMessages.messages
+    if (openChatMessages === void 0) openChatMessages = []
+    const messagesList = openChatMessages.map((message) => {
       const messageClasses = classNames({
         'clear'                          : true,
         'message-box__item'              : true,
@@ -76,10 +77,12 @@ class MessagesBox extends React.Component {
       })
 
       let isText = (message.message_type === 'text')
+      var imageName = this.state.toUser.image_name
+      if (imageName === void 0) imageName = { url: null }
       return (
         <li key = { message.id } className = { messageClasses }>
           <div className = 'user-list__item__picture'>
-            <img className = 'icon_by_message' src = { this.state.toUser.image_name }/>
+            <img className = 'icon_by_message' src = { imageName.url }/>
           </div>
           <p>{ this.state.toUser.name }</p>
           <div className = 'message-box__item__contents'>
@@ -94,8 +97,8 @@ class MessagesBox extends React.Component {
     })
     var lastAccess = friendWithMessages.lastAccess
     if (lastAccess === void 0) lastAccess = {}
-    const messagesLength = messages.length
-    var lastMessage = messages[messagesLength - 1]
+    const messagesLength = openChatMessages.length
+    var lastMessage = openChatMessages[messagesLength - 1]
     if (lastMessage === void 0) lastMessage = {}
 
     if (lastMessage.user_id === this.state.currentUser.id) {

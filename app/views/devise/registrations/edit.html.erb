@@ -1,13 +1,13 @@
 <div class="sign-wrapper edit">
   <h2>Edit Profile</h2>
-  <img  class="profile-img" src="<%= "/#{current_user.image_name}" %>">
+
+  <img  class = "profile-img" src = "<%= "#{current_user.image_name_url}" %>">
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= devise_error_messages! %>
 
     <div class="field">
-      <!-- FIXME: Carrierwave使ってプロフィール流画像変更できるようにする -->
-       Choose your new profile pic...</br><%= f.file_field :image %>
+       Choose your new profile pic...</br><%= f.file_field :image_name, :accept => 'image/*' %>
     </div>
 
     <div class="field">
@@ -23,15 +23,15 @@
     </div>
 
     <div class="field">
-      <%= f.password_field :password, autocomplete: "off",:placeholder => "Enter your new password..."%>
+      <%= f.password_field :password, autocomplete: "off", :placeholder => "Enter your new password..."%>
     </div>
 
     <div class="field">
-      <%= f.password_field :password_confirmation, autocomplete: "off",:placeholder => "Enter your new password again..." %>
+      <%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "Enter your new password again..." %>
     </div>
 
     <div class="field">
-      <%= f.password_field :current_password, autocomplete: "off",:placeholder => "Enter your current password (requied to change)" %>
+      <%= f.password_field :current_password, autocomplete: "off", :placeholder => "Enter your current password (requied to change)" %>
     </div>
 
     <div class="actions btn btn-primary">
