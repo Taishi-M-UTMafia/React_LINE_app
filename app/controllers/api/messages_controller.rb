@@ -38,9 +38,7 @@ module Api
                                  message_type: "image",
                                  timestamp: Time.now.to_i)
 
-      File.open(output_path, 'w+b') do |fp|
-        fp.write  posted_image.tempfile.read
-      end
+      File.open(output_path, 'w+b') { |fp| fp.write  posted_image.tempfile.read }
 
       new_image.save and render json: @chat_room.all_messages
     end

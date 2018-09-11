@@ -17,7 +17,7 @@ const Utils = {
     }
   },
   getNiceDate(timestamp) {
-    if (timestamp === void 0){
+    if (timestamp === void 0) {
       return undefined
     } else {
       const defaultString = '%d %f%y at %h:%i'

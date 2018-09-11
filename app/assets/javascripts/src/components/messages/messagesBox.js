@@ -66,7 +66,6 @@ class MessagesBox extends React.Component {
   render() {
     var friendWithMessages = _.find(this.state.userList, (list) => list.friend.id === this.state.openChatID)
     if (friendWithMessages === void 0) friendWithMessages = []
-    // HACK(Sunny): リネーム
     var openChatMessages = friendWithMessages.messages
     if (openChatMessages === void 0) openChatMessages = []
     const messagesList = openChatMessages.map((message) => {
@@ -91,7 +90,7 @@ class MessagesBox extends React.Component {
           <div
             key = { message.id }
             onClick = { this.destroyMessage.bind(this, message.id) }
-          ><i className = "far fa-trash-alt"></i></div>
+          ><i className = 'far fa-trash-alt'></i></div>
         </li>
       )
     })
