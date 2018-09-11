@@ -10,7 +10,6 @@ export default {
       userID: newUserID,
     })
     this.getMessagesByUserId(newUserID)
-    UserAction.getToUser(newUserID)
   },
 
   getMessagesByUserId(openChatID) {

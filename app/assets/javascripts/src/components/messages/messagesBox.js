@@ -25,10 +25,7 @@ class MessagesBox extends React.Component {
   componentWillMount() {
     UserAction.getCurrentUser()
     UserAction.getFriends() // OpenChatIDに初期値を入れるためのgetFriends()
-    .then(() => {
-      MessageAction.getMessagesByUserId(this.state.openChatID)
-      UserAction.getToUser(this.state.openChatID)
-    })
+    .then(() => MessageAction.getMessagesByUserId(this.state.openChatID))
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
   }
@@ -43,11 +40,23 @@ class MessagesBox extends React.Component {
   }
 
   getStateFromStore() {
-    return {
-      openChatID : MessagesStore.getOpenChatUserID(),
-      currentUser: UserStore.getCurrentUser(),
-      messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-      toUser     : UserStore.getToUser(this.state.openChatID),
+    const friends = UserStore.getFriends()
+    // toUserがundefinedになる場合の処理をうまく書けてない
+    const toUser = friends.filter((friends) => friends.id == this.state.openChatID)[0]
+    if (toUser !== undefined) {
+      return {
+        openChatID : MessagesStore.getOpenChatUserID(),
+        currentUser: UserStore.getCurrentUser(),
+        messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
+        toUser     : toUser,
+      }
+    } else {
+      return {
+        openChatID : MessagesStore.getOpenChatUserID(),
+        currentUser: UserStore.getCurrentUser(),
+        messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
+        toUser     : {},
+      }
     }
   }
 
@@ -62,7 +71,7 @@ class MessagesBox extends React.Component {
       const messageClasses = classNames({
         'clear'                          : true,
         'message-box__item'              : true,
-        'message-box__item--from-current': message.from_user_id === this.state.currentUser.id,
+        'message-box__item--from-current': message.user_id === this.state.currentUser.id,
       })
 
       let isText = (message.message_type === 'text')
