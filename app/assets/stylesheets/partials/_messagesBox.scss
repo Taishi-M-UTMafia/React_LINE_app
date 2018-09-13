@@ -26,7 +26,7 @@
       margin:0;
     }
 
-    .fa-times-circle{
+    .fa-trash-alt {
       display: none;
     }
 
@@ -42,17 +42,12 @@
       p{
         display: none;
       }
-      .fa-times-circle{
-        display:block;
-        color:red;
-        font-size:12px;
+      .fa-trash-alt {
+        color: gray;
+        display:inline-block;
+        float: right;
         cursor: pointer;
-        position:absolute;
-        top:0;
-        left: -1;
-        right:0;
-        bottom:0;
-        border-radius: 6px;
+        margin: 2px 5px 0 0;
       }
     }
 

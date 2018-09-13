@@ -7,11 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def chat_room_id(to_user_id)
-    if current_user.id > to_user_id.to_i
-      "#{to_user_id.to_i}-#{current_user.id}"
-    else
-      "#{current_user.id}-#{to_user_id.to_i}"
-    end
+    current_user.id > to_user_id.to_i ? "#{to_user_id.to_i}-#{current_user.id}" : "#{current_user.id}-#{to_user_id.to_i}"
   end
 
     private
@@ -23,6 +19,6 @@ class ApplicationController < ActionController::Base
     protected
       def configure_permitted_parameters
         devise_parameter_sanitizer.permit(:sign_up,        keys: [:name])
-        devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+        devise_parameter_sanitizer.permit(:account_update, keys: [:name, :image_name])
       end
 end

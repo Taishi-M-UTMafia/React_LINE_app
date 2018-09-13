@@ -1,6 +1,10 @@
 import React from 'react'
+import _ from 'lodash'
 import MessagesStore from '../../stores/messages'
 import MessagesAction from '../../actions/messages'
+import UserStore from '../../stores/user'
+import UserAction from '../../actions/user'
+import FriendshipAction from '../../actions/friendship'
 
 class ReplyBox extends React.Component {
   constructor(props) {
@@ -13,11 +17,13 @@ class ReplyBox extends React.Component {
     return {
       value     : '',
       openChatID: null,
+      friends   : [],
     }
   }
 
   componentWillMount() {
     MessagesStore.onChange(this.onStoreChange)
+    UserStore.onChange(this.onStoreChange)
   }
 
   componentWillUnmount() {
@@ -31,12 +37,19 @@ class ReplyBox extends React.Component {
   getStateFromStore() {
     return {
       openChatID: MessagesStore.getOpenChatUserID(),
+      friends   : UserStore.getFriends(),
     }
   }
 
   handleKeyDown(e) {
     if (e.keyCode === 13) {
       MessagesAction.postMessage(this.state.openChatID, this.state.value)
+      UserAction.getFriends()
+      .then(() => {
+        FriendshipAction.updateLastAccess(this.state.openChatID)
+        MessagesStore.state.friendWithMessages = []
+        _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend))
+      })
       this.setState({
         value: '',
       })
@@ -45,6 +58,12 @@ class ReplyBox extends React.Component {
 
   postImage(e) {
     MessagesAction.postImage(this.state.openChatID, e.target.files[0])
+    UserAction.getFriends()
+    .then(() => {
+      FriendshipAction.updateLastAccess(this.state.openChatID)
+      MessagesStore.state.friendWithMessages = []
+      _.each(this.state.friends, (friend) => MessagesAction.getMessagesByFriendID(friend))
+    })
   }
 
   updateValue(e) {

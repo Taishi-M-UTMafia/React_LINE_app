@@ -1,5 +1,7 @@
 import React from 'react'
 import classNames from 'classNames'
+import _ from 'lodash'
+import Utils from '../../utils'
 import ReplyBox from '../../components/messages/replyBox'
 import MessagesStore from '../../stores/messages'
 import MessageAction from '../../actions/messages'
@@ -15,17 +17,16 @@ class MessagesBox extends React.Component {
 
   get initialState() {
     return {
+      friends    : [],
       openChatID : null,
       currentUser: {},
-      messages   : [],
+      userList   : [],
       toUser     : {},
     }
   }
 
   componentWillMount() {
     UserAction.getCurrentUser()
-    UserAction.getFriends() // OpenChatIDに初期値を入れるためのgetFriends()
-    .then(() => MessageAction.getMessagesByUserId(this.state.openChatID))
     UserStore.onChange(this.onStoreChange)
     MessagesStore.onChange(this.onStoreChange)
   }
@@ -41,33 +42,33 @@ class MessagesBox extends React.Component {
 
   getStateFromStore() {
     const friends = UserStore.getFriends()
-    // toUserがundefinedになる場合の処理をうまく書けてない
-    const toUser = friends.filter((friends) => friends.id == this.state.openChatID)[0]
-    if (toUser !== undefined) {
-      return {
-        openChatID : MessagesStore.getOpenChatUserID(),
-        currentUser: UserStore.getCurrentUser(),
-        messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-        toUser     : toUser,
-      }
-    } else {
-      return {
-        openChatID : MessagesStore.getOpenChatUserID(),
-        currentUser: UserStore.getCurrentUser(),
-        messages   : MessagesStore.getMessagesByUserId(this.state.openChatID),
-        toUser     : {},
-      }
+    var toUser = _.find(friends, ['id', this.state.openChatID])
+    if (toUser === void 0) toUser = {}
+    return {
+      friends    : UserStore.getFriends(),
+      openChatID : MessagesStore.getOpenChatUserID(),
+      currentUser: UserStore.getCurrentUser(),
+      userList   : MessagesStore.getFriendWithMessages(),
+      toUser     : toUser,
     }
   }
 
   destroyMessage(messageID) {
     if (window.confirm('この投稿を削除しますか？(相手からも見えなくなります)')) {
       MessageAction.destroyMessage(this.state.openChatID, messageID)
+      MessagesStore.state.friendWithMessages = []
+      _.each(this.state.friends, (friend) => {
+        MessageAction.getMessagesByFriendID(friend)
+      })
     }
   }
 
   render() {
-    const messagesList = this.state.messages.map((message) => {
+    var friendWithMessages = _.find(this.state.userList, (list) => list.friend.id === this.state.openChatID)
+    if (friendWithMessages === void 0) friendWithMessages = []
+    var openChatMessages = friendWithMessages.messages
+    if (openChatMessages === void 0) openChatMessages = []
+    const messagesList = openChatMessages.map((message) => {
       const messageClasses = classNames({
         'clear'                          : true,
         'message-box__item'              : true,
@@ -75,26 +76,48 @@ class MessagesBox extends React.Component {
       })
 
       let isText = (message.message_type === 'text')
+      var imageName = this.state.toUser.image_name
+      if (imageName === void 0) imageName = { url: null }
       return (
         <li key = { message.id } className = { messageClasses }>
           <div className = 'user-list__item__picture'>
-            <img className = 'icon_by_message' src = { this.state.toUser.image_name }/>
+            <img className = 'icon_by_message' src = { imageName.url }/>
           </div>
           <p>{ this.state.toUser.name }</p>
           <div className = 'message-box__item__contents'>
             { isText ? <span>{ message.content }</span> : <img className = 'image_message' src = { 'message_images/' + message.content } /> }
-            <div
-              key = { message.id }
-              onClick = { this.destroyMessage.bind(this, message.id) }
-            ><i className = 'fas fa-times-circle'></i></div>
           </div>
+          <div
+            key = { message.id }
+            onClick = { this.destroyMessage.bind(this, message.id) }
+          ><i className = 'far fa-trash-alt'></i></div>
         </li>
       )
     })
+    var lastAccess = friendWithMessages.lastAccess
+    if (lastAccess === void 0) lastAccess = {}
+    const messagesLength = openChatMessages.length
+    var lastMessage = openChatMessages[messagesLength - 1]
+    if (lastMessage === void 0) lastMessage = {}
+
+    if (lastMessage.user_id === this.state.currentUser.id) {
+      if (lastAccess.recipient >= lastMessage.timestamp) {
+        const date = Utils.getShortDate(lastMessage.timestamp)
+        messagesList.push(
+          <li key='read' className='message-box__item message-box__item--read'>
+            <div className='message-box__item__contents'>
+              Read { date }
+            </div>
+          </li>
+        )
+      }
+    }
 
     return (
       <div className = 'message-box'>
-        <ul className = 'message-box__list'>{ messagesList }</ul>
+        <ul className = 'message-box__list'>
+          { messagesList }
+        </ul>
         <ReplyBox />
       </div>
     )

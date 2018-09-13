@@ -1,7 +1,8 @@
 import request from 'superagent'
 import Dispatcher from '../dispatcher'
-import UserAction from './user'
-import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
+import FriendshipStore from '../stores/friendship'
+import FriendshipAction from './friendship'
+import { ActionTypes, APIEndpoints, CSRFToken } from '../constants/app'
 
 export default {
   changeOpenChat(newUserID) {
@@ -9,20 +10,24 @@ export default {
       type  : ActionTypes.UPDATE_OPEN_CHAT_ID,
       userID: newUserID,
     })
-    this.getMessagesByUserId(newUserID)
   },
 
-  getMessagesByUserId(openChatID) {
+  getMessagesByFriendID(friend) {
     return new Promise((resolve, reject) => {
       request
       .get('/api/messages')
-      .query({ open_chat_id: openChatID })
+      .query({ open_chat_id: friend.id })
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
-          Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
-            json,
+          FriendshipAction.getFriendship(friend.id)
+          .then(() => {
+            Dispatcher.handleServerAction({
+              type      : ActionTypes.GET_MESSAGE_BY_ID,
+              friendship: FriendshipStore.getFriendship(),
+              friend    : friend,
+              json,
+            })
           })
           resolve(json)
         } else {
@@ -44,7 +49,7 @@ export default {
         } else {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
+            type: ActionTypes.GET_OPEN_CHAT_MESSAGE,
             json,
           })
         }
@@ -64,7 +69,7 @@ export default {
         } else {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
+            type: ActionTypes.GET_OPEN_CHAT_MESSAGE,
             json,
           })
         }
@@ -85,7 +90,7 @@ export default {
         } else {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
-            type: ActionTypes.GET_MESSAGE,
+            type: ActionTypes.GET_OPEN_CHAT_MESSAGE,
             json,
           })
         }
